@@ -18,7 +18,7 @@ contract TokenSale is TokenController, Owned, SafeMath {
     address public vaultAddress;            // The address to hold the funds donated
     bool public transfersAllowed;           // If the token transfers are allowed
     uint256 public exchangeRate;            // USD/ETH rate * 100
-    uint public exchangeRateTime;           // Time when exchange rate was set
+    uint public exchangeRateAt;             // Block number when exchange rate was set
 
     /// @notice 'TokenSale()' initiates the TokenSale by setting its funding
     /// parameters
@@ -51,7 +51,7 @@ contract TokenSale is TokenController, Owned, SafeMath {
         vaultAddress = _vaultAddress;
         transfersAllowed = _transfersAllowed;
         exchangeRate = _exchangeRate;
-        exchangeRateTime = now;
+        exchangeRateAt = block.number;
     }
 
     /// @dev The fallback function is called when ether is sent to the contract, it
@@ -116,9 +116,9 @@ contract TokenSale is TokenController, Owned, SafeMath {
 
     /// @notice `onlyOwner` changes the exchange rate of token to ETH
     /// @param _exchangeRate USD/ETH rate * 100
-    function setTransfersAllowed(uint256 _exchangeRate) onlyOwner public{
+    function setExchangeRate(uint256 _exchangeRate) onlyOwner public{
         exchangeRate = _exchangeRate;
-        exchangeRateTime = now;
+        exchangeRateAt = block.number;
     }
 
     /// @notice `onlyOwner` changes the controller of the tokenContract

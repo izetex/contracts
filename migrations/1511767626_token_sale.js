@@ -32,7 +32,7 @@ module.exports = function(deployer, network, accounts) {
             token = instance;
             return TokenSale.deployed();
     }).then(function(token_sale) {
-            console.log("Setting token: "+token.address+" controller to: "+token_sale.address);
+           // console.log("Setting token: "+token.address+" controller to: "+token_sale.address);
             token.changeController(token_sale.address);
     });
 

@@ -327,15 +327,23 @@ contract('TokenSale', function(accounts) {
 
     });
 
-    it('should protect to change controller', function() {
-
-    });
-
-    it('should protect transfer tokens', function() {
-
-    });
 
     it('should change controller', function() {
+
+        var sale, token;
+
+        return TokenSale.deployed().then(function (instance) {
+            sale = instance;
+            return IZXToken.deployed();
+        }).then(function (instance) {
+            return sale.distributeTokens([accounts[5]], [1111111], {from: accounts[5], gas: 120000});
+        }).then(function(result) { assert(false); }, function(e){
+
+        });
+
+    });
+
+    it('should protect to change controller', function() {
 
         var sale, token;
 
@@ -350,13 +358,46 @@ contract('TokenSale', function(accounts) {
             return sale.owner();
         }).then(function(result) {
             assert.equal(result.valueOf(), accounts[0]);
-            return sale.changeController(accounts[5], {gas: 70000 });
-        }).then(function(result) {
+            return sale.changeController(accounts[5], {gas: 70000, from: accounts[5] });
+        }).then(function(result) { assert(false); }, function(e){
             return token.controller();
         }).then(function(result) {
-            assert.equal(result.valueOf(), accounts[5]);
-            return token.changeController(sale.address, {gas: 70000, from: accounts[5] });
+            assert.equal(result.valueOf(), sale.address);
+            return token.changeController(accounts[5], {gas: 70000, from: accounts[5] });
+        }).then(function(result) { assert(false)}, function(e){
+            return token.controller();
         }).then(function(result) {
+            assert.equal(result.valueOf(), sale.address);
+        });
+
+
+    });
+
+    it('should protect distribute tokens', function() {
+
+        var sale, token;
+
+        return TokenSale.deployed().then(function (instance) {
+            sale = instance;
+            return IZXToken.deployed();
+        }).then(function (instance) {
+            token = instance;
+            return token.controller();
+        }).then(function(result) {
+
+            return token.transfer(owners[1], initial_tokens[0], {from: owners[1], gas: 120000});
+
+            assert.equal(result.valueOf(), sale.address);
+            return sale.owner();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), accounts[0]);
+            return sale.changeController(accounts[5], {gas: 70000, from: accounts[5] });
+        }).then(function(result) { assert(false); }, function(e){
+            return token.controller();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), sale.address);
+            return token.changeController(accounts[5], {gas: 70000, from: accounts[5] });
+        }).then(function(result) { assert(false)}, function(e){
             return token.controller();
         }).then(function(result) {
             assert.equal(result.valueOf(), sale.address);
@@ -364,9 +405,6 @@ contract('TokenSale', function(accounts) {
 
     });
 
-    it('should destroy tokens', function() {
-
-    });
 
 });
 

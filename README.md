@@ -19,7 +19,36 @@ testrpc -m "warrior minimum breeze raven garden express solar flavor obvious twe
 And then run tests
 
 ```
-truffle test test/token_sale.js
+$ truffle test test/token_sale.js
+Using network 'development'.
+
+
+
+  Contract: IZXToken
+    ✓ should have 18 digits
+    ✓ should have 1 supply
+    ✓ should have IZX symbol (41ms)
+
+  Contract: Wallet
+    ✓ should have 5 owners
+    ✓ should require 3 owners
+
+  Contract: TokenSale
+    ✓ should have set exchange rate
+    ✓ should have set wallet
+    ✓ should have set token
+    ✓ should set controller for token (60ms)
+    ✓ should transfer tokens by ETH transfer (1894ms)
+    ✓ should change ETH rate (2277ms)
+    ✓ should distribute tokens (318ms)
+    ✓ should disable transfer tokens (238ms)
+    ✓ should enable transfer tokens (269ms)
+    ✓ should change controller
+    ✓ should protect to change controller (172ms)
+    ✓ should protect distribute tokens (94ms)
+
+
+  17 passing (6s)
 ```
 
 ## Note on console usage

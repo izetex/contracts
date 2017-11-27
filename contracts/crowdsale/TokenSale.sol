@@ -12,7 +12,10 @@ contract TokenSale is TokenController, Owned, SafeMath {
 
     uint public startFundingTime;           // In UNIX Time Format
     uint public endFundingTime;             // In UNIX Time Format
-    uint public maximumFunding;             // In wei
+
+    uint public tokenCap;                   // Maximum amount of tokens to be distributed
+    uint public totalTokenCount;            // Actual amount of tokens distributed
+
     uint public totalCollected;             // In wei
     ControlledToken public tokenContract;   // The new token for this TokenSale
     address public vaultAddress;            // The address to hold the funds donated
@@ -27,15 +30,15 @@ contract TokenSale is TokenController, Owned, SafeMath {
     /// start receiving funds
     /// @param _endFundingTime The UNIX time that the TokenSale will stop being able
     /// to receive funds
-    /// @param _maximumFunding In wei, the Maximum amount that the TokenSale can
-    /// receive
+    /// @param _tokenCap Maximum amount of tokens to be sold
     /// @param _vaultAddress The address that will store the donated funds
     /// @param _tokenAddress Address of the token contract this contract controls
     /// @param _transfersAllowed if token transfers are allowed
+    /// @param _exchangeRate USD/ETH rate * 100
     function TokenSale (
         uint _startFundingTime,
         uint _endFundingTime,
-        uint _maximumFunding,
+        uint _tokenCap,
         address _vaultAddress,
         address _tokenAddress,
         bool _transfersAllowed,
@@ -46,7 +49,7 @@ contract TokenSale is TokenController, Owned, SafeMath {
             (_vaultAddress != 0));                    // To prevent burning ETH
         startFundingTime = _startFundingTime;
         endFundingTime = _endFundingTime;
-        maximumFunding = _maximumFunding;
+        tokenCap = _tokenCap;
         tokenContract = ControlledToken(_tokenAddress);// The Deployed Token Contract
         vaultAddress = _vaultAddress;
         transfersAllowed = _transfersAllowed;
@@ -73,11 +76,12 @@ contract TokenSale is TokenController, Owned, SafeMath {
         // First check that the TokenSale is allowed to receive this donation
         require ((now >= startFundingTime) &&
             (now <= endFundingTime) &&
-            (tokenContract.controller() != 0) &&           // Extra check
-            (msg.value != 0) &&
-            (totalCollected + msg.value <= maximumFunding));
+            (tokenContract.controller() != 0) &&
+            (msg.value != 0) );
 
         uint256 tokensAmount = mul(msg.value, exchangeRate) / 100;
+
+        require( totalTokenCount + tokensAmount <= tokenCap );
 
         //Track how much the TokenSale has collected
         totalCollected += msg.value;
@@ -88,6 +92,8 @@ contract TokenSale is TokenController, Owned, SafeMath {
         // Creates an  amount of tokens base on ether sent and exchange rate. The new tokens are created
         //  in the `_owner` address
         require (tokenContract.generateTokens(_owner, tokensAmount));
+
+        totalTokenCount += tokensAmount;
 
         return;
     }

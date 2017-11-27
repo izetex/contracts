@@ -1,5 +1,6 @@
 var IZXToken = artifacts.require("IZXToken");
 var Wallet = artifacts.require("Wallet");
+var TokenSale = artifacts.require("TokenSale");
 
 contract('IZXToken', function(accounts) {
 
@@ -59,3 +60,55 @@ contract('Wallet', function(accounts) {
     });
 
 });
+
+contract('TokenSale', function(accounts) {
+
+    it("should have set exchange rate", function() {
+        return TokenSale.deployed().then(function(instance) {
+            return instance.exchangeRate.call();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), 400*100);
+        });
+    });
+
+
+    it("should have set wallet", function() {
+        var wallet;
+        return Wallet.deployed().then(function(instance) {
+            wallet = instance;
+            return TokenSale.deployed();
+        }).then(function(instance) {
+            return instance.vaultAddress.call();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), wallet.address);
+        });
+    });
+
+
+    it("should have set token", function() {
+        var token;
+        return IZXToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenSale.deployed();
+        }).then(function(instance) {
+            return instance.tokenContract.call();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), token.address);
+        });
+    });
+
+
+    it("should set controller for token", function() {
+        var sale;
+        return TokenSale.deployed().then(function(instance) {
+            sale = instance;
+            return IZXToken.deployed();
+        }).then(function(instance) {
+            return instance.controller.call();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), sale.address);
+        });
+    });
+
+});
+

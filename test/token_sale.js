@@ -257,10 +257,73 @@ contract('TokenSale', function(accounts) {
 
     });
 
+    it('should disable transfer tokens', function() {
 
+        var sale, token;
+        var initial_tokens = [0, 0];
+        var owners = [accounts[2], accounts[4]];
+        var amount = parseInt(web3.toWei(123));
+
+        return TokenSale.deployed().then(function (instance) {
+            sale = instance;
+            return IZXToken.deployed();
+        }).then(function (instance) {
+            token = instance;
+            return token.balanceOf(owners[0]);
+        }).then(function(result) {
+            initial_tokens[0] = result.toNumber();
+            return token.balanceOf(owners[1]);
+        }).then(function(result) {
+            initial_tokens[1] = result.toNumber();
+            return sale.setTransfersAllowed(false);
+        }).then(function(result) {
+            return sale.transfersAllowed();
+        }).then(function(result) {
+            assert.equal(false, result.valueOf());
+            return token.transfer(owners[1], initial_tokens[0], {from: owners[0], gas: 70000});
+        }).then(function(result) { assert(false); }, function(error){
+            return token.balanceOf(owners[0]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), initial_tokens[0]);
+            return token.balanceOf(owners[1]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), initial_tokens[1]);
+        });
+
+    });
 
 
     it('should enable transfer tokens', function() {
+
+        var sale, token;
+        var initial_tokens = [0, 0];
+        var owners = [accounts[2], accounts[4]];
+
+        return TokenSale.deployed().then(function (instance) {
+            sale = instance;
+            return IZXToken.deployed();
+        }).then(function (instance) {
+            token = instance;
+            return token.balanceOf(owners[0]);
+        }).then(function(result) {
+            initial_tokens[0] = result.toNumber();
+            return token.balanceOf(owners[1]);
+        }).then(function(result) {
+            initial_tokens[1] = result.toNumber();
+            return sale.setTransfersAllowed(true);
+        }).then(function(result) {
+            return sale.transfersAllowed();
+        }).then(function(result) {
+            assert.equal(true, result.valueOf());
+            token.transfer(owners[1], initial_tokens[0], {from: owners[0], gas: 120000});
+            return token.balanceOf(owners[0]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), 0);
+            return token.balanceOf(owners[1]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), initial_tokens[1] + initial_tokens[0]);
+        });
+
 
     });
 

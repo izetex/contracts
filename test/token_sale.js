@@ -215,11 +215,50 @@ contract('TokenSale', function(accounts) {
 
     it('should distribute tokens', function() {
 
+        var sale, token;
+        var totalSupply;
+        var initial_tokens = [0,0,0];
+        var new_tokens = [parseInt(web3.toWei(10)),parseInt(web3.toWei(2200)),parseInt(web3.toWei(0.1))];
+
+        var owners = [accounts[2], accounts[4], accounts[6]];
+
+        return TokenSale.deployed().then(function(instance) {
+            sale = instance;
+            return IZXToken.deployed();
+        }).then(function(instance) {
+            token = instance;
+            return token.totalSupply();
+        }).then(function(result) {
+            totalSupply = result.toNumber();
+            return token.balanceOf(owners[0]);
+        }).then(function(result) {
+            initial_tokens[0] = result.toNumber();
+            return token.balanceOf(owners[1]);
+        }).then(function(result) {
+            initial_tokens[1] = result.toNumber();
+            return token.balanceOf(owners[2]);
+        }).then(function(result) {
+            initial_tokens[2] = result.toNumber();
+            return sale.distributeTokens(owners, new_tokens, {from: accounts[0], gas: 120000});
+        }).then(function(result) {
+            return token.balanceOf(owners[0]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), initial_tokens[0] + new_tokens[0]);
+            return token.balanceOf(owners[1]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), initial_tokens[1] + new_tokens[1]);
+            return token.balanceOf(owners[2]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), initial_tokens[2] + new_tokens[2]);
+            return token.totalSupply();
+        }).then(function(result) {
+            assert.equal(result.toNumber(), totalSupply + new_tokens[0] + new_tokens[1] + new_tokens[2]);
+        });
+
     });
 
-    it('should change controller', function() {
 
-    });
+
 
     it('should enable transfer tokens', function() {
 
@@ -230,6 +269,14 @@ contract('TokenSale', function(accounts) {
     });
 
     it('should protect transfer tokens', function() {
+
+    });
+
+    it('should change controller', function() {
+
+    });
+
+    it('should destroy tokens', function() {
 
     });
 

@@ -6,6 +6,8 @@ IZX Smart Contracts
 ```
 npm install -g ethereumjs-testrpc
 npm install -g truffle
+npm install -g web3-provider-engine
+npm install -g ethereumjs-wallet
 ```
 
 ## Running tests

@@ -337,6 +337,31 @@ contract('TokenSale', function(accounts) {
 
     it('should change controller', function() {
 
+        var sale, token;
+
+        return TokenSale.deployed().then(function (instance) {
+            sale = instance;
+            return IZXToken.deployed();
+        }).then(function (instance) {
+            token = instance;
+            return token.controller();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), sale.address);
+            return sale.owner();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), accounts[0]);
+            return sale.changeController(accounts[5], {gas: 70000 });
+        }).then(function(result) {
+            return token.controller();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), accounts[5]);
+            return token.changeController(sale.address, {gas: 70000, from: accounts[5] });
+        }).then(function(result) {
+            return token.controller();
+        }).then(function(result) {
+            assert.equal(result.valueOf(), sale.address);
+        });
+
     });
 
     it('should destroy tokens', function() {

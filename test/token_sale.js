@@ -111,7 +111,7 @@ contract('TokenSale', function(accounts) {
 
 
         var sender = accounts[0];
-        var wei = web3.toWei(1, "ether");
+        var wei = parseInt(web3.toWei(1));
 
         return TokenSale.deployed().then(function(instance) {
             sale = instance;
@@ -136,7 +136,7 @@ contract('TokenSale', function(accounts) {
             return Wallet.deployed();
         }).then(function(instance) {
             wallet = instance;
-            initial_balance = web3.eth.getBalance(wallet.address);
+            initial_balance = web3.eth.getBalance(wallet.address).toNumber();
             return token.balanceOf(sender);
         }).then(function(result) {
             return web3.eth.sendTransaction({from: sender, to: token.address, value: wei, gas: 120000});
@@ -144,14 +144,10 @@ contract('TokenSale', function(accounts) {
             return token.balanceOf(sender);
         }).then(function(result) {
             var final_tokens = result.toNumber();
-            var final_balance = web3.eth.getBalance(wallet.address);
+            var final_balance = web3.eth.getBalance(wallet.address).toNumber();
 
-          //  console.log('Final balance '+ web3.fromWei(final_balance, "ether") +
-          //      'ETH, tokens owned: '+web3.fromWei(final_tokens), 'Rate: '+rate/100.0 + 'ETH/tokens');
-
-
-            assert.equal(web3.fromWei(final_balance), web3.fromWei(initial_balance + wei) ) ;
-            assert.equal(web3.fromWei(final_tokens), web3.fromWei(initial_tokens + (rate*wei/100)) ) ;
+            assert.equal(final_balance, initial_balance + wei ) ;
+            assert.equal(final_tokens, initial_tokens + rate*wei/100);
 
             return token.totalSupply();
         }).then(function(result) {
@@ -168,6 +164,52 @@ contract('TokenSale', function(accounts) {
     });
 
     it('should change ETH rate', function() {
+
+
+        var sale, token, wallet;
+        var initial_balance, initial_tokens;
+
+
+        var sender = accounts[0];
+        var wei = parseInt(web3.toWei(1));
+
+        var rate = 230*100;
+        var block;
+
+        return TokenSale.deployed().then(function(instance) {
+            sale = instance;
+            return sale.setExchangeRate(rate);
+        }).then(function(result) {
+            block = web3.eth.blockNumber;
+            return sale.exchangeRateAt();
+        }).then(function(result) {
+            assert.equal(result.toNumber(), block);
+            return IZXToken.deployed();
+        }).then(function(instance) {
+            token = instance;
+            return token.balanceOf(sender);
+        }).then(function(result) {
+            initial_tokens = result.toNumber();
+            return Wallet.deployed();
+        }).then(function(instance) {
+            wallet = instance;
+            initial_balance = web3.eth.getBalance(wallet.address).toNumber();
+            return token.balanceOf(sender);
+        }).then(function(result) {
+            return web3.eth.sendTransaction({from: sender, to: token.address, value: wei, gas: 120000});
+        }).then(function(result) {
+            return token.balanceOf(sender);
+        }).then(function(result) {
+            var final_tokens = result.toNumber();
+            var final_balance = web3.eth.getBalance(wallet.address).toNumber();
+
+            assert.equal(final_balance, initial_balance + wei ) ;
+            assert.equal(final_tokens, initial_tokens + rate*wei/100);
+
+            return token.totalSupply();
+        });
+
+
 
     });
 

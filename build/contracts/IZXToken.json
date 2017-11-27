@@ -603,8 +603,13 @@
       "events": {},
       "links": {},
       "address": "0xddc9def861f3337217c6c3070b1536f7215a9008"
+    },
+    "1511765259813": {
+      "events": {},
+      "links": {},
+      "address": "0xb423aecc9352a4e1d905f68ae05d3d6795f88622"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-26T09:25:02.664Z"
+  "updatedAt": "2017-11-27T07:16:44.977Z"
 }

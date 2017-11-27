@@ -220,7 +220,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2332,
+                                  "referencedDeclaration": 2357,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -357,7 +357,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2332,
+                                  "referencedDeclaration": 2357,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -816,57 +816,17 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "1511681224105": {
+    "1511780801128": {
       "events": {},
       "links": {},
       "address": "0xf2ddaa2b461af9955fbe220aa229806611f6ac02"
     },
-    "1511687627967": {
-      "events": {},
-      "links": {},
-      "address": "0x62d9b53fb01e85d46272d2d2f78a99c0b6cd51e3"
-    },
-    "1511765259813": {
-      "events": {},
-      "links": {},
-      "address": "0xabae7e480eac4db6319518f41e4e8864129efa0a"
-    },
-    "1511770622697": {
-      "events": {},
-      "links": {},
-      "address": "0xf2ddaa2b461af9955fbe220aa229806611f6ac02"
-    },
-    "1511770774319": {
-      "events": {},
-      "links": {},
-      "address": "0xf2ddaa2b461af9955fbe220aa229806611f6ac02"
-    },
-    "1511770863083": {
-      "events": {},
-      "links": {},
-      "address": "0xf2ddaa2b461af9955fbe220aa229806611f6ac02"
-    },
-    "1511771136057": {
-      "events": {},
-      "links": {},
-      "address": "0xf2ddaa2b461af9955fbe220aa229806611f6ac02"
-    },
-    "1511771174514": {
-      "events": {},
-      "links": {},
-      "address": "0xf2ddaa2b461af9955fbe220aa229806611f6ac02"
-    },
-    "1511771230630": {
-      "events": {},
-      "links": {},
-      "address": "0xf2ddaa2b461af9955fbe220aa229806611f6ac02"
-    },
-    "1511771618165": {
+    "1511781020077": {
       "events": {},
       "links": {},
       "address": "0xf2ddaa2b461af9955fbe220aa229806611f6ac02"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-11-27T08:33:45.631Z"
+  "updatedAt": "2017-11-27T11:10:33.330Z"
 }

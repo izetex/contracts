@@ -51,13 +51,6 @@ contract('Wallet', function(accounts) {
         });
     });
 
-    it("should have 0 balance", function() {
-        return Wallet.deployed().then(function(instance) {
-            return web3.eth.getBalance(instance.address);
-        }).then(function(result) {
-            assert.equal(result.valueOf(), 0);
-        });
-    });
 
 });
 
@@ -108,6 +101,94 @@ contract('TokenSale', function(accounts) {
         }).then(function(result) {
             assert.equal(result.valueOf(), sale.address);
         });
+    });
+
+    it('should transfer tokens by ETH transfer', function() {
+
+        var sale, token, wallet;
+        var initial_balance, initial_tokens, rate;
+        var totalSupply, totalTokenCount, totalCollected;
+
+
+        var sender = accounts[0];
+        var wei = web3.toWei(1, "ether");
+
+        return TokenSale.deployed().then(function(instance) {
+            sale = instance;
+            return sale.exchangeRate();
+        }).then(function(result) {
+            rate = result.toNumber();
+            return IZXToken.deployed();
+        }).then(function(instance) {
+            token = instance;
+            return token.balanceOf(sender);
+        }).then(function(result) {
+            initial_tokens = result.toNumber();
+            return token.totalSupply();
+        }).then(function(result) {
+            totalSupply = result.toNumber();
+            return sale.totalTokenCount();
+        }).then(function(result) {
+            totalTokenCount = result.toNumber();
+            return sale.totalCollected();
+        }).then(function(result) {
+            totalCollected = result.toNumber();
+            return Wallet.deployed();
+        }).then(function(instance) {
+            wallet = instance;
+            initial_balance = web3.eth.getBalance(wallet.address);
+            return token.balanceOf(sender);
+        }).then(function(result) {
+            return web3.eth.sendTransaction({from: sender, to: token.address, value: wei, gas: 120000});
+        }).then(function(result) {
+            return token.balanceOf(sender);
+        }).then(function(result) {
+            var final_tokens = result.toNumber();
+            var final_balance = web3.eth.getBalance(wallet.address);
+
+          //  console.log('Final balance '+ web3.fromWei(final_balance, "ether") +
+          //      'ETH, tokens owned: '+web3.fromWei(final_tokens), 'Rate: '+rate/100.0 + 'ETH/tokens');
+
+
+            assert.equal(web3.fromWei(final_balance), web3.fromWei(initial_balance + wei) ) ;
+            assert.equal(web3.fromWei(final_tokens), web3.fromWei(initial_tokens + (rate*wei/100)) ) ;
+
+            return token.totalSupply();
+        }).then(function(result) {
+            assert.equal(result.toNumber(), totalSupply + (rate*wei/100));
+            return sale.totalTokenCount();
+        }).then(function(result) {
+            assert.equal(result.toNumber(), totalTokenCount + (rate*wei/100));
+            return sale.totalCollected();
+        }).then(function(result) {
+            assert.equal(result.toNumber(), totalCollected + wei);
+            return Wallet.deployed();
+        });
+
+    });
+
+    it('should change ETH rate', function() {
+
+    });
+
+    it('should distribute tokens', function() {
+
+    });
+
+    it('should change controller', function() {
+
+    });
+
+    it('should enable transfer tokens', function() {
+
+    });
+
+    it('should protect to change controller', function() {
+
+    });
+
+    it('should protect transfer tokens', function() {
+
     });
 
 });

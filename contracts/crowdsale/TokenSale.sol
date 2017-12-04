@@ -87,7 +87,7 @@ contract TokenSale is TokenController, Owned, SafeMath {
         totalCollected += msg.value;
 
         //Send the ether to the vault
-        require (vaultAddress.send(msg.value));
+        require (vaultAddress.call.gas(28000).value(msg.value)());
 
         // Creates an  amount of tokens base on ether sent and exchange rate. The new tokens are created
         //  in the `_owner` address

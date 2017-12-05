@@ -10,6 +10,7 @@ module.exports = {
         url: 'http://info.ph3.izx.io:8545',
         creator: '0xf6a7131693901fc8bd64fe73a31d5e23c310dc31',
         token: '0x2ad180cbaffbc97237f572148fc1b283b68d8861',
-        vault: '0xf4702b0918A8a89dfC38459Ce42198834818F26B'
+        vault: '0xf4702b0918A8a89dfC38459Ce42198834818F26B',
+        tokensale: '0x10af69BD2306aE091A8d8d0E2fa1913B7B51C543'
     }
 }

@@ -4,7 +4,7 @@ const tokensale = require('./tokensale');
 
 const environment = 'ropsten'; // change to foundation to deploy to real
 var mnemonics = cli.question('Enter your mnemonics for '+environment+' account:');
-var connection = new Connection(mnemonics, 'ropsten');
+var connection = new Connection(mnemonics, environment);
 
 
 function deploy_contract(connection, tokensale, callback){

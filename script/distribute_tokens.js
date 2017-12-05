@@ -5,7 +5,7 @@ const request = require('request');
 
 const environment = 'ropsten'; // change to foundation to deploy to real
 var mnemonics = cli.question('Enter your mnemonics for '+environment+' account:');
-var connection = new Connection(mnemonics, 'ropsten');
+var connection = new Connection(mnemonics, environment);
 
 var deployed_tokensale = connection.web3.eth.contract(tokensale.abi).at(connection.config.tokensale);
 

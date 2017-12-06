@@ -21,7 +21,7 @@ deployed_tokensale.exchangeRate(function(error,result){
                 var ethusd = JSON.parse(body)['result']['ethusd'];
                 console.log( 'Current USD rate on Etherscan '+ ethusd );
 
-                var yesno = cli.question('Enter Yes! to change rate in environment: ');
+                var yesno = cli.question('Enter Yes! to change rate in ' + environment+': ');
                 if(yesno!='Yes!'){
                     console.log('Not confirmed, stopping');
                     process.exit(1);

@@ -1,5 +1,5 @@
-# contracts
-IZX Smart Contracts
+# IZX Crowdsale Smart Contracts
+
 
 ## Installation
 
@@ -53,7 +53,38 @@ Using network 'development'.
   17 passing (6s)
 ```
 
-## Note on console usage
+## Executing deployment scripts
+
+Crowdsale contract deployment and management scripts are located in script directory.
+They are called as node scripts:
+```
+npm install
+node script/deploy_contract
+```
+
+Every script contains variable, defining the environment to run: 
+```
+const environment = 'ropsten'; // ropsten/foundation, change to foundation to deploy to real
+```
+
+Configuration in script/config.js contains all properties for selected environment.
+
+On script run, it asks for credentials, and asks to enter word 'Yes!' before actual execution. After successfull run, it logs the hash of transaction,
+that should be looked up in ethereum explorer.
+
+Scripts are:
+
+  * **script/deploy_contract** - deploys the crowdsale contract with the specified token and 
+  vault in the configuration
+  * **script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
+  controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly
+  * **script/set_rate** - modifies the exhange rate USD/ETH for crowdsale contract. First it reads the old value and queries for
+  the current rate from etherscan.io
+  * **script/distribute_tokens** - transfers tokens to the owners in the list
+  * **script/send_eth** - sends ether to an address
+  
+
+## Note on truffle console usage
 
 Use the callback to get deployed instance of contract, as:
 ```

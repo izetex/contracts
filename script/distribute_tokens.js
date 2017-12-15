@@ -4,7 +4,7 @@ const tokensale = require('./tokensale');
 const request = require('request');
 const fs = require('fs');
 
-const environment = 'ropsten'; // ropsten/foundation, change to foundation to deploy to real
+const environment = 'foundation'; // ropsten/foundation, change to foundation to deploy to real
 
 var filename = cli.question('Enter full path to CSV file:');
 

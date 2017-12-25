@@ -239,7 +239,7 @@ contract('TokenSale', function(accounts) {
             return token.balanceOf(owners[2]);
         }).then(function(result) {
             initial_tokens[2] = result.toNumber();
-            return sale.distributeTokens(owners, new_tokens, {from: accounts[0], gas: 120000});
+            return sale.distributeTokens(owners, new_tokens, {from: accounts[0], gas: 220000});
         }).then(function(result) {
             return token.balanceOf(owners[0]);
         }).then(function(result) {

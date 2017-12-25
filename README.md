@@ -18,10 +18,18 @@ Tests can be run using Test RPC. Run it with command
 testrpc -m "warrior minimum breeze raven garden express solar flavor obvious twenty alpha actress"
 ```
 
-And then run tests
+Alternatively you can use [Ganache](https://github.com/trufflesuite/ganache-cli):
 
 ```
-$ truffle test test/token_sale.js
+npm install -g ganache-cli
+ganache-cli
+```
+
+After server started, you can compile, run migrations and tests
+
+
+```
+$ truffle test
 Using network 'development'.
 
 

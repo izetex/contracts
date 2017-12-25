@@ -25,6 +25,7 @@ contract Game is Owned {
 
     function add(address _owner, uint256 _amount, bytes _info, uint256 _expiration, uint256 _hash) payable public returns (bool) {
         require( _owner != address(0) );
+        require( _expiration > now );
 
         uint256 issue_tokens = calculate_amount(_amount, msg.value);
 
@@ -39,7 +40,7 @@ contract Game is Owned {
         Prize storage prize = prizes[hash];
         require(prize.owner != address(0));
 
-        if( prize.expiration!=0 && now>prize.expiration ){
+        if( now>prize.expiration ){
 
             require( token.transfer(prize.owner, prize.tokens) );
             if(prize.value>0){

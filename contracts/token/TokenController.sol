@@ -5,7 +5,7 @@ pragma solidity ^0.4.11;
 
 /// @dev The token controller contract must implement these functions
 contract TokenController {
-    /// @notice Called when `_owner` sends ether to the MiniMe Token contract
+    /// @notice Called when `_owner` sends ether to the Token contract
     /// @param _owner The address that sent the ether to create tokens
     /// @return True if the ether is accepted, false if it throws
     function proxyPayment(address _owner) payable public returns(bool);

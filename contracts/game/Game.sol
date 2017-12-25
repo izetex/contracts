@@ -25,10 +25,11 @@ contract Game is Owned {
 
     function add(address _owner, uint256 _amount, bytes _info, uint256 _expiration, uint256 _hash) payable public returns (bool) {
         require( _owner != address(0) );
-        require( _amount > 0 );
-        require( token.transferFrom(_owner, this, _amount) );
-        // TODO: price?
-        prizes[_hash] = Prize(_owner, msg.sender, _amount, msg.value, _info, _expiration);
+
+        uint256 issue_tokens = calculate_amount(_amount, msg.value);
+
+        require( token.transferFrom(_owner, this, issue_tokens) );
+        prizes[_hash] = Prize(_owner, msg.sender, issue_tokens, msg.value, _info, _expiration);
     }
 
     function claim(uint256 _key, address _winner) public returns (bool){
@@ -55,13 +56,6 @@ contract Game is Owned {
 
     }
 
-    function distribute(Prize storage _prize, address _winner) private {
-        require(token.transfer(_prize.owner, _prize.tokens));
-        if(_prize.value>0){
-            pendingWithdrawals[_winner] += _prize.value;
-        }
-    }
-
 
     function key_hash256(uint256 _key) public view returns(uint256) {
         return uint256(sha256(_key, address(this)));
@@ -74,5 +68,17 @@ contract Game is Owned {
             require(msg.sender.call.value(amount)());
         }
     }
+
+    function calculate_amount( uint256 _requested_amount, uint256 _payed_value) private returns(uint256) {
+        return _requested_amount;
+    }
+
+    function distribute(Prize storage _prize, address _winner) private {
+        require(token.transfer(_prize.owner, _prize.tokens));
+        if(_prize.value>0){
+            pendingWithdrawals[_winner] += _prize.value;
+        }
+    }
+
 
 }

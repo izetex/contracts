@@ -10,7 +10,7 @@ contract GameController is TokenController {
     }
 
 
-    function amount_owner(uint256 _amount) view public returns(address){
+    function allowed_for(address _to, uint256 _amount) view public returns(address){
 
     }
 

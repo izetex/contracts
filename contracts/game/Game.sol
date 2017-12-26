@@ -34,7 +34,7 @@ contract Game is Owned {
 
         require(requested_amount>0);
 
-        address tokens_owner = controller.amount_owner(requested_amount);
+        address tokens_owner = controller.allowed_for(this, requested_amount);
 
         if(tokens_owner!=address(0)){
             require( token.transferFrom(tokens_owner, this, requested_amount) );

@@ -2,35 +2,49 @@ pragma solidity ^0.4.11;
 
 import "../token/ControlledToken.sol";
 import "../util/Owned.sol";
+import "./GameController.sol";
 
 contract Game is Owned {
 
     struct Prize {
-        address owner;
         address issuer;
+        address owner;
         uint256 tokens;
         uint256 value;
         bytes   info;
         uint256 expiration;
     }
 
-    ERC20 public token;
+    ControlledToken public  token;
+    GameController public   controller;
     mapping (uint256 => Prize) public prizes;
     mapping (address => uint) public pendingWithdrawals;
 
-    function Game(  ERC20 _token ) public {
+    function Game(  ControlledToken _token ) public {
         require(address(_token)!=address(0));
         token = _token;
+        controller = GameController(token.controller());
     }
 
-    function add(address _owner, uint256 _amount, bytes _info, uint256 _expiration, uint256 _hash) payable public returns (bool) {
-        require( _owner != address(0) );
+    function issue(uint256 _amount, bytes _info, uint256 _expiration, uint256 _hash) payable public returns (bool) {
+
         require( _expiration > now );
 
-        uint256 issue_tokens = calculate_amount(_amount, msg.value);
+        uint256 requested_amount = calculate_amount(_amount, msg.value);
 
-        require( token.transferFrom(_owner, this, issue_tokens) );
-        prizes[_hash] = Prize(_owner, msg.sender, issue_tokens, msg.value, _info, _expiration);
+        require(requested_amount>0);
+
+        address tokens_owner = controller.amount_owner(requested_amount);
+
+        if(tokens_owner!=address(0)){
+            require( token.transferFrom(tokens_owner, this, requested_amount) );
+            prizes[_hash] = Prize(msg.sender, tokens_owner, requested_amount, msg.value, _info, _expiration);
+            return true;
+        }else{
+            return false;
+        }
+
+
     }
 
     function claim(uint256 _key, address _winner) public returns (bool){
@@ -50,7 +64,7 @@ contract Game is Owned {
 
             return false;
         }else{
-            distribute(prize, _winner);
+            payout(prize, _winner);
             delete(prizes[hash]);
             return true;
         }
@@ -70,11 +84,13 @@ contract Game is Owned {
         }
     }
 
-    function calculate_amount( uint256 _requested_amount, uint256 _payed_value) private returns(uint256) {
-        return _requested_amount;
+
+    function calculate_amount( uint256 _requested_amount, uint256 _payed_value ) returns(uint256) {
+        return 1;
     }
 
-    function distribute(Prize storage _prize, address _winner) private {
+
+    function payout(Prize storage _prize, address _winner) internal {
         require(token.transfer(_prize.owner, _prize.tokens));
         if(_prize.value>0){
             pendingWithdrawals[_winner] += _prize.value;

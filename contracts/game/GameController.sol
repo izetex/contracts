@@ -70,6 +70,10 @@ contract GameController is TokenController {
         }
     }
 
+    function proxyPayment(address _owner) payable public returns(bool) {
+        return false;
+    }
+
     function amount_owner(address _to, uint256 _amount) view public returns(address){
         uint256 count = allowances[_to].owners.length;
         for(uint i = 0; i < count; i++ ){

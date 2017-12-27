@@ -1,0 +1,1302 @@
+{
+  "contractName": "FreeGame",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "issuedPrizes",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "withdraw",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "changeOwner",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_hashes",
+          "type": "uint256[]"
+        },
+        {
+          "name": "_expiration",
+          "type": "uint256"
+        }
+      ],
+      "name": "issue",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_key",
+          "type": "uint256"
+        },
+        {
+          "name": "_winner",
+          "type": "address"
+        }
+      ],
+      "name": "claim",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_key",
+          "type": "uint256"
+        }
+      ],
+      "name": "key_hash256",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "prizes",
+      "outputs": [
+        {
+          "name": "issuer",
+          "type": "address"
+        },
+        {
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "name": "tokens",
+          "type": "uint256"
+        },
+        {
+          "name": "value",
+          "type": "uint256"
+        },
+        {
+          "name": "expiration",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "pendingWithdrawals",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "controller",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "token",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "name": "_controller",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "issuer",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Issue",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "issuer",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "winner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Claim",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "issuer",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Expired",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b604051604080610aba833981016040528080519190602001805160008054600160a060020a03191633600160a060020a039081169190911790915590925083915082908216151561005f57600080fd5b600160a060020a038116151561007457600080fd5b60018054600160a060020a03938416600160a060020a031991821617909155600280549290931691161790555050610a09806100b16000396000f3006060604052600436106100955763ffffffff60e060020a6000350416630f38dc38811461009a5780633ccfd60b146100cb5780638da5cb5b146100e0578063a6f9dae11461010f578063c28b4f981461012e578063ddd5e1b214610174578063e2dc19cb146101aa578063eccb3a4f146101c0578063f3f4370314610210578063f77c47911461022f578063fc0c546a14610242575b600080fd5b34156100a557600080fd5b6100b9600160a060020a0360043516610255565b60405190815260200160405180910390f35b34156100d657600080fd5b6100de610267565b005b34156100eb57600080fd5b6100f36102be565b604051600160a060020a03909116815260200160405180910390f35b341561011a57600080fd5b6100de600160a060020a03600435166102cd565b6100de6004602481358181019083013580602081810201604051908101604052809392919081815260200183836020028082843750949650509335935061031792505050565b341561017f57600080fd5b610196600435600160a060020a0360243516610330565b604051901515815260200160405180910390f35b34156101b557600080fd5b6100b96004356105c5565b34156101cb57600080fd5b6101d6600435610634565b604051600160a060020a0395861681529390941660208401526040808401929092526060830152608082019290925260a001905180910390f35b341561021b57600080fd5b6100b9600160a060020a0360043516610670565b341561023a57600080fd5b6100f3610682565b341561024d57600080fd5b6100f3610691565b60056020526000908152604090205481565b600160a060020a0333166000908152600460205260408120805490829055908111156102bb5733600160a060020a03168160405160006040518083038185876187965a03f19250505015156102bb57600080fd5b50565b600054600160a060020a031681565b60005433600160a060020a039081169116146102e857600080fd5b6000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0392909216919091179055565b341561032257600080fd5b61032c82826106a0565b5050565b600080600061033e856105c5565b600081815260036020526040902060018101549193509150600160a060020a0316151561036a57600080fd5b80600401544211156104f55760018054908201546002830154600160a060020a039283169263a9059cbb92169060006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b15156103e357600080fd5b6102c65a03f115156103f457600080fd5b50505060405180519050151561040957600080fd5b60008160030154111561043c5760038101548154600160a060020a03166000908152600460205260409020805490910190555b600160a060020a033381166000908152600560205260409081902080546000190190556001830154835460028501549184169316917f4f250de368f70919105efcd7254a862cc87a72d732d1fa5760792925064f4eb991905190815260200160405180910390a360008281526003602081905260408220805473ffffffffffffffffffffffffffffffffffffffff19908116825560018201805490911690556002810183905590810182905560040181905592506105bd565b6104ff8185610941565b600160a060020a03338116600090815260056020526040908190208054600019019055600183015483546002850154888516949283169391909216917fc1405953cccdad6b442e266c84d66ad671e2534c6584f8e6ef92802f7ad294d5915190815260200160405180910390a460008281526003602081905260408220805473ffffffffffffffffffffffffffffffffffffffff19908116825560018083018054909216909155600282018490559181018390556004019190915592505b505092915050565b6000600282306000604051602001526040518083815260200182600160a060020a0316600160a060020a03166c010000000000000000000000000281526014019250505060206040518083038160008661646e5a03f1151561062657600080fd5b505060405180519392505050565b600360208190526000918252604090912080546001820154600283015493830154600490930154600160a060020a039283169492909116929085565b60046020526000908152604090205481565b600254600160a060020a031681565b600154600160a060020a031681565b60008060006106b1855134336109d4565b92506000831180156106c257504284115b15156106cd57600080fd5b600254600160a060020a03166307fe1b61308560006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b151561072c57600080fd5b6102c65a03f1151561073d57600080fd5b5050506040518051925050600160a060020a0382161561093a57600154600160a060020a03166323b872dd83308660006040516020015260405160e060020a63ffffffff8616028152600160a060020a0393841660048201529190921660248201526044810191909152606401602060405180830381600087803b15156107c357600080fd5b6102c65a03f115156107d457600080fd5b5050506040518051905015156107e957600080fd5b5060005b828110156108e15760a06040519081016040528033600160a060020a0316815260200183600160a060020a0316815260200160018152602001348152602001858152506003600087848151811061084057fe5b9060200190602002015181526020019081526020016000206000820151815473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0391909116178155602082015160018201805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a039290921691909117905560408201518160020155606082015181600301556080820151600490910155506001016107ed565b600160a060020a0333811660008181526005602052604090819020805487019055918416917f4b2682685b046a3dae8e75ff49b82fa703e366056a43c6a791411011134f4f5d9086905190815260200160405180910390a35b5050505050565b60018054908301546002840154600160a060020a039283169263a9059cbb92169060006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b15156109ae57600080fd5b6102c65a03f115156109bf57600080fd5b50505060405180519050151561032c57600080fd5b600193925050505600a165627a7a723058205108b76572234a11d1b97fdc4a300fc98960d34fec0d74252781ae43083a66340029",
+  "deployedBytecode": "0x6060604052600436106100955763ffffffff60e060020a6000350416630f38dc38811461009a5780633ccfd60b146100cb5780638da5cb5b146100e0578063a6f9dae11461010f578063c28b4f981461012e578063ddd5e1b214610174578063e2dc19cb146101aa578063eccb3a4f146101c0578063f3f4370314610210578063f77c47911461022f578063fc0c546a14610242575b600080fd5b34156100a557600080fd5b6100b9600160a060020a0360043516610255565b60405190815260200160405180910390f35b34156100d657600080fd5b6100de610267565b005b34156100eb57600080fd5b6100f36102be565b604051600160a060020a03909116815260200160405180910390f35b341561011a57600080fd5b6100de600160a060020a03600435166102cd565b6100de6004602481358181019083013580602081810201604051908101604052809392919081815260200183836020028082843750949650509335935061031792505050565b341561017f57600080fd5b610196600435600160a060020a0360243516610330565b604051901515815260200160405180910390f35b34156101b557600080fd5b6100b96004356105c5565b34156101cb57600080fd5b6101d6600435610634565b604051600160a060020a0395861681529390941660208401526040808401929092526060830152608082019290925260a001905180910390f35b341561021b57600080fd5b6100b9600160a060020a0360043516610670565b341561023a57600080fd5b6100f3610682565b341561024d57600080fd5b6100f3610691565b60056020526000908152604090205481565b600160a060020a0333166000908152600460205260408120805490829055908111156102bb5733600160a060020a03168160405160006040518083038185876187965a03f19250505015156102bb57600080fd5b50565b600054600160a060020a031681565b60005433600160a060020a039081169116146102e857600080fd5b6000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0392909216919091179055565b341561032257600080fd5b61032c82826106a0565b5050565b600080600061033e856105c5565b600081815260036020526040902060018101549193509150600160a060020a0316151561036a57600080fd5b80600401544211156104f55760018054908201546002830154600160a060020a039283169263a9059cbb92169060006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b15156103e357600080fd5b6102c65a03f115156103f457600080fd5b50505060405180519050151561040957600080fd5b60008160030154111561043c5760038101548154600160a060020a03166000908152600460205260409020805490910190555b600160a060020a033381166000908152600560205260409081902080546000190190556001830154835460028501549184169316917f4f250de368f70919105efcd7254a862cc87a72d732d1fa5760792925064f4eb991905190815260200160405180910390a360008281526003602081905260408220805473ffffffffffffffffffffffffffffffffffffffff19908116825560018201805490911690556002810183905590810182905560040181905592506105bd565b6104ff8185610941565b600160a060020a03338116600090815260056020526040908190208054600019019055600183015483546002850154888516949283169391909216917fc1405953cccdad6b442e266c84d66ad671e2534c6584f8e6ef92802f7ad294d5915190815260200160405180910390a460008281526003602081905260408220805473ffffffffffffffffffffffffffffffffffffffff19908116825560018083018054909216909155600282018490559181018390556004019190915592505b505092915050565b6000600282306000604051602001526040518083815260200182600160a060020a0316600160a060020a03166c010000000000000000000000000281526014019250505060206040518083038160008661646e5a03f1151561062657600080fd5b505060405180519392505050565b600360208190526000918252604090912080546001820154600283015493830154600490930154600160a060020a039283169492909116929085565b60046020526000908152604090205481565b600254600160a060020a031681565b600154600160a060020a031681565b60008060006106b1855134336109d4565b92506000831180156106c257504284115b15156106cd57600080fd5b600254600160a060020a03166307fe1b61308560006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b151561072c57600080fd5b6102c65a03f1151561073d57600080fd5b5050506040518051925050600160a060020a0382161561093a57600154600160a060020a03166323b872dd83308660006040516020015260405160e060020a63ffffffff8616028152600160a060020a0393841660048201529190921660248201526044810191909152606401602060405180830381600087803b15156107c357600080fd5b6102c65a03f115156107d457600080fd5b5050506040518051905015156107e957600080fd5b5060005b828110156108e15760a06040519081016040528033600160a060020a0316815260200183600160a060020a0316815260200160018152602001348152602001858152506003600087848151811061084057fe5b9060200190602002015181526020019081526020016000206000820151815473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0391909116178155602082015160018201805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a039290921691909117905560408201518160020155606082015181600301556080820151600490910155506001016107ed565b600160a060020a0333811660008181526005602052604090819020805487019055918416917f4b2682685b046a3dae8e75ff49b82fa703e366056a43c6a791411011134f4f5d9086905190815260200160405180910390a35b5050505050565b60018054908301546002840154600160a060020a039283169263a9059cbb92169060006040516020015260405160e060020a63ffffffff8516028152600160a060020a0390921660048301526024820152604401602060405180830381600087803b15156109ae57600080fd5b6102c65a03f115156109bf57600080fd5b50505060405180519050151561032c57600080fd5b600193925050505600a165627a7a723058205108b76572234a11d1b97fdc4a300fc98960d34fec0d74252781ae43083a66340029",
+  "sourceMap": "48:549:0:-;;;81:112;;;;;;;;;;;;;;;;;;;;;;;;;;;;408:5:6;:18;;-1:-1:-1;;;;;;408:18:6;416:10;-1:-1:-1;;;;;408:18:6;;;;;;;;;;81:112:0;;-1:-1:-1;158:6:0;;-1:-1:-1;81:112:0;;893:27:1;;;;885:36;;;;;;-1:-1:-1;;;;;939:32:1;;;;931:41;;;;;;982:5;:14;;-1:-1:-1;;;;;982:14:1;;;-1:-1:-1;;;;;;982:14:1;;;;;;;1006:10;:24;;;;;;;;;;;-1:-1:-1;;48:549:0;;;;;;",
+  "deployedSourceMap": "48:549:0:-;;;;;;;;;-1:-1:-1;;;48:549:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;496:47:1;;;;;;;;;;-1:-1:-1;;;;;496:47:1;;;;;;;;;;;;;;;;;;;;2721:218;;;;;;;;;;;;;;289:20:6;;;;;;;;;;;;;;;-1:-1:-1;;;;;289:20:6;;;;;;;;;;;;;;661:85;;;;;;;;;;-1:-1:-1;;;;;661:85:6;;;;;199:151:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;199:151:0;;-1:-1:-1;;199:151:0;;;-1:-1:-1;199:151:0;;-1:-1:-1;;;199:151:0;1761:823:1;;;;;;;;;;;;-1:-1:-1;;;;;1761:823:1;;;;;;;;;;;;;;;;;;;;;;2591:124;;;;;;;;;;;;;;390:41;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;390:41:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;437:53;;;;;;;;;;-1:-1:-1;;;;;437:53:1;;;;;339:45;;;;;;;;;;;;293:40;;;;;;;;;;;;496:47;;;;;;;;;;;;;:::o;2721:218::-;-1:-1:-1;;;;;2791:10:1;2772:30;2758:11;2772:30;;;:18;:30;;;;;;;2812:34;;;;2772:30;2859:8;;2856:77;;;2890:10;-1:-1:-1;;;;;2890:15:1;2912:6;2890:31;;;;;;;;;;;;;;;;;;;2882:40;;;;;;;;2721:218;:::o;289:20:6:-;;;-1:-1:-1;;;;;289:20:6;;:::o;661:85::-;271:5;;257:10;-1:-1:-1;;;;;257:19:6;;;271:5;;257:19;248:29;;;;;;722:5;:17;;-1:-1:-1;;722:17:6;-1:-1:-1;;;;;722:17:6;;;;;;;;;;661:85::o;199:151:0:-;287:9;:12;279:21;;;;;;310:33;322:7;331:11;310;:33::i;:::-;199:151;;:::o;1761:823:1:-;1823:4;1839:12;1882:19;1854:17;1866:4;1854:11;:17::i;:::-;1904:12;;;;:6;:12;;;;;1934:11;;;;1839:32;;-1:-1:-1;1904:12:1;-1:-1:-1;;;;;;1934:11:1;:25;;1926:34;;;;;;1979:5;:16;;;1975:3;:20;1971:605;;;2021:5;;;2036:11;;;;2049:12;;;;-1:-1:-1;;;;;2021:5:1;;;;:14;;2036:11;;2021:5;:41;;;;;;;-1:-1:-1;;;2021:41:1;;;;;;-1:-1:-1;;;;;2021:41:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2012:52;;;;;;;;2093:1;2081:5;:11;;;:13;2078:97;;;2149:11;;;;2132:12;;-1:-1:-1;;;;;2132:12:1;2113:32;;;;:18;:32;;;;;:47;;;;;;;2078:97;-1:-1:-1;;;;;2201:10:1;2188:24;;;;;;:12;:24;;;;;;;:29;;-1:-1:-1;;2188:29:1;;;2216:1;2254:11;;;2240:12;;2267;;;;2254:11;;;;2240:12;;2232:48;;2267:12;2232:48;;;;;;;;;;;;;2302:12;;;;:6;:12;;;;;;;2295:20;;-1:-1:-1;;2295:20:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2302:12;-1:-1:-1;2329:12:1;;1971:605;2370:22;2377:5;2384:7;2370:6;:22::i;:::-;-1:-1:-1;;;;;2419:10:1;2406:24;;;;;;:12;:24;;;;;;;:29;;-1:-1:-1;;2406:29:1;;;2434:1;2470:11;;;2456:12;;2492;;;;2450:55;;;;2470:11;;;;2456:12;;;;;2450:55;;;;;;;;;;;;;;;2527:12;;;;:6;:12;;;;;;;2520:20;;-1:-1:-1;;2520:20:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;1971:605:1;1761:823;;;;;;:::o;2591:124::-;2646:7;2680:27;2687:4;2701;2680:27;;;;;;;;;;;;;;;-1:-1:-1;;;;;2680:27:1;-1:-1:-1;;;;;2680:27:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2591:124;-1:-1:-1;;;2591:124:1:o;390:41::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;390:41:1;;;;;;;;;;;:::o;437:53::-;;;;;;;;;;;;;:::o;339:45::-;;;-1:-1:-1;;;;;339:45:1;;:::o;293:40::-;;;-1:-1:-1;;;;;293:40:1;;:::o;1043:712::-;1124:23;1271:20;1477:6;1150:53;1165:7;:14;1181:9;1192:10;1150:14;:53::i;:::-;1124:79;;1237:1;1221:15;:17;:38;;;;;1256:3;1242:11;:17;1221:38;1213:47;;;;;;;;1294:10;;-1:-1:-1;;;;;1294:10:1;:23;1318:4;1324:15;1294:10;:46;;;;;;;-1:-1:-1;;;1294:46:1;;;;;;-1:-1:-1;;;;;1294:46:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;;;;;;1354:24:1;;;1351:398;;1402:5;;-1:-1:-1;;;;;1402:5:1;:18;1421:12;1435:4;1441:15;1402:5;:55;;;;;;;-1:-1:-1;;;1402:55:1;;;;;;-1:-1:-1;;;;;1402:55:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1393:66;;;;;;;;-1:-1:-1;1484:1:1;1473:147;1488:15;1486:1;:17;1473:147;;;1547:58;;;;;;;;;1553:10;-1:-1:-1;;;;;1547:58:1;;;;;1565:12;-1:-1:-1;;;;;1547:58:1;;;;;1579:1;1547:58;;;;1582:9;1547:58;;;;1593:11;1547:58;;;1526:6;:18;1533:7;1541:1;1533:10;;;;;;;;;;;;;;;;1526:18;;;;;;;;;;;:79;;;;;;-1:-1:-1;;1526:79:1;-1:-1:-1;;;;;1526:79:1;;;;;;;;;;;;;;;;-1:-1:-1;;1526:79:1;-1:-1:-1;;;;;1526:79:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;1504:3:1;;1473:147;;;-1:-1:-1;;;;;1646:10:1;1633:24;;;;;;:12;:24;;;;;;;:43;;;;;;1690:48;;;;;;1661:15;;1690:48;;;;;;;;;;;;;1351:398;1043:712;;;;;:::o;469:126:0:-;544:5;;;559:12;;;;573:13;;;;-1:-1:-1;;;;;544:5:0;;;;:14;;559:12;;544:5;:43;;;;;;;-1:-1:-1;;;544:43:0;;;;;;-1:-1:-1;;;;;544:43:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;536:52;;;;;;;356:107;455:1;356:107;;;;;:::o",
+  "source": "pragma solidity ^0.4.11;\n\nimport \"./Game.sol\";\n\ncontract FreeGame is Game {\n\n    function FreeGame(  ERC20 _token, GameController _controller  )\n        Game(_token, _controller) public {\n    }\n\n    function issue(uint256[] _hashes, uint256 _expiration) payable public {\n        require(msg.value==0);\n        super.issue(_hashes, _expiration);\n    }\n\n    function reserve_amount( uint256 , uint256 , address  ) internal returns(uint256) {\n        return 1;\n    }\n\n    function payout(Prize storage _prize, address ) internal {\n        require(token.transfer(_prize.owner, _prize.tokens));\n    }\n}",
+  "sourcePath": "/Users/studnev/dev4bc/contracts/contracts/game/FreeGame.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/Users/studnev/dev4bc/contracts/contracts/game/FreeGame.sol",
+      "exportedSymbols": {
+        "FreeGame": [
+          72
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".11"
+          ]
+        },
+        "id": 1,
+        "name": "PragmaDirective",
+        "src": "0:24:0"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 450,
+          "absolutePath": "/Users/studnev/dev4bc/contracts/contracts/game/Game.sol",
+          "file": "./Game.sol",
+          "scope": 73,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 2,
+        "name": "ImportDirective",
+        "src": "26:20:0"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            449,
+            1202
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            72,
+            449,
+            1202
+          ],
+          "name": "FreeGame",
+          "scope": 73
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Game",
+                  "referencedDeclaration": 449,
+                  "type": "contract Game"
+                },
+                "id": 3,
+                "name": "UserDefinedTypeName",
+                "src": "69:4:0"
+              }
+            ],
+            "id": 4,
+            "name": "InheritanceSpecifier",
+            "src": "69:4:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "name": "FreeGame",
+              "payable": false,
+              "scope": 72,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_token",
+                      "scope": 16,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract ERC20",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "ERC20",
+                          "referencedDeclaration": 1098,
+                          "type": "contract ERC20"
+                        },
+                        "id": 5,
+                        "name": "UserDefinedTypeName",
+                        "src": "101:5:0"
+                      }
+                    ],
+                    "id": 6,
+                    "name": "VariableDeclaration",
+                    "src": "101:12:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_controller",
+                      "scope": 16,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract GameController",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "GameController",
+                          "referencedDeclaration": 812,
+                          "type": "contract GameController"
+                        },
+                        "id": 7,
+                        "name": "UserDefinedTypeName",
+                        "src": "115:14:0"
+                      }
+                    ],
+                    "id": 8,
+                    "name": "VariableDeclaration",
+                    "src": "115:26:0"
+                  }
+                ],
+                "id": 9,
+                "name": "ParameterList",
+                "src": "98:46:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 14,
+                "name": "ParameterList",
+                "src": "186:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 449,
+                      "type": "type(contract Game)",
+                      "value": "Game"
+                    },
+                    "id": 10,
+                    "name": "Identifier",
+                    "src": "153:4:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 6,
+                      "type": "contract ERC20",
+                      "value": "_token"
+                    },
+                    "id": 11,
+                    "name": "Identifier",
+                    "src": "158:6:0"
+                  },
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 8,
+                      "type": "contract GameController",
+                      "value": "_controller"
+                    },
+                    "id": 12,
+                    "name": "Identifier",
+                    "src": "166:11:0"
+                  }
+                ],
+                "id": 13,
+                "name": "ModifierInvocation",
+                "src": "153:25:0"
+              },
+              {
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 15,
+                "name": "Block",
+                "src": "186:7:0"
+              }
+            ],
+            "id": 16,
+            "name": "FunctionDefinition",
+            "src": "81:112:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "issue",
+              "payable": true,
+              "scope": 72,
+              "stateMutability": "payable",
+              "superFunction": 264,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_hashes",
+                      "scope": 39,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256[] memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "length": null,
+                          "type": "uint256[] storage pointer"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "uint256",
+                              "type": "uint256"
+                            },
+                            "id": 17,
+                            "name": "ElementaryTypeName",
+                            "src": "214:7:0"
+                          }
+                        ],
+                        "id": 18,
+                        "name": "ArrayTypeName",
+                        "src": "214:9:0"
+                      }
+                    ],
+                    "id": 19,
+                    "name": "VariableDeclaration",
+                    "src": "214:17:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_expiration",
+                      "scope": 39,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 20,
+                        "name": "ElementaryTypeName",
+                        "src": "233:7:0"
+                      }
+                    ],
+                    "id": 21,
+                    "name": "VariableDeclaration",
+                    "src": "233:19:0"
+                  }
+                ],
+                "id": 22,
+                "name": "ParameterList",
+                "src": "213:40:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 23,
+                "name": "ParameterList",
+                "src": "269:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1315,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 24,
+                            "name": "Identifier",
+                            "src": "279:7:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "value",
+                                  "referencedDeclaration": null,
+                                  "type": "uint256"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 1312,
+                                      "type": "msg",
+                                      "value": "msg"
+                                    },
+                                    "id": 25,
+                                    "name": "Identifier",
+                                    "src": "287:3:0"
+                                  }
+                                ],
+                                "id": 26,
+                                "name": "MemberAccess",
+                                "src": "287:9:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "30",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 0",
+                                  "value": "0"
+                                },
+                                "id": 27,
+                                "name": "Literal",
+                                "src": "298:1:0"
+                              }
+                            ],
+                            "id": 28,
+                            "name": "BinaryOperation",
+                            "src": "287:12:0"
+                          }
+                        ],
+                        "id": 29,
+                        "name": "FunctionCall",
+                        "src": "279:21:0"
+                      }
+                    ],
+                    "id": 30,
+                    "name": "ExpressionStatement",
+                    "src": "279:21:0"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                                  "typeString": "uint256[] memory"
+                                },
+                                {
+                                  "typeIdentifier": "t_uint256",
+                                  "typeString": "uint256"
+                                }
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "issue",
+                              "referencedDeclaration": 264,
+                              "type": "function (uint256[] memory,uint256)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 1336,
+                                  "type": "contract super FreeGame",
+                                  "value": "super"
+                                },
+                                "id": 31,
+                                "name": "Identifier",
+                                "src": "310:5:0"
+                              }
+                            ],
+                            "id": 33,
+                            "name": "MemberAccess",
+                            "src": "310:11:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 19,
+                              "type": "uint256[] memory",
+                              "value": "_hashes"
+                            },
+                            "id": 34,
+                            "name": "Identifier",
+                            "src": "322:7:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 21,
+                              "type": "uint256",
+                              "value": "_expiration"
+                            },
+                            "id": 35,
+                            "name": "Identifier",
+                            "src": "331:11:0"
+                          }
+                        ],
+                        "id": 36,
+                        "name": "FunctionCall",
+                        "src": "310:33:0"
+                      }
+                    ],
+                    "id": 37,
+                    "name": "ExpressionStatement",
+                    "src": "310:33:0"
+                  }
+                ],
+                "id": 38,
+                "name": "Block",
+                "src": "269:81:0"
+              }
+            ],
+            "id": 39,
+            "name": "FunctionDefinition",
+            "src": "199:151:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "reserve_amount",
+              "payable": false,
+              "scope": 72,
+              "stateMutability": "nonpayable",
+              "superFunction": 441,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 53,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 40,
+                        "name": "ElementaryTypeName",
+                        "src": "381:7:0"
+                      }
+                    ],
+                    "id": 41,
+                    "name": "VariableDeclaration",
+                    "src": "381:7:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 53,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 42,
+                        "name": "ElementaryTypeName",
+                        "src": "391:7:0"
+                      }
+                    ],
+                    "id": 43,
+                    "name": "VariableDeclaration",
+                    "src": "391:7:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 53,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 44,
+                        "name": "ElementaryTypeName",
+                        "src": "401:7:0"
+                      }
+                    ],
+                    "id": 45,
+                    "name": "VariableDeclaration",
+                    "src": "401:7:0"
+                  }
+                ],
+                "id": 46,
+                "name": "ParameterList",
+                "src": "379:32:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 53,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 47,
+                        "name": "ElementaryTypeName",
+                        "src": "429:7:0"
+                      }
+                    ],
+                    "id": 48,
+                    "name": "VariableDeclaration",
+                    "src": "429:7:0"
+                  }
+                ],
+                "id": 49,
+                "name": "ParameterList",
+                "src": "428:9:0"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 49
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "hexvalue": "31",
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "subdenomination": null,
+                          "token": "number",
+                          "type": "int_const 1",
+                          "value": "1"
+                        },
+                        "id": 50,
+                        "name": "Literal",
+                        "src": "455:1:0"
+                      }
+                    ],
+                    "id": 51,
+                    "name": "Return",
+                    "src": "448:8:0"
+                  }
+                ],
+                "id": 52,
+                "name": "Block",
+                "src": "438:25:0"
+              }
+            ],
+            "id": 53,
+            "name": "FunctionDefinition",
+            "src": "356:107:0"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "payout",
+              "payable": false,
+              "scope": 72,
+              "stateMutability": "nonpayable",
+              "superFunction": 448,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_prize",
+                      "scope": 71,
+                      "stateVariable": false,
+                      "storageLocation": "storage",
+                      "type": "struct Game.Prize storage pointer",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "Prize",
+                          "referencedDeclaration": 90,
+                          "type": "struct Game.Prize storage pointer"
+                        },
+                        "id": 54,
+                        "name": "UserDefinedTypeName",
+                        "src": "485:5:0"
+                      }
+                    ],
+                    "id": 55,
+                    "name": "VariableDeclaration",
+                    "src": "485:20:0"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 71,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 56,
+                        "name": "ElementaryTypeName",
+                        "src": "507:7:0"
+                      }
+                    ],
+                    "id": 57,
+                    "name": "VariableDeclaration",
+                    "src": "507:7:0"
+                  }
+                ],
+                "id": 58,
+                "name": "ParameterList",
+                "src": "484:32:0"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 59,
+                "name": "ParameterList",
+                "src": "526:0:0"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 1315,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 60,
+                            "name": "Identifier",
+                            "src": "536:7:0"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "bool",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_address",
+                                      "typeString": "address"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "transfer",
+                                  "referencedDeclaration": 1061,
+                                  "type": "function (address,uint256) external returns (bool)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 92,
+                                      "type": "contract ERC20",
+                                      "value": "token"
+                                    },
+                                    "id": 61,
+                                    "name": "Identifier",
+                                    "src": "544:5:0"
+                                  }
+                                ],
+                                "id": 62,
+                                "name": "MemberAccess",
+                                "src": "544:14:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "owner",
+                                  "referencedDeclaration": 83,
+                                  "type": "address"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 55,
+                                      "type": "struct Game.Prize storage pointer",
+                                      "value": "_prize"
+                                    },
+                                    "id": 63,
+                                    "name": "Identifier",
+                                    "src": "559:6:0"
+                                  }
+                                ],
+                                "id": 64,
+                                "name": "MemberAccess",
+                                "src": "559:12:0"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "tokens",
+                                  "referencedDeclaration": 85,
+                                  "type": "uint256"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 55,
+                                      "type": "struct Game.Prize storage pointer",
+                                      "value": "_prize"
+                                    },
+                                    "id": 65,
+                                    "name": "Identifier",
+                                    "src": "573:6:0"
+                                  }
+                                ],
+                                "id": 66,
+                                "name": "MemberAccess",
+                                "src": "573:13:0"
+                              }
+                            ],
+                            "id": 67,
+                            "name": "FunctionCall",
+                            "src": "544:43:0"
+                          }
+                        ],
+                        "id": 68,
+                        "name": "FunctionCall",
+                        "src": "536:52:0"
+                      }
+                    ],
+                    "id": 69,
+                    "name": "ExpressionStatement",
+                    "src": "536:52:0"
+                  }
+                ],
+                "id": 70,
+                "name": "Block",
+                "src": "526:69:0"
+              }
+            ],
+            "id": 71,
+            "name": "FunctionDefinition",
+            "src": "469:126:0"
+          }
+        ],
+        "id": 72,
+        "name": "ContractDefinition",
+        "src": "48:549:0"
+      }
+    ],
+    "id": 73,
+    "name": "SourceUnit",
+    "src": "0:597:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-12-27T17:40:40.987Z"
+}

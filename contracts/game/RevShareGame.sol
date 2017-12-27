@@ -12,7 +12,7 @@ contract RevShareGame is Game, SafeMath {
     uint256 issuer_commission;
     
 
-    function IZXGame(   ERC20 _token,
+    function RevShareGame(   ERC20 _token,
                         GameController _controller,
                         uint256 _token_price,
                         uint256 _dev_commission,

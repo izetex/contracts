@@ -4,7 +4,7 @@ pragma solidity ^0.4.11;
 import "./Game.sol";
 import "../util/SafeMath.sol";
 
-contract IZXGame is Game, SafeMath {
+contract RevShareGame is Game, SafeMath {
 
     uint256 public token_price;
     uint256 dev_commission;

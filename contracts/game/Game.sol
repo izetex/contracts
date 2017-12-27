@@ -1,6 +1,6 @@
 pragma solidity ^0.4.11;
 
-import "../token/ControlledToken.sol";
+import "../token/ERC20.sol";
 import "../util/Owned.sol";
 import "./GameController.sol";
 
@@ -14,15 +14,21 @@ contract Game is Owned {
         uint256 expiration;
     }
 
-    ControlledToken public  token;
-    GameController public   controller;
-    mapping (uint256 => Prize) public prizes;
-    mapping (address => uint) public pendingWithdrawals;
+    ERC20                       public token;
+    GameController              public controller;
+    mapping (uint256 => Prize)  public prizes;
+    mapping (address => uint)   public pendingWithdrawals;
+    mapping (address => uint)   public issuedPrizes;
 
-    function Game(  ControlledToken _token ) public {
+    event Issue(address indexed issuer, address indexed owner, uint amount);
+    event Claim(address indexed issuer, address indexed owner, address indexed winner, uint amount);
+    event Expired(address indexed issuer, address indexed owner, uint amount);
+
+    function Game(  ERC20 _token, GameController _controller  ) public {
         require(address(_token)!=address(0));
+        require(address(_controller)!=address(0));
         token = _token;
-        controller = GameController(token.controller());
+        controller = _controller;
     }
 
     function issue(uint256[] _hashes, uint256 _expiration) payable public returns (uint256) {
@@ -37,6 +43,8 @@ contract Game is Owned {
             for(uint i=0;i<reserved_amount;i++){
                 prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, 1, msg.value, _expiration);
             }
+            issuedPrizes[msg.sender] += reserved_amount;
+            Issue(msg.sender, tokens_owner, reserved_amount);
             return reserved_amount;
         }else{
             return 0;
@@ -58,14 +66,22 @@ contract Game is Owned {
             if(prize.value>0){
                 pendingWithdrawals[prize.issuer] += prize.value;
             }
-            delete(prizes[hash]);
+            issuedPrizes[msg.sender] -= 1;
 
+            Expired(prize.issuer, prize.owner, prize.tokens);
+
+            delete(prizes[hash]);
             return false;
         }else{
             payout(prize, _winner);
+            issuedPrizes[msg.sender] -= 1;
+
+            Claim(prize.issuer, prize.owner, _winner, prize.tokens);
+
             delete(prizes[hash]);
             return true;
         }
+
 
     }
 
@@ -83,7 +99,7 @@ contract Game is Owned {
     }
 
 
-    function reserve_amount( uint256 _requested_amount, uint256 _payed_value ) returns(uint256) {
+    function reserve_amount( uint256 _requested_amount, uint256 _payed_value ) internal returns(uint256) {
         return 1;
     }
 

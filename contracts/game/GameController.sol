@@ -16,17 +16,17 @@ contract GameController is TokenController {
        mapping( address => Balance) balances;
     }
 
-    address public token;
+    address public master;
     mapping( address => Allowance) allowances;
 
 
-    function GameController(address _token) public {
-        require(_token != address(0));
-        token = _token;
+    function GameController(address _master) public {
+        require(_master != address(0));
+        master = _master;
     }
 
     function onApprove(address _owner, address _spender, uint _amount) public returns(bool){
-        require(msg.sender==token);
+        require(msg.sender==master);
 
         Allowance storage allowance = allowances[_spender];
         Balance storage balance = allowance.balances[_owner];
@@ -43,7 +43,7 @@ contract GameController is TokenController {
     }
 
     function onTransfer(address _from, address _to, uint _amount) public returns(bool){
-        require(msg.sender==token);
+        require(msg.sender==master);
 
         Allowance storage allowance = allowances[_to];
         Balance storage balance = allowance.balances[_from];
@@ -70,7 +70,7 @@ contract GameController is TokenController {
         }
     }
 
-    function proxyPayment(address _owner) payable public returns(bool) {
+    function proxyPayment(address) payable public returns(bool) {
         return false;
     }
 
@@ -86,4 +86,20 @@ contract GameController is TokenController {
         return address(0);
     }
 
+    function approved_amount(address _owner, address _game) view public returns(uint256){
+        return owner_balance(_owner, _game).approved_amount;
+    }
+
+    function reserved_amount(address _owner, address _game) view public returns(uint256){
+        return owner_balance(_owner, _game).reserved_amount;
+    }
+
+    function owner_index(address _owner, address _game) view public returns(uint256){
+        return owner_balance(_owner, _game).key_index;
+    }
+
+    function owner_balance(address _owner, address _game) view internal returns(Balance){
+        Allowance storage allowance = allowances[_game];
+        return allowance.balances[_owner];
+    }
 }

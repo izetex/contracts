@@ -12,7 +12,6 @@ contract ProxyController is Owned, TokenController {
     function ProxyController(address _token, address _controller) public {
 
         require(_token != address(0));
-        require(_controller != address(0));
 
         tokenContract = ControlledToken(_token);
         proxiedController = TokenController(_controller);

@@ -11,7 +11,6 @@ contract Game is Owned {
         address owner;
         uint256 tokens;
         uint256 value;
-        bytes   info;
         uint256 expiration;
     }
 
@@ -26,22 +25,21 @@ contract Game is Owned {
         controller = GameController(token.controller());
     }
 
-    function issue(uint256 _amount, bytes _info, uint256 _expiration, uint256 _hash) payable public returns (bool) {
+    function issue(uint256[] _hashes, uint256 _expiration) payable public returns (uint256) {
 
-        require( _expiration > now );
+        uint256 reserved_amount = reserve_amount(_hashes.length, msg.value);
+        require(reserved_amount>0 && _expiration > now);
 
-        uint256 requested_amount = calculate_amount(_amount, msg.value);
-
-        require(requested_amount>0);
-
-        address tokens_owner = controller.allowed_for(this, requested_amount);
+        address tokens_owner = controller.amount_owner(this, reserved_amount);
 
         if(tokens_owner!=address(0)){
-            require( token.transferFrom(tokens_owner, this, requested_amount) );
-            prizes[_hash] = Prize(msg.sender, tokens_owner, requested_amount, msg.value, _info, _expiration);
-            return true;
+            require( token.transferFrom(tokens_owner, this, reserved_amount) );
+            for(uint i=0;i<reserved_amount;i++){
+                prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, 1, msg.value, _expiration);
+            }
+            return reserved_amount;
         }else{
-            return false;
+            return 0;
         }
 
 
@@ -85,7 +83,7 @@ contract Game is Owned {
     }
 
 
-    function calculate_amount( uint256 _requested_amount, uint256 _payed_value ) returns(uint256) {
+    function reserve_amount( uint256 _requested_amount, uint256 _payed_value ) returns(uint256) {
         return 1;
     }
 

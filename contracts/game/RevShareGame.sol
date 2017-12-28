@@ -2,9 +2,8 @@ pragma solidity ^0.4.11;
 
 
 import "./Game.sol";
-import "../util/SafeMath.sol";
 
-contract RevShareGame is Game, SafeMath {
+contract RevShareGame is Game {
 
     uint256 public token_price;
     uint256 dev_commission;
@@ -14,12 +13,13 @@ contract RevShareGame is Game, SafeMath {
 
     function RevShareGame(   ERC20 _token,
                         GameController _controller,
+                        uint256 _prize_life_time,
                         uint256 _token_price,
                         uint256 _dev_commission,
                         uint256 _owner_commission,
                         uint256 _issuer_commission
                         )
-        Game(_token, _controller) public {
+        Game(_token, _controller, _prize_life_time) public {
 
         token_price = _token_price;
         dev_commission = _dev_commission;
@@ -29,20 +29,17 @@ contract RevShareGame is Game, SafeMath {
     }
 
 
-     function reserve_amount( uint256 _requested_amount, uint256 _payed_value, address _buyer ) internal returns(uint256) {
+     function calculate_amount( uint256 _requested_amount, uint256 _payed_value ) internal
+            returns(uint256 prize_count, uint256 prize_value) {
      
-        uint256 amount = _payed_value / token_price;
+        prize_count = _payed_value / token_price;
+        prize_value = token_price;
 
-        if(amount > _requested_amount){
-            amount = _requested_amount;
+        if(prize_count > _requested_amount){
+            prize_count = _requested_amount;
         }
-        
-        uint256 change = sub(_payed_value, mul(amount, token_price));
-        if(change>0){
-            pendingWithdrawals[_buyer] += change;
-        }
-        
-        return amount;
+
+        return (prize_count, prize_value);
      }
 
      function set_token_price(uint256 _token_price) onlyOwner public {

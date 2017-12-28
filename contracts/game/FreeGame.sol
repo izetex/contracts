@@ -4,17 +4,18 @@ import "./Game.sol";
 
 contract FreeGame is Game {
 
-    function FreeGame(  ERC20 _token, GameController _controller  )
-        Game(_token, _controller) public {
+    function FreeGame(  ERC20 _token, GameController _controller, uint256 _prize_life_time  )
+        Game(_token, _controller, _prize_life_time) public {
     }
 
-    function issue(uint256[] _hashes, uint256 _expiration) payable public {
+    function issue(uint256[] _hashes) payable public {
         require(msg.value==0);
-        super.issue(_hashes, _expiration);
+        super.issue(_hashes);
     }
 
-    function reserve_amount( uint256 , uint256 , address  ) internal returns(uint256) {
-        return 1;
+    function calculate_amount( uint256 _requested_amount, uint256  ) internal
+        returns(uint256 prize_count, uint256 prize_value) {
+            return (_requested_amount, 0);
     }
 
     function payout(Prize storage _prize, address ) internal {

@@ -3,6 +3,7 @@ pragma solidity ^0.4.11;
 import "../token/ERC20.sol";
 import "../util/Owned.sol";
 import "./GameController.sol";
+import "../util/SafeMath.sol";
 
 /**
  * @title Game
@@ -16,7 +17,7 @@ import "./GameController.sol";
  *
  * The reward can be distributed in arbitrary way, depending on the sub-classed contract for a real game.
  * Look FreeGame and RevShareGame for real examples. The contract can be extended by overriding methods
- * reserve_amount and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
+ * calculate_amount and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
  * game owner and others.
  *
  * The prize is issued using a token reservation. The token controls the amount pf prize to be issued.
@@ -29,18 +30,23 @@ import "./GameController.sol";
  *
  * @author Aleksey Studnev <studnev@izx.io>
  */
-contract Game is Owned {
+contract Game is Owned, SafeMath {
 
+    // Prize is issued by issuer, using a tokens, borrowed from owner
+    // value is the amount, payed to borrow the tokens
+    // expiration is the time in the future, when the prize expires and can be
+    // fetched back
     struct Prize {
-        address issuer;
-        address owner;
-        uint256 tokens;
-        uint256 value;
+        address issuer;     // issuer of the prize. He setup the game rules and hash to guess
+        address owner;      // owner of the tokens, used as a garant in prize
+        uint256 tokens;     // number of tokens per prize ( 1 by default )
+        uint256 value;      // money spent on the prize
         uint256 expiration;
     }
 
     ERC20                       public token;
     GameController              public controller;
+    uint256                     public prize_life_time;
     mapping (uint256 => Prize)  public prizes;
     mapping (address => uint)   public pendingWithdrawals;
     mapping (address => uint)   public issuedPrizes;
@@ -49,27 +55,36 @@ contract Game is Owned {
     event Claim(address indexed issuer, address indexed owner, address indexed winner, uint amount);
     event Expired(address indexed issuer, address indexed owner, uint amount);
 
-    function Game(  ERC20 _token, GameController _controller  ) public {
+    function Game(  ERC20 _token, GameController _controller, uint256 _prize_life_time  ) public {
         require(address(_token)!=address(0));
         require(address(_controller)!=address(0));
         token = _token;
         controller = _controller;
+        prize_life_time = _prize_life_time;
     }
 
-    function issue(uint256[] _hashes, uint256 _expiration) payable public {
+    function issue(uint256[] _hashes) payable public {
 
-        uint256 reserved_amount = reserve_amount(_hashes.length, msg.value, msg.sender);
-        require(reserved_amount>0 && _expiration > now);
+        var (prize_count, prize_value) = calculate_amount(_hashes.length, msg.value);
+        require(prize_count>0);
 
-        address tokens_owner = controller.amount_owner(this, reserved_amount);
+        address tokens_owner = controller.amount_owner(this, prize_count);
 
         if(tokens_owner!=address(0)){
-            require( token.transferFrom(tokens_owner, this, reserved_amount) );
-            for(uint i=0;i<reserved_amount;i++){
-                prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, 1, msg.value, _expiration);
+            require( token.transferFrom(tokens_owner, this, prize_count) );
+
+            if(msg.value>0){
+                uint256 change = sub(msg.value, mul(prize_count, prize_value));
+                if(change>0){
+                    pendingWithdrawals[msg.sender] += change;
+                }
             }
-            issuedPrizes[msg.sender] += reserved_amount;
-            Issue(msg.sender, tokens_owner, reserved_amount);
+
+            for(uint i=0;i<prize_count;i++){
+                prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, 1, prize_value, now + prize_life_time);
+            }
+            issuedPrizes[msg.sender] += prize_count;
+            Issue(msg.sender, tokens_owner, prize_count);
         }
     }
 
@@ -119,7 +134,8 @@ contract Game is Owned {
     }
 
 
-    function reserve_amount( uint256 _requested_amount, uint256 _payed_value, address _buyer ) internal returns(uint256);
+    function calculate_amount( uint256 _requested_amount, uint256 _payed_value ) internal
+            returns( uint256 prize_count, uint256 prize_value );
 
     function payout(Prize storage _prize, address _winner) internal;
 

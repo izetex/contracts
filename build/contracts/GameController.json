@@ -203,7 +203,7 @@
       "absolutePath": "/Users/studnev/dev4bc/contracts/contracts/game/GameController.sol",
       "exportedSymbols": {
         "GameController": [
-          1073
+          847
         ]
       }
     },
@@ -217,39 +217,39 @@
             ".11"
           ]
         },
-        "id": 712,
+        "id": 486,
         "name": "PragmaDirective",
         "src": "0:24:2"
       },
       {
         "attributes": {
-          "SourceUnit": 1930,
+          "SourceUnit": 1186,
           "absolutePath": "/Users/studnev/dev4bc/contracts/contracts/token/TokenController.sol",
           "file": "../token/TokenController.sol",
-          "scope": 1074,
+          "scope": 848,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 713,
+        "id": 487,
         "name": "ImportDirective",
         "src": "26:38:2"
       },
       {
         "attributes": {
           "contractDependencies": [
-            1894
+            1150
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            1073,
-            1894
+            847,
+            1150
           ],
           "name": "GameController",
-          "scope": 1074
+          "scope": 848
         },
         "children": [
           {
@@ -263,15 +263,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "TokenController",
-                  "referencedDeclaration": 1894,
+                  "referencedDeclaration": 1150,
                   "type": "contract TokenController"
                 },
-                "id": 714,
+                "id": 488,
                 "name": "UserDefinedTypeName",
                 "src": "94:15:2"
               }
             ],
-            "id": 715,
+            "id": 489,
             "name": "InheritanceSpecifier",
             "src": "94:15:2"
           },
@@ -279,7 +279,7 @@
             "attributes": {
               "canonicalName": "GameController.Balance",
               "name": "Balance",
-              "scope": 1073,
+              "scope": 847,
               "visibility": "public"
             },
             "children": [
@@ -287,7 +287,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "key_index",
-                  "scope": 722,
+                  "scope": 496,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -300,12 +300,12 @@
                       "name": "uint",
                       "type": "uint256"
                     },
-                    "id": 716,
+                    "id": 490,
                     "name": "ElementaryTypeName",
                     "src": "142:4:2"
                   }
                 ],
-                "id": 717,
+                "id": 491,
                 "name": "VariableDeclaration",
                 "src": "142:14:2"
               },
@@ -313,7 +313,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "approved_amount",
-                  "scope": 722,
+                  "scope": 496,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -326,12 +326,12 @@
                       "name": "uint",
                       "type": "uint256"
                     },
-                    "id": 718,
+                    "id": 492,
                     "name": "ElementaryTypeName",
                     "src": "166:4:2"
                   }
                 ],
-                "id": 719,
+                "id": 493,
                 "name": "VariableDeclaration",
                 "src": "166:20:2"
               },
@@ -339,7 +339,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "reserved_amount",
-                  "scope": 722,
+                  "scope": 496,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "uint256",
@@ -352,17 +352,17 @@
                       "name": "uint",
                       "type": "uint256"
                     },
-                    "id": 720,
+                    "id": 494,
                     "name": "ElementaryTypeName",
                     "src": "196:4:2"
                   }
                 ],
-                "id": 721,
+                "id": 495,
                 "name": "VariableDeclaration",
                 "src": "196:20:2"
               }
             ],
-            "id": 722,
+            "id": 496,
             "name": "StructDefinition",
             "src": "117:106:2"
           },
@@ -370,7 +370,7 @@
             "attributes": {
               "canonicalName": "GameController.Allowance",
               "name": "Allowance",
-              "scope": 1073,
+              "scope": 847,
               "visibility": "public"
             },
             "children": [
@@ -378,7 +378,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "owners",
-                  "scope": 730,
+                  "scope": 504,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "address[] storage pointer",
@@ -397,17 +397,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 723,
+                        "id": 497,
                         "name": "ElementaryTypeName",
                         "src": "255:7:2"
                       }
                     ],
-                    "id": 724,
+                    "id": 498,
                     "name": "ArrayTypeName",
                     "src": "255:9:2"
                   }
                 ],
-                "id": 725,
+                "id": 499,
                 "name": "VariableDeclaration",
                 "src": "255:16:2"
               },
@@ -415,7 +415,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "balances",
-                  "scope": 730,
+                  "scope": 504,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "mapping(address => struct GameController.Balance storage ref)",
@@ -433,7 +433,7 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 726,
+                        "id": 500,
                         "name": "ElementaryTypeName",
                         "src": "289:7:2"
                       },
@@ -441,25 +441,25 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Balance",
-                          "referencedDeclaration": 722,
+                          "referencedDeclaration": 496,
                           "type": "struct GameController.Balance storage pointer"
                         },
-                        "id": 727,
+                        "id": 501,
                         "name": "UserDefinedTypeName",
                         "src": "300:7:2"
                       }
                     ],
-                    "id": 728,
+                    "id": 502,
                     "name": "Mapping",
                     "src": "280:28:2"
                   }
                 ],
-                "id": 729,
+                "id": 503,
                 "name": "VariableDeclaration",
                 "src": "280:37:2"
               }
             ],
-            "id": 730,
+            "id": 504,
             "name": "StructDefinition",
             "src": "229:95:2"
           },
@@ -467,7 +467,7 @@
             "attributes": {
               "constant": false,
               "name": "master",
-              "scope": 1073,
+              "scope": 847,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "address",
@@ -480,12 +480,12 @@
                   "name": "address",
                   "type": "address"
                 },
-                "id": 731,
+                "id": 505,
                 "name": "ElementaryTypeName",
                 "src": "330:7:2"
               }
             ],
-            "id": 732,
+            "id": 506,
             "name": "VariableDeclaration",
             "src": "330:21:2"
           },
@@ -493,7 +493,7 @@
             "attributes": {
               "constant": false,
               "name": "allowances",
-              "scope": 1073,
+              "scope": 847,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "mapping(address => struct GameController.Allowance storage ref)",
@@ -511,7 +511,7 @@
                       "name": "address",
                       "type": "address"
                     },
-                    "id": 733,
+                    "id": 507,
                     "name": "ElementaryTypeName",
                     "src": "366:7:2"
                   },
@@ -519,20 +519,20 @@
                     "attributes": {
                       "contractScope": null,
                       "name": "Allowance",
-                      "referencedDeclaration": 730,
+                      "referencedDeclaration": 504,
                       "type": "struct GameController.Allowance storage pointer"
                     },
-                    "id": 734,
+                    "id": 508,
                     "name": "UserDefinedTypeName",
                     "src": "377:9:2"
                   }
                 ],
-                "id": 735,
+                "id": 509,
                 "name": "Mapping",
                 "src": "357:30:2"
               }
             ],
-            "id": 736,
+            "id": 510,
             "name": "VariableDeclaration",
             "src": "357:41:2"
           },
@@ -546,7 +546,7 @@
               ],
               "name": "GameController",
               "payable": false,
-              "scope": 1073,
+              "scope": 847,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -558,7 +558,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_master",
-                      "scope": 754,
+                      "scope": 528,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -571,17 +571,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 737,
+                        "id": 511,
                         "name": "ElementaryTypeName",
                         "src": "430:7:2"
                       }
                     ],
-                    "id": 738,
+                    "id": 512,
                     "name": "VariableDeclaration",
                     "src": "430:15:2"
                   }
                 ],
-                "id": 739,
+                "id": 513,
                 "name": "ParameterList",
                 "src": "429:17:2"
               },
@@ -592,7 +592,7 @@
                   ]
                 },
                 "children": [],
-                "id": 740,
+                "id": 514,
                 "name": "ParameterList",
                 "src": "454:0:2"
               },
@@ -626,11 +626,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2079,
+                              "referencedDeclaration": 1335,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 741,
+                            "id": 515,
                             "name": "Identifier",
                             "src": "464:7:2"
                           },
@@ -655,11 +655,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 738,
+                                  "referencedDeclaration": 512,
                                   "type": "address",
                                   "value": "_master"
                                 },
-                                "id": 742,
+                                "id": 516,
                                 "name": "Identifier",
                                 "src": "472:7:2"
                               },
@@ -693,7 +693,7 @@
                                       "type": "type(address)",
                                       "value": "address"
                                     },
-                                    "id": 743,
+                                    "id": 517,
                                     "name": "ElementaryTypeNameExpression",
                                     "src": "483:7:2"
                                   },
@@ -710,27 +710,27 @@
                                       "type": "int_const 0",
                                       "value": "0"
                                     },
-                                    "id": 744,
+                                    "id": 518,
                                     "name": "Literal",
                                     "src": "491:1:2"
                                   }
                                 ],
-                                "id": 745,
+                                "id": 519,
                                 "name": "FunctionCall",
                                 "src": "483:10:2"
                               }
                             ],
-                            "id": 746,
+                            "id": 520,
                             "name": "BinaryOperation",
                             "src": "472:21:2"
                           }
                         ],
-                        "id": 747,
+                        "id": 521,
                         "name": "FunctionCall",
                         "src": "464:30:2"
                       }
                     ],
-                    "id": 748,
+                    "id": 522,
                     "name": "ExpressionStatement",
                     "src": "464:30:2"
                   },
@@ -753,11 +753,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 732,
+                              "referencedDeclaration": 506,
                               "type": "address",
                               "value": "master"
                             },
-                            "id": 749,
+                            "id": 523,
                             "name": "Identifier",
                             "src": "504:6:2"
                           },
@@ -767,31 +767,31 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 738,
+                              "referencedDeclaration": 512,
                               "type": "address",
                               "value": "_master"
                             },
-                            "id": 750,
+                            "id": 524,
                             "name": "Identifier",
                             "src": "513:7:2"
                           }
                         ],
-                        "id": 751,
+                        "id": 525,
                         "name": "Assignment",
                         "src": "504:16:2"
                       }
                     ],
-                    "id": 752,
+                    "id": 526,
                     "name": "ExpressionStatement",
                     "src": "504:16:2"
                   }
                 ],
-                "id": 753,
+                "id": 527,
                 "name": "Block",
                 "src": "454:73:2"
               }
             ],
-            "id": 754,
+            "id": 528,
             "name": "FunctionDefinition",
             "src": "406:121:2"
           },
@@ -805,9 +805,9 @@
               ],
               "name": "onApprove",
               "payable": false,
-              "scope": 1073,
+              "scope": 847,
               "stateMutability": "nonpayable",
-              "superFunction": 1893,
+              "superFunction": 1149,
               "visibility": "public"
             },
             "children": [
@@ -817,7 +817,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_owner",
-                      "scope": 823,
+                      "scope": 597,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -830,12 +830,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 755,
+                        "id": 529,
                         "name": "ElementaryTypeName",
                         "src": "552:7:2"
                       }
                     ],
-                    "id": 756,
+                    "id": 530,
                     "name": "VariableDeclaration",
                     "src": "552:14:2"
                   },
@@ -843,7 +843,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_spender",
-                      "scope": 823,
+                      "scope": 597,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -856,12 +856,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 757,
+                        "id": 531,
                         "name": "ElementaryTypeName",
                         "src": "568:7:2"
                       }
                     ],
-                    "id": 758,
+                    "id": 532,
                     "name": "VariableDeclaration",
                     "src": "568:16:2"
                   },
@@ -869,7 +869,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_amount",
-                      "scope": 823,
+                      "scope": 597,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -882,17 +882,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 759,
+                        "id": 533,
                         "name": "ElementaryTypeName",
                         "src": "586:4:2"
                       }
                     ],
-                    "id": 760,
+                    "id": 534,
                     "name": "VariableDeclaration",
                     "src": "586:12:2"
                   }
                 ],
-                "id": 761,
+                "id": 535,
                 "name": "ParameterList",
                 "src": "551:48:2"
               },
@@ -902,7 +902,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 823,
+                      "scope": 597,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -915,17 +915,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 762,
+                        "id": 536,
                         "name": "ElementaryTypeName",
                         "src": "615:4:2"
                       }
                     ],
-                    "id": 763,
+                    "id": 537,
                     "name": "VariableDeclaration",
                     "src": "615:4:2"
                   }
                 ],
-                "id": 764,
+                "id": 538,
                 "name": "ParameterList",
                 "src": "614:6:2"
               },
@@ -959,11 +959,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2079,
+                              "referencedDeclaration": 1335,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 765,
+                            "id": 539,
                             "name": "Identifier",
                             "src": "630:7:2"
                           },
@@ -1000,16 +1000,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2076,
+                                      "referencedDeclaration": 1332,
                                       "type": "msg",
                                       "value": "msg"
                                     },
-                                    "id": 766,
+                                    "id": 540,
                                     "name": "Identifier",
                                     "src": "638:3:2"
                                   }
                                 ],
-                                "id": 767,
+                                "id": 541,
                                 "name": "MemberAccess",
                                 "src": "638:10:2"
                               },
@@ -1019,33 +1019,33 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 732,
+                                  "referencedDeclaration": 506,
                                   "type": "address",
                                   "value": "master"
                                 },
-                                "id": 768,
+                                "id": 542,
                                 "name": "Identifier",
                                 "src": "650:6:2"
                               }
                             ],
-                            "id": 769,
+                            "id": 543,
                             "name": "BinaryOperation",
                             "src": "638:18:2"
                           }
                         ],
-                        "id": 770,
+                        "id": 544,
                         "name": "FunctionCall",
                         "src": "630:27:2"
                       }
                     ],
-                    "id": 771,
+                    "id": 545,
                     "name": "ExpressionStatement",
                     "src": "630:27:2"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        773
+                        547
                       ]
                     },
                     "children": [
@@ -1053,7 +1053,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "allowance",
-                          "scope": 823,
+                          "scope": 597,
                           "stateVariable": false,
                           "storageLocation": "storage",
                           "type": "struct GameController.Allowance storage pointer",
@@ -1065,15 +1065,15 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "Allowance",
-                              "referencedDeclaration": 730,
+                              "referencedDeclaration": 504,
                               "type": "struct GameController.Allowance storage pointer"
                             },
-                            "id": 772,
+                            "id": 546,
                             "name": "UserDefinedTypeName",
                             "src": "668:9:2"
                           }
                         ],
-                        "id": 773,
+                        "id": 547,
                         "name": "VariableDeclaration",
                         "src": "668:27:2"
                       },
@@ -1093,11 +1093,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 736,
+                              "referencedDeclaration": 510,
                               "type": "mapping(address => struct GameController.Allowance storage ref)",
                               "value": "allowances"
                             },
-                            "id": 774,
+                            "id": 548,
                             "name": "Identifier",
                             "src": "698:10:2"
                           },
@@ -1107,28 +1107,28 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 758,
+                              "referencedDeclaration": 532,
                               "type": "address",
                               "value": "_spender"
                             },
-                            "id": 775,
+                            "id": 549,
                             "name": "Identifier",
                             "src": "709:8:2"
                           }
                         ],
-                        "id": 776,
+                        "id": 550,
                         "name": "IndexAccess",
                         "src": "698:20:2"
                       }
                     ],
-                    "id": 777,
+                    "id": 551,
                     "name": "VariableDeclarationStatement",
                     "src": "668:50:2"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        779
+                        553
                       ]
                     },
                     "children": [
@@ -1136,7 +1136,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "balance",
-                          "scope": 823,
+                          "scope": 597,
                           "stateVariable": false,
                           "storageLocation": "storage",
                           "type": "struct GameController.Balance storage pointer",
@@ -1148,15 +1148,15 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "Balance",
-                              "referencedDeclaration": 722,
+                              "referencedDeclaration": 496,
                               "type": "struct GameController.Balance storage pointer"
                             },
-                            "id": 778,
+                            "id": 552,
                             "name": "UserDefinedTypeName",
                             "src": "728:7:2"
                           }
                         ],
-                        "id": 779,
+                        "id": 553,
                         "name": "VariableDeclaration",
                         "src": "728:23:2"
                       },
@@ -1178,7 +1178,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "balances",
-                              "referencedDeclaration": 729,
+                              "referencedDeclaration": 503,
                               "type": "mapping(address => struct GameController.Balance storage ref)"
                             },
                             "children": [
@@ -1188,16 +1188,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 773,
+                                  "referencedDeclaration": 547,
                                   "type": "struct GameController.Allowance storage pointer",
                                   "value": "allowance"
                                 },
-                                "id": 780,
+                                "id": 554,
                                 "name": "Identifier",
                                 "src": "754:9:2"
                               }
                             ],
-                            "id": 781,
+                            "id": 555,
                             "name": "MemberAccess",
                             "src": "754:18:2"
                           },
@@ -1207,21 +1207,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 756,
+                              "referencedDeclaration": 530,
                               "type": "address",
                               "value": "_owner"
                             },
-                            "id": 782,
+                            "id": 556,
                             "name": "Identifier",
                             "src": "773:6:2"
                           }
                         ],
-                        "id": 783,
+                        "id": 557,
                         "name": "IndexAccess",
                         "src": "754:26:2"
                       }
                     ],
-                    "id": 784,
+                    "id": 558,
                     "name": "VariableDeclarationStatement",
                     "src": "728:52:2"
                   },
@@ -1253,7 +1253,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "key_index",
-                              "referencedDeclaration": 717,
+                              "referencedDeclaration": 491,
                               "type": "uint256"
                             },
                             "children": [
@@ -1263,16 +1263,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 779,
+                                  "referencedDeclaration": 553,
                                   "type": "struct GameController.Balance storage pointer",
                                   "value": "balance"
                                 },
-                                "id": 785,
+                                "id": 559,
                                 "name": "Identifier",
                                 "src": "794:7:2"
                               }
                             ],
-                            "id": 786,
+                            "id": 560,
                             "name": "MemberAccess",
                             "src": "794:17:2"
                           },
@@ -1289,12 +1289,12 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 787,
+                            "id": 561,
                             "name": "Literal",
                             "src": "812:1:2"
                           }
                         ],
-                        "id": 788,
+                        "id": 562,
                         "name": "BinaryOperation",
                         "src": "794:19:2"
                       },
@@ -1303,7 +1303,7 @@
                           {
                             "attributes": {
                               "assignments": [
-                                790
+                                564
                               ]
                             },
                             "children": [
@@ -1311,7 +1311,7 @@
                                 "attributes": {
                                   "constant": false,
                                   "name": "next",
-                                  "scope": 823,
+                                  "scope": 597,
                                   "stateVariable": false,
                                   "storageLocation": "default",
                                   "type": "uint256",
@@ -1324,12 +1324,12 @@
                                       "name": "uint",
                                       "type": "uint256"
                                     },
-                                    "id": 789,
+                                    "id": 563,
                                     "name": "ElementaryTypeName",
                                     "src": "828:4:2"
                                   }
                                 ],
-                                "id": 790,
+                                "id": 564,
                                 "name": "VariableDeclaration",
                                 "src": "828:9:2"
                               },
@@ -1365,7 +1365,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "owners",
-                                          "referencedDeclaration": 725,
+                                          "referencedDeclaration": 499,
                                           "type": "address[] storage ref"
                                         },
                                         "children": [
@@ -1375,31 +1375,31 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 773,
+                                              "referencedDeclaration": 547,
                                               "type": "struct GameController.Allowance storage pointer",
                                               "value": "allowance"
                                             },
-                                            "id": 791,
+                                            "id": 565,
                                             "name": "Identifier",
                                             "src": "840:9:2"
                                           }
                                         ],
-                                        "id": 792,
+                                        "id": 566,
                                         "name": "MemberAccess",
                                         "src": "840:16:2"
                                       }
                                     ],
-                                    "id": 793,
+                                    "id": 567,
                                     "name": "MemberAccess",
                                     "src": "840:23:2"
                                   }
                                 ],
-                                "id": 794,
+                                "id": 568,
                                 "name": "UnaryOperation",
                                 "src": "840:25:2"
                               }
                             ],
-                            "id": 795,
+                            "id": 569,
                             "name": "VariableDeclarationStatement",
                             "src": "828:37:2"
                           },
@@ -1434,7 +1434,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "owners",
-                                          "referencedDeclaration": 725,
+                                          "referencedDeclaration": 499,
                                           "type": "address[] storage ref"
                                         },
                                         "children": [
@@ -1444,16 +1444,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 773,
+                                              "referencedDeclaration": 547,
                                               "type": "struct GameController.Allowance storage pointer",
                                               "value": "allowance"
                                             },
-                                            "id": 796,
+                                            "id": 570,
                                             "name": "Identifier",
                                             "src": "879:9:2"
                                           }
                                         ],
-                                        "id": 799,
+                                        "id": 573,
                                         "name": "MemberAccess",
                                         "src": "879:16:2"
                                       },
@@ -1463,16 +1463,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 790,
+                                          "referencedDeclaration": 564,
                                           "type": "uint256",
                                           "value": "next"
                                         },
-                                        "id": 798,
+                                        "id": 572,
                                         "name": "Identifier",
                                         "src": "896:4:2"
                                       }
                                     ],
-                                    "id": 800,
+                                    "id": 574,
                                     "name": "IndexAccess",
                                     "src": "879:22:2"
                                   },
@@ -1482,21 +1482,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 756,
+                                      "referencedDeclaration": 530,
                                       "type": "address",
                                       "value": "_owner"
                                     },
-                                    "id": 801,
+                                    "id": 575,
                                     "name": "Identifier",
                                     "src": "904:6:2"
                                   }
                                 ],
-                                "id": 802,
+                                "id": 576,
                                 "name": "Assignment",
                                 "src": "879:31:2"
                               }
                             ],
-                            "id": 803,
+                            "id": 577,
                             "name": "ExpressionStatement",
                             "src": "879:31:2"
                           },
@@ -1521,7 +1521,7 @@
                                       "isPure": false,
                                       "lValueRequested": true,
                                       "member_name": "key_index",
-                                      "referencedDeclaration": 717,
+                                      "referencedDeclaration": 491,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -1531,16 +1531,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 779,
+                                          "referencedDeclaration": 553,
                                           "type": "struct GameController.Balance storage pointer",
                                           "value": "balance"
                                         },
-                                        "id": 804,
+                                        "id": 578,
                                         "name": "Identifier",
                                         "src": "924:7:2"
                                       }
                                     ],
-                                    "id": 806,
+                                    "id": 580,
                                     "name": "MemberAccess",
                                     "src": "924:17:2"
                                   },
@@ -1565,11 +1565,11 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 790,
+                                          "referencedDeclaration": 564,
                                           "type": "uint256",
                                           "value": "next"
                                         },
-                                        "id": 807,
+                                        "id": 581,
                                         "name": "Identifier",
                                         "src": "944:4:2"
                                       },
@@ -1586,32 +1586,32 @@
                                           "type": "int_const 1",
                                           "value": "1"
                                         },
-                                        "id": 808,
+                                        "id": 582,
                                         "name": "Literal",
                                         "src": "951:1:2"
                                       }
                                     ],
-                                    "id": 809,
+                                    "id": 583,
                                     "name": "BinaryOperation",
                                     "src": "944:8:2"
                                   }
                                 ],
-                                "id": 810,
+                                "id": 584,
                                 "name": "Assignment",
                                 "src": "924:28:2"
                               }
                             ],
-                            "id": 811,
+                            "id": 585,
                             "name": "ExpressionStatement",
                             "src": "924:28:2"
                           }
                         ],
-                        "id": 812,
+                        "id": 586,
                         "name": "Block",
                         "src": "814:149:2"
                       }
                     ],
-                    "id": 813,
+                    "id": 587,
                     "name": "IfStatement",
                     "src": "791:172:2"
                   },
@@ -1636,7 +1636,7 @@
                               "isPure": false,
                               "lValueRequested": true,
                               "member_name": "approved_amount",
-                              "referencedDeclaration": 719,
+                              "referencedDeclaration": 493,
                               "type": "uint256"
                             },
                             "children": [
@@ -1646,16 +1646,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 779,
+                                  "referencedDeclaration": 553,
                                   "type": "struct GameController.Balance storage pointer",
                                   "value": "balance"
                                 },
-                                "id": 814,
+                                "id": 588,
                                 "name": "Identifier",
                                 "src": "973:7:2"
                               }
                             ],
-                            "id": 816,
+                            "id": 590,
                             "name": "MemberAccess",
                             "src": "973:23:2"
                           },
@@ -1665,27 +1665,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 760,
+                              "referencedDeclaration": 534,
                               "type": "uint256",
                               "value": "_amount"
                             },
-                            "id": 817,
+                            "id": 591,
                             "name": "Identifier",
                             "src": "999:7:2"
                           }
                         ],
-                        "id": 818,
+                        "id": 592,
                         "name": "Assignment",
                         "src": "973:33:2"
                       }
                     ],
-                    "id": 819,
+                    "id": 593,
                     "name": "ExpressionStatement",
                     "src": "973:33:2"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 764
+                      "functionReturnParameters": 538
                     },
                     "children": [
                       {
@@ -1701,22 +1701,22 @@
                           "type": "bool",
                           "value": "true"
                         },
-                        "id": 820,
+                        "id": 594,
                         "name": "Literal",
                         "src": "1024:4:2"
                       }
                     ],
-                    "id": 821,
+                    "id": 595,
                     "name": "Return",
                     "src": "1017:11:2"
                   }
                 ],
-                "id": 822,
+                "id": 596,
                 "name": "Block",
                 "src": "620:415:2"
               }
             ],
-            "id": 823,
+            "id": 597,
             "name": "FunctionDefinition",
             "src": "533:502:2"
           },
@@ -1730,9 +1730,9 @@
               ],
               "name": "onTransfer",
               "payable": false,
-              "scope": 1073,
+              "scope": 847,
               "stateMutability": "nonpayable",
-              "superFunction": 1882,
+              "superFunction": 1138,
               "visibility": "public"
             },
             "children": [
@@ -1742,7 +1742,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_from",
-                      "scope": 930,
+                      "scope": 704,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1755,12 +1755,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 824,
+                        "id": 598,
                         "name": "ElementaryTypeName",
                         "src": "1061:7:2"
                       }
                     ],
-                    "id": 825,
+                    "id": 599,
                     "name": "VariableDeclaration",
                     "src": "1061:13:2"
                   },
@@ -1768,7 +1768,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_to",
-                      "scope": 930,
+                      "scope": 704,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1781,12 +1781,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 826,
+                        "id": 600,
                         "name": "ElementaryTypeName",
                         "src": "1076:7:2"
                       }
                     ],
-                    "id": 827,
+                    "id": 601,
                     "name": "VariableDeclaration",
                     "src": "1076:11:2"
                   },
@@ -1794,7 +1794,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_amount",
-                      "scope": 930,
+                      "scope": 704,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1807,17 +1807,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-                        "id": 828,
+                        "id": 602,
                         "name": "ElementaryTypeName",
                         "src": "1089:4:2"
                       }
                     ],
-                    "id": 829,
+                    "id": 603,
                     "name": "VariableDeclaration",
                     "src": "1089:12:2"
                   }
                 ],
-                "id": 830,
+                "id": 604,
                 "name": "ParameterList",
                 "src": "1060:42:2"
               },
@@ -1827,7 +1827,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 930,
+                      "scope": 704,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -1840,17 +1840,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 831,
+                        "id": 605,
                         "name": "ElementaryTypeName",
                         "src": "1118:4:2"
                       }
                     ],
-                    "id": 832,
+                    "id": 606,
                     "name": "VariableDeclaration",
                     "src": "1118:4:2"
                   }
                 ],
-                "id": 833,
+                "id": 607,
                 "name": "ParameterList",
                 "src": "1117:6:2"
               },
@@ -1884,11 +1884,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2079,
+                              "referencedDeclaration": 1335,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
-                            "id": 834,
+                            "id": 608,
                             "name": "Identifier",
                             "src": "1133:7:2"
                           },
@@ -1925,16 +1925,16 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 2076,
+                                      "referencedDeclaration": 1332,
                                       "type": "msg",
                                       "value": "msg"
                                     },
-                                    "id": 835,
+                                    "id": 609,
                                     "name": "Identifier",
                                     "src": "1141:3:2"
                                   }
                                 ],
-                                "id": 836,
+                                "id": 610,
                                 "name": "MemberAccess",
                                 "src": "1141:10:2"
                               },
@@ -1944,33 +1944,33 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 732,
+                                  "referencedDeclaration": 506,
                                   "type": "address",
                                   "value": "master"
                                 },
-                                "id": 837,
+                                "id": 611,
                                 "name": "Identifier",
                                 "src": "1153:6:2"
                               }
                             ],
-                            "id": 838,
+                            "id": 612,
                             "name": "BinaryOperation",
                             "src": "1141:18:2"
                           }
                         ],
-                        "id": 839,
+                        "id": 613,
                         "name": "FunctionCall",
                         "src": "1133:27:2"
                       }
                     ],
-                    "id": 840,
+                    "id": 614,
                     "name": "ExpressionStatement",
                     "src": "1133:27:2"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        842
+                        616
                       ]
                     },
                     "children": [
@@ -1978,7 +1978,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "allowance",
-                          "scope": 930,
+                          "scope": 704,
                           "stateVariable": false,
                           "storageLocation": "storage",
                           "type": "struct GameController.Allowance storage pointer",
@@ -1990,15 +1990,15 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "Allowance",
-                              "referencedDeclaration": 730,
+                              "referencedDeclaration": 504,
                               "type": "struct GameController.Allowance storage pointer"
                             },
-                            "id": 841,
+                            "id": 615,
                             "name": "UserDefinedTypeName",
                             "src": "1171:9:2"
                           }
                         ],
-                        "id": 842,
+                        "id": 616,
                         "name": "VariableDeclaration",
                         "src": "1171:27:2"
                       },
@@ -2018,11 +2018,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 736,
+                              "referencedDeclaration": 510,
                               "type": "mapping(address => struct GameController.Allowance storage ref)",
                               "value": "allowances"
                             },
-                            "id": 843,
+                            "id": 617,
                             "name": "Identifier",
                             "src": "1201:10:2"
                           },
@@ -2032,28 +2032,28 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 827,
+                              "referencedDeclaration": 601,
                               "type": "address",
                               "value": "_to"
                             },
-                            "id": 844,
+                            "id": 618,
                             "name": "Identifier",
                             "src": "1212:3:2"
                           }
                         ],
-                        "id": 845,
+                        "id": 619,
                         "name": "IndexAccess",
                         "src": "1201:15:2"
                       }
                     ],
-                    "id": 846,
+                    "id": 620,
                     "name": "VariableDeclarationStatement",
                     "src": "1171:45:2"
                   },
                   {
                     "attributes": {
                       "assignments": [
-                        848
+                        622
                       ]
                     },
                     "children": [
@@ -2061,7 +2061,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "balance",
-                          "scope": 930,
+                          "scope": 704,
                           "stateVariable": false,
                           "storageLocation": "storage",
                           "type": "struct GameController.Balance storage pointer",
@@ -2073,15 +2073,15 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "Balance",
-                              "referencedDeclaration": 722,
+                              "referencedDeclaration": 496,
                               "type": "struct GameController.Balance storage pointer"
                             },
-                            "id": 847,
+                            "id": 621,
                             "name": "UserDefinedTypeName",
                             "src": "1226:7:2"
                           }
                         ],
-                        "id": 848,
+                        "id": 622,
                         "name": "VariableDeclaration",
                         "src": "1226:23:2"
                       },
@@ -2103,7 +2103,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "balances",
-                              "referencedDeclaration": 729,
+                              "referencedDeclaration": 503,
                               "type": "mapping(address => struct GameController.Balance storage ref)"
                             },
                             "children": [
@@ -2113,16 +2113,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 842,
+                                  "referencedDeclaration": 616,
                                   "type": "struct GameController.Allowance storage pointer",
                                   "value": "allowance"
                                 },
-                                "id": 849,
+                                "id": 623,
                                 "name": "Identifier",
                                 "src": "1252:9:2"
                               }
                             ],
-                            "id": 850,
+                            "id": 624,
                             "name": "MemberAccess",
                             "src": "1252:18:2"
                           },
@@ -2132,21 +2132,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 825,
+                              "referencedDeclaration": 599,
                               "type": "address",
                               "value": "_from"
                             },
-                            "id": 851,
+                            "id": 625,
                             "name": "Identifier",
                             "src": "1271:5:2"
                           }
                         ],
-                        "id": 852,
+                        "id": 626,
                         "name": "IndexAccess",
                         "src": "1252:25:2"
                       }
                     ],
-                    "id": 853,
+                    "id": 627,
                     "name": "VariableDeclarationStatement",
                     "src": "1226:51:2"
                   },
@@ -2175,7 +2175,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "key_index",
-                              "referencedDeclaration": 717,
+                              "referencedDeclaration": 491,
                               "type": "uint256"
                             },
                             "children": [
@@ -2185,16 +2185,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 848,
+                                  "referencedDeclaration": 622,
                                   "type": "struct GameController.Balance storage pointer",
                                   "value": "balance"
                                 },
-                                "id": 854,
+                                "id": 628,
                                 "name": "Identifier",
                                 "src": "1291:7:2"
                               }
                             ],
-                            "id": 855,
+                            "id": 629,
                             "name": "MemberAccess",
                             "src": "1291:17:2"
                           },
@@ -2211,12 +2211,12 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 856,
+                            "id": 630,
                             "name": "Literal",
                             "src": "1309:1:2"
                           }
                         ],
-                        "id": 857,
+                        "id": 631,
                         "name": "BinaryOperation",
                         "src": "1291:19:2"
                       },
@@ -2243,7 +2243,7 @@
                                       "isPure": false,
                                       "lValueRequested": true,
                                       "member_name": "reserved_amount",
-                                      "referencedDeclaration": 721,
+                                      "referencedDeclaration": 495,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -2253,16 +2253,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 848,
+                                          "referencedDeclaration": 622,
                                           "type": "struct GameController.Balance storage pointer",
                                           "value": "balance"
                                         },
-                                        "id": 858,
+                                        "id": 632,
                                         "name": "Identifier",
                                         "src": "1325:7:2"
                                       }
                                     ],
-                                    "id": 860,
+                                    "id": 634,
                                     "name": "MemberAccess",
                                     "src": "1325:23:2"
                                   },
@@ -2272,28 +2272,28 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 829,
+                                      "referencedDeclaration": 603,
                                       "type": "uint256",
                                       "value": "_amount"
                                     },
-                                    "id": 861,
+                                    "id": 635,
                                     "name": "Identifier",
                                     "src": "1352:7:2"
                                   }
                                 ],
-                                "id": 862,
+                                "id": 636,
                                 "name": "Assignment",
                                 "src": "1325:34:2"
                               }
                             ],
-                            "id": 863,
+                            "id": 637,
                             "name": "ExpressionStatement",
                             "src": "1325:34:2"
                           },
                           {
                             "attributes": {
                               "assignments": [
-                                867
+                                641
                               ]
                             },
                             "children": [
@@ -2301,7 +2301,7 @@
                                 "attributes": {
                                   "constant": false,
                                   "name": "owners",
-                                  "scope": 930,
+                                  "scope": 704,
                                   "stateVariable": false,
                                   "storageLocation": "storage",
                                   "type": "address[] storage pointer",
@@ -2320,17 +2320,17 @@
                                           "name": "address",
                                           "type": "address"
                                         },
-                                        "id": 865,
+                                        "id": 639,
                                         "name": "ElementaryTypeName",
                                         "src": "1373:7:2"
                                       }
                                     ],
-                                    "id": 866,
+                                    "id": 640,
                                     "name": "ArrayTypeName",
                                     "src": "1373:9:2"
                                   }
                                 ],
-                                "id": 867,
+                                "id": 641,
                                 "name": "VariableDeclaration",
                                 "src": "1373:24:2"
                               },
@@ -2342,7 +2342,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "owners",
-                                  "referencedDeclaration": 725,
+                                  "referencedDeclaration": 499,
                                   "type": "address[] storage ref"
                                 },
                                 "children": [
@@ -2352,21 +2352,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 842,
+                                      "referencedDeclaration": 616,
                                       "type": "struct GameController.Allowance storage pointer",
                                       "value": "allowance"
                                     },
-                                    "id": 868,
+                                    "id": 642,
                                     "name": "Identifier",
                                     "src": "1400:9:2"
                                   }
                                 ],
-                                "id": 869,
+                                "id": 643,
                                 "name": "MemberAccess",
                                 "src": "1400:16:2"
                               }
                             ],
-                            "id": 870,
+                            "id": 644,
                             "name": "VariableDeclarationStatement",
                             "src": "1373:43:2"
                           },
@@ -2399,11 +2399,11 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 867,
+                                          "referencedDeclaration": 641,
                                           "type": "address[] storage pointer",
                                           "value": "owners"
                                         },
-                                        "id": 871,
+                                        "id": 645,
                                         "name": "Identifier",
                                         "src": "1431:6:2"
                                       },
@@ -2430,7 +2430,7 @@
                                               "isPure": false,
                                               "lValueRequested": false,
                                               "member_name": "key_index",
-                                              "referencedDeclaration": 717,
+                                              "referencedDeclaration": 491,
                                               "type": "uint256"
                                             },
                                             "children": [
@@ -2440,16 +2440,16 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 848,
+                                                  "referencedDeclaration": 622,
                                                   "type": "struct GameController.Balance storage pointer",
                                                   "value": "balance"
                                                 },
-                                                "id": 872,
+                                                "id": 646,
                                                 "name": "Identifier",
                                                 "src": "1438:7:2"
                                               }
                                             ],
-                                            "id": 873,
+                                            "id": 647,
                                             "name": "MemberAccess",
                                             "src": "1438:17:2"
                                           },
@@ -2466,17 +2466,17 @@
                                               "type": "int_const 1",
                                               "value": "1"
                                             },
-                                            "id": 874,
+                                            "id": 648,
                                             "name": "Literal",
                                             "src": "1456:1:2"
                                           }
                                         ],
-                                        "id": 875,
+                                        "id": 649,
                                         "name": "BinaryOperation",
                                         "src": "1438:19:2"
                                       }
                                     ],
-                                    "id": 876,
+                                    "id": 650,
                                     "name": "IndexAccess",
                                     "src": "1431:27:2"
                                   },
@@ -2496,11 +2496,11 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 867,
+                                          "referencedDeclaration": 641,
                                           "type": "address[] storage pointer",
                                           "value": "owners"
                                         },
-                                        "id": 877,
+                                        "id": 651,
                                         "name": "Identifier",
                                         "src": "1461:6:2"
                                       },
@@ -2537,16 +2537,16 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 867,
+                                                  "referencedDeclaration": 641,
                                                   "type": "address[] storage pointer",
                                                   "value": "owners"
                                                 },
-                                                "id": 878,
+                                                "id": 652,
                                                 "name": "Identifier",
                                                 "src": "1468:6:2"
                                               }
                                             ],
-                                            "id": 879,
+                                            "id": 653,
                                             "name": "MemberAccess",
                                             "src": "1468:13:2"
                                           },
@@ -2563,27 +2563,27 @@
                                               "type": "int_const 1",
                                               "value": "1"
                                             },
-                                            "id": 880,
+                                            "id": 654,
                                             "name": "Literal",
                                             "src": "1482:1:2"
                                           }
                                         ],
-                                        "id": 881,
+                                        "id": 655,
                                         "name": "BinaryOperation",
                                         "src": "1468:15:2"
                                       }
                                     ],
-                                    "id": 882,
+                                    "id": 656,
                                     "name": "IndexAccess",
                                     "src": "1461:23:2"
                                   }
                                 ],
-                                "id": 883,
+                                "id": 657,
                                 "name": "Assignment",
                                 "src": "1431:53:2"
                               }
                             ],
-                            "id": 884,
+                            "id": 658,
                             "name": "ExpressionStatement",
                             "src": "1431:53:2"
                           },
@@ -2616,11 +2616,11 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 867,
+                                          "referencedDeclaration": 641,
                                           "type": "address[] storage pointer",
                                           "value": "owners"
                                         },
-                                        "id": 885,
+                                        "id": 659,
                                         "name": "Identifier",
                                         "src": "1498:6:2"
                                       },
@@ -2657,16 +2657,16 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 867,
+                                                  "referencedDeclaration": 641,
                                                   "type": "address[] storage pointer",
                                                   "value": "owners"
                                                 },
-                                                "id": 886,
+                                                "id": 660,
                                                 "name": "Identifier",
                                                 "src": "1505:6:2"
                                               }
                                             ],
-                                            "id": 887,
+                                            "id": 661,
                                             "name": "MemberAccess",
                                             "src": "1505:13:2"
                                           },
@@ -2683,17 +2683,17 @@
                                               "type": "int_const 1",
                                               "value": "1"
                                             },
-                                            "id": 888,
+                                            "id": 662,
                                             "name": "Literal",
                                             "src": "1519:1:2"
                                           }
                                         ],
-                                        "id": 889,
+                                        "id": 663,
                                         "name": "BinaryOperation",
                                         "src": "1505:15:2"
                                       }
                                     ],
-                                    "id": 890,
+                                    "id": 664,
                                     "name": "IndexAccess",
                                     "src": "1498:23:2"
                                   },
@@ -2703,27 +2703,27 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 825,
+                                      "referencedDeclaration": 599,
                                       "type": "address",
                                       "value": "_from"
                                     },
-                                    "id": 891,
+                                    "id": 665,
                                     "name": "Identifier",
                                     "src": "1524:5:2"
                                   }
                                 ],
-                                "id": 892,
+                                "id": 666,
                                 "name": "Assignment",
                                 "src": "1498:31:2"
                               }
                             ],
-                            "id": 893,
+                            "id": 667,
                             "name": "ExpressionStatement",
                             "src": "1498:31:2"
                           },
                           {
                             "attributes": {
-                              "functionReturnParameters": 833
+                              "functionReturnParameters": 607
                             },
                             "children": [
                               {
@@ -2739,17 +2739,17 @@
                                   "type": "bool",
                                   "value": "true"
                                 },
-                                "id": 894,
+                                "id": 668,
                                 "name": "Literal",
                                 "src": "1551:4:2"
                               }
                             ],
-                            "id": 895,
+                            "id": 669,
                             "name": "Return",
                             "src": "1544:11:2"
                           }
                         ],
-                        "id": 896,
+                        "id": 670,
                         "name": "Block",
                         "src": "1311:255:2"
                       },
@@ -2774,11 +2774,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 842,
+                                      "referencedDeclaration": 616,
                                       "type": "struct GameController.Allowance storage pointer",
                                       "value": "allowance"
                                     },
-                                    "id": 897,
+                                    "id": 671,
                                     "name": "Identifier",
                                     "src": "1584:9:2"
                                   },
@@ -2798,11 +2798,11 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 736,
+                                          "referencedDeclaration": 510,
                                           "type": "mapping(address => struct GameController.Allowance storage ref)",
                                           "value": "allowances"
                                         },
-                                        "id": 898,
+                                        "id": 672,
                                         "name": "Identifier",
                                         "src": "1596:10:2"
                                       },
@@ -2812,26 +2812,26 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 825,
+                                          "referencedDeclaration": 599,
                                           "type": "address",
                                           "value": "_from"
                                         },
-                                        "id": 899,
+                                        "id": 673,
                                         "name": "Identifier",
                                         "src": "1607:5:2"
                                       }
                                     ],
-                                    "id": 900,
+                                    "id": 674,
                                     "name": "IndexAccess",
                                     "src": "1596:17:2"
                                   }
                                 ],
-                                "id": 901,
+                                "id": 675,
                                 "name": "Assignment",
                                 "src": "1584:29:2"
                               }
                             ],
-                            "id": 902,
+                            "id": 676,
                             "name": "ExpressionStatement",
                             "src": "1584:29:2"
                           },
@@ -2854,11 +2854,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 848,
+                                      "referencedDeclaration": 622,
                                       "type": "struct GameController.Balance storage pointer",
                                       "value": "balance"
                                     },
-                                    "id": 903,
+                                    "id": 677,
                                     "name": "Identifier",
                                     "src": "1627:7:2"
                                   },
@@ -2880,7 +2880,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "balances",
-                                          "referencedDeclaration": 729,
+                                          "referencedDeclaration": 503,
                                           "type": "mapping(address => struct GameController.Balance storage ref)"
                                         },
                                         "children": [
@@ -2890,16 +2890,16 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 842,
+                                              "referencedDeclaration": 616,
                                               "type": "struct GameController.Allowance storage pointer",
                                               "value": "allowance"
                                             },
-                                            "id": 904,
+                                            "id": 678,
                                             "name": "Identifier",
                                             "src": "1637:9:2"
                                           }
                                         ],
-                                        "id": 905,
+                                        "id": 679,
                                         "name": "MemberAccess",
                                         "src": "1637:18:2"
                                       },
@@ -2909,26 +2909,26 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 827,
+                                          "referencedDeclaration": 601,
                                           "type": "address",
                                           "value": "_to"
                                         },
-                                        "id": 906,
+                                        "id": 680,
                                         "name": "Identifier",
                                         "src": "1656:3:2"
                                       }
                                     ],
-                                    "id": 907,
+                                    "id": 681,
                                     "name": "IndexAccess",
                                     "src": "1637:23:2"
                                   }
                                 ],
-                                "id": 908,
+                                "id": 682,
                                 "name": "Assignment",
                                 "src": "1627:33:2"
                               }
                             ],
-                            "id": 909,
+                            "id": 683,
                             "name": "ExpressionStatement",
                             "src": "1627:33:2"
                           },
@@ -2957,7 +2957,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "key_index",
-                                      "referencedDeclaration": 717,
+                                      "referencedDeclaration": 491,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -2967,16 +2967,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 848,
+                                          "referencedDeclaration": 622,
                                           "type": "struct GameController.Balance storage pointer",
                                           "value": "balance"
                                         },
-                                        "id": 910,
+                                        "id": 684,
                                         "name": "Identifier",
                                         "src": "1678:7:2"
                                       }
                                     ],
-                                    "id": 911,
+                                    "id": 685,
                                     "name": "MemberAccess",
                                     "src": "1678:17:2"
                                   },
@@ -2993,12 +2993,12 @@
                                       "type": "int_const 0",
                                       "value": "0"
                                     },
-                                    "id": 912,
+                                    "id": 686,
                                     "name": "Literal",
                                     "src": "1696:1:2"
                                   }
                                 ],
-                                "id": 913,
+                                "id": 687,
                                 "name": "BinaryOperation",
                                 "src": "1678:19:2"
                               },
@@ -3025,7 +3025,7 @@
                                               "isPure": false,
                                               "lValueRequested": true,
                                               "member_name": "reserved_amount",
-                                              "referencedDeclaration": 721,
+                                              "referencedDeclaration": 495,
                                               "type": "uint256"
                                             },
                                             "children": [
@@ -3035,16 +3035,16 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 848,
+                                                  "referencedDeclaration": 622,
                                                   "type": "struct GameController.Balance storage pointer",
                                                   "value": "balance"
                                                 },
-                                                "id": 914,
+                                                "id": 688,
                                                 "name": "Identifier",
                                                 "src": "1716:7:2"
                                               }
                                             ],
-                                            "id": 916,
+                                            "id": 690,
                                             "name": "MemberAccess",
                                             "src": "1716:23:2"
                                           },
@@ -3054,27 +3054,27 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 829,
+                                              "referencedDeclaration": 603,
                                               "type": "uint256",
                                               "value": "_amount"
                                             },
-                                            "id": 917,
+                                            "id": 691,
                                             "name": "Identifier",
                                             "src": "1743:7:2"
                                           }
                                         ],
-                                        "id": 918,
+                                        "id": 692,
                                         "name": "Assignment",
                                         "src": "1716:34:2"
                                       }
                                     ],
-                                    "id": 919,
+                                    "id": 693,
                                     "name": "ExpressionStatement",
                                     "src": "1716:34:2"
                                   },
                                   {
                                     "attributes": {
-                                      "functionReturnParameters": 833
+                                      "functionReturnParameters": 607
                                     },
                                     "children": [
                                       {
@@ -3090,17 +3090,17 @@
                                           "type": "bool",
                                           "value": "true"
                                         },
-                                        "id": 920,
+                                        "id": 694,
                                         "name": "Literal",
                                         "src": "1775:4:2"
                                       }
                                     ],
-                                    "id": 921,
+                                    "id": 695,
                                     "name": "Return",
                                     "src": "1768:11:2"
                                   }
                                 ],
-                                "id": 922,
+                                "id": 696,
                                 "name": "Block",
                                 "src": "1698:96:2"
                               },
@@ -3108,7 +3108,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "functionReturnParameters": 833
+                                      "functionReturnParameters": 607
                                     },
                                     "children": [
                                       {
@@ -3124,42 +3124,42 @@
                                           "type": "bool",
                                           "value": "false"
                                         },
-                                        "id": 923,
+                                        "id": 697,
                                         "name": "Literal",
                                         "src": "1823:5:2"
                                       }
                                     ],
-                                    "id": 924,
+                                    "id": 698,
                                     "name": "Return",
                                     "src": "1816:12:2"
                                   }
                                 ],
-                                "id": 925,
+                                "id": 699,
                                 "name": "Block",
                                 "src": "1798:45:2"
                               }
                             ],
-                            "id": 926,
+                            "id": 700,
                             "name": "IfStatement",
                             "src": "1675:168:2"
                           }
                         ],
-                        "id": 927,
+                        "id": 701,
                         "name": "Block",
                         "src": "1570:284:2"
                       }
                     ],
-                    "id": 928,
+                    "id": 702,
                     "name": "IfStatement",
                     "src": "1288:566:2"
                   }
                 ],
-                "id": 929,
+                "id": 703,
                 "name": "Block",
                 "src": "1123:737:2"
               }
             ],
-            "id": 930,
+            "id": 704,
             "name": "FunctionDefinition",
             "src": "1041:819:2"
           },
@@ -3173,9 +3173,9 @@
               ],
               "name": "proxyPayment",
               "payable": true,
-              "scope": 1073,
+              "scope": 847,
               "stateMutability": "payable",
-              "superFunction": 1871,
+              "superFunction": 1127,
               "visibility": "public"
             },
             "children": [
@@ -3185,7 +3185,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 940,
+                      "scope": 714,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -3198,17 +3198,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 931,
+                        "id": 705,
                         "name": "ElementaryTypeName",
                         "src": "1888:7:2"
                       }
                     ],
-                    "id": 932,
+                    "id": 706,
                     "name": "VariableDeclaration",
                     "src": "1888:7:2"
                   }
                 ],
-                "id": 933,
+                "id": 707,
                 "name": "ParameterList",
                 "src": "1887:9:2"
               },
@@ -3218,7 +3218,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 940,
+                      "scope": 714,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -3231,17 +3231,17 @@
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 934,
+                        "id": 708,
                         "name": "ElementaryTypeName",
                         "src": "1920:4:2"
                       }
                     ],
-                    "id": 935,
+                    "id": 709,
                     "name": "VariableDeclaration",
                     "src": "1920:4:2"
                   }
                 ],
-                "id": 936,
+                "id": 710,
                 "name": "ParameterList",
                 "src": "1919:6:2"
               },
@@ -3249,7 +3249,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 936
+                      "functionReturnParameters": 710
                     },
                     "children": [
                       {
@@ -3265,22 +3265,22 @@
                           "type": "bool",
                           "value": "false"
                         },
-                        "id": 937,
+                        "id": 711,
                         "name": "Literal",
                         "src": "1943:5:2"
                       }
                     ],
-                    "id": 938,
+                    "id": 712,
                     "name": "Return",
                     "src": "1936:12:2"
                   }
                 ],
-                "id": 939,
+                "id": 713,
                 "name": "Block",
                 "src": "1926:29:2"
               }
             ],
-            "id": 940,
+            "id": 714,
             "name": "FunctionDefinition",
             "src": "1866:89:2"
           },
@@ -3294,7 +3294,7 @@
               ],
               "name": "amount_owner",
               "payable": false,
-              "scope": 1073,
+              "scope": 847,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -3306,7 +3306,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_to",
-                      "scope": 1003,
+                      "scope": 777,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -3319,12 +3319,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 941,
+                        "id": 715,
                         "name": "ElementaryTypeName",
                         "src": "1983:7:2"
                       }
                     ],
-                    "id": 942,
+                    "id": 716,
                     "name": "VariableDeclaration",
                     "src": "1983:11:2"
                   },
@@ -3332,7 +3332,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_amount",
-                      "scope": 1003,
+                      "scope": 777,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -3345,17 +3345,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 943,
+                        "id": 717,
                         "name": "ElementaryTypeName",
                         "src": "1996:7:2"
                       }
                     ],
-                    "id": 944,
+                    "id": 718,
                     "name": "VariableDeclaration",
                     "src": "1996:15:2"
                   }
                 ],
-                "id": 945,
+                "id": 719,
                 "name": "ParameterList",
                 "src": "1982:30:2"
               },
@@ -3365,7 +3365,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1003,
+                      "scope": 777,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -3378,17 +3378,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 946,
+                        "id": 720,
                         "name": "ElementaryTypeName",
                         "src": "2033:7:2"
                       }
                     ],
-                    "id": 947,
+                    "id": 721,
                     "name": "VariableDeclaration",
                     "src": "2033:7:2"
                   }
                 ],
-                "id": 948,
+                "id": 722,
                 "name": "ParameterList",
                 "src": "2032:9:2"
               },
@@ -3397,7 +3397,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        950
+                        724
                       ]
                     },
                     "children": [
@@ -3405,7 +3405,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "count",
-                          "scope": 1003,
+                          "scope": 777,
                           "stateVariable": false,
                           "storageLocation": "default",
                           "type": "uint256",
@@ -3418,12 +3418,12 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 949,
+                            "id": 723,
                             "name": "ElementaryTypeName",
                             "src": "2051:7:2"
                           }
                         ],
-                        "id": 950,
+                        "id": 724,
                         "name": "VariableDeclaration",
                         "src": "2051:13:2"
                       },
@@ -3447,7 +3447,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "owners",
-                              "referencedDeclaration": 725,
+                              "referencedDeclaration": 499,
                               "type": "address[] storage ref"
                             },
                             "children": [
@@ -3467,11 +3467,11 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 736,
+                                      "referencedDeclaration": 510,
                                       "type": "mapping(address => struct GameController.Allowance storage ref)",
                                       "value": "allowances"
                                     },
-                                    "id": 951,
+                                    "id": 725,
                                     "name": "Identifier",
                                     "src": "2067:10:2"
                                   },
@@ -3481,31 +3481,31 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 942,
+                                      "referencedDeclaration": 716,
                                       "type": "address",
                                       "value": "_to"
                                     },
-                                    "id": 952,
+                                    "id": 726,
                                     "name": "Identifier",
                                     "src": "2078:3:2"
                                   }
                                 ],
-                                "id": 953,
+                                "id": 727,
                                 "name": "IndexAccess",
                                 "src": "2067:15:2"
                               }
                             ],
-                            "id": 954,
+                            "id": 728,
                             "name": "MemberAccess",
                             "src": "2067:22:2"
                           }
                         ],
-                        "id": 955,
+                        "id": 729,
                         "name": "MemberAccess",
                         "src": "2067:29:2"
                       }
                     ],
-                    "id": 956,
+                    "id": 730,
                     "name": "VariableDeclarationStatement",
                     "src": "2051:45:2"
                   },
@@ -3514,7 +3514,7 @@
                       {
                         "attributes": {
                           "assignments": [
-                            958
+                            732
                           ]
                         },
                         "children": [
@@ -3522,7 +3522,7 @@
                             "attributes": {
                               "constant": false,
                               "name": "i",
-                              "scope": 1003,
+                              "scope": 777,
                               "stateVariable": false,
                               "storageLocation": "default",
                               "type": "uint256",
@@ -3535,12 +3535,12 @@
                                   "name": "uint",
                                   "type": "uint256"
                                 },
-                                "id": 957,
+                                "id": 731,
                                 "name": "ElementaryTypeName",
                                 "src": "2110:4:2"
                               }
                             ],
-                            "id": 958,
+                            "id": 732,
                             "name": "VariableDeclaration",
                             "src": "2110:6:2"
                           },
@@ -3557,12 +3557,12 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 959,
+                            "id": 733,
                             "name": "Literal",
                             "src": "2119:1:2"
                           }
                         ],
-                        "id": 960,
+                        "id": 734,
                         "name": "VariableDeclarationStatement",
                         "src": "2110:10:2"
                       },
@@ -3587,11 +3587,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 958,
+                              "referencedDeclaration": 732,
                               "type": "uint256",
                               "value": "i"
                             },
-                            "id": 961,
+                            "id": 735,
                             "name": "Identifier",
                             "src": "2122:1:2"
                           },
@@ -3601,16 +3601,16 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 950,
+                              "referencedDeclaration": 724,
                               "type": "uint256",
                               "value": "count"
                             },
-                            "id": 962,
+                            "id": 736,
                             "name": "Identifier",
                             "src": "2126:5:2"
                           }
                         ],
-                        "id": 963,
+                        "id": 737,
                         "name": "BinaryOperation",
                         "src": "2122:9:2"
                       },
@@ -3634,21 +3634,21 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 958,
+                                  "referencedDeclaration": 732,
                                   "type": "uint256",
                                   "value": "i"
                                 },
-                                "id": 964,
+                                "id": 738,
                                 "name": "Identifier",
                                 "src": "2133:1:2"
                               }
                             ],
-                            "id": 965,
+                            "id": 739,
                             "name": "UnaryOperation",
                             "src": "2133:3:2"
                           }
                         ],
-                        "id": 966,
+                        "id": 740,
                         "name": "ExpressionStatement",
                         "src": "2133:3:2"
                       },
@@ -3657,7 +3657,7 @@
                           {
                             "attributes": {
                               "assignments": [
-                                968
+                                742
                               ]
                             },
                             "children": [
@@ -3665,7 +3665,7 @@
                                 "attributes": {
                                   "constant": false,
                                   "name": "owner",
-                                  "scope": 1003,
+                                  "scope": 777,
                                   "stateVariable": false,
                                   "storageLocation": "default",
                                   "type": "address",
@@ -3678,12 +3678,12 @@
                                       "name": "address",
                                       "type": "address"
                                     },
-                                    "id": 967,
+                                    "id": 741,
                                     "name": "ElementaryTypeName",
                                     "src": "2152:7:2"
                                   }
                                 ],
-                                "id": 968,
+                                "id": 742,
                                 "name": "VariableDeclaration",
                                 "src": "2152:13:2"
                               },
@@ -3705,7 +3705,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "owners",
-                                      "referencedDeclaration": 725,
+                                      "referencedDeclaration": 499,
                                       "type": "address[] storage ref"
                                     },
                                     "children": [
@@ -3725,11 +3725,11 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 736,
+                                              "referencedDeclaration": 510,
                                               "type": "mapping(address => struct GameController.Allowance storage ref)",
                                               "value": "allowances"
                                             },
-                                            "id": 969,
+                                            "id": 743,
                                             "name": "Identifier",
                                             "src": "2168:10:2"
                                           },
@@ -3739,21 +3739,21 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 942,
+                                              "referencedDeclaration": 716,
                                               "type": "address",
                                               "value": "_to"
                                             },
-                                            "id": 970,
+                                            "id": 744,
                                             "name": "Identifier",
                                             "src": "2179:3:2"
                                           }
                                         ],
-                                        "id": 971,
+                                        "id": 745,
                                         "name": "IndexAccess",
                                         "src": "2168:15:2"
                                       }
                                     ],
-                                    "id": 972,
+                                    "id": 746,
                                     "name": "MemberAccess",
                                     "src": "2168:22:2"
                                   },
@@ -3763,28 +3763,28 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 958,
+                                      "referencedDeclaration": 732,
                                       "type": "uint256",
                                       "value": "i"
                                     },
-                                    "id": 973,
+                                    "id": 747,
                                     "name": "Identifier",
                                     "src": "2191:1:2"
                                   }
                                 ],
-                                "id": 974,
+                                "id": 748,
                                 "name": "IndexAccess",
                                 "src": "2168:25:2"
                               }
                             ],
-                            "id": 975,
+                            "id": 749,
                             "name": "VariableDeclarationStatement",
                             "src": "2152:41:2"
                           },
                           {
                             "attributes": {
                               "assignments": [
-                                977
+                                751
                               ]
                             },
                             "children": [
@@ -3792,7 +3792,7 @@
                                 "attributes": {
                                   "constant": false,
                                   "name": "balance",
-                                  "scope": 1003,
+                                  "scope": 777,
                                   "stateVariable": false,
                                   "storageLocation": "storage",
                                   "type": "struct GameController.Balance storage pointer",
@@ -3804,15 +3804,15 @@
                                     "attributes": {
                                       "contractScope": null,
                                       "name": "Balance",
-                                      "referencedDeclaration": 722,
+                                      "referencedDeclaration": 496,
                                       "type": "struct GameController.Balance storage pointer"
                                     },
-                                    "id": 976,
+                                    "id": 750,
                                     "name": "UserDefinedTypeName",
                                     "src": "2207:7:2"
                                   }
                                 ],
-                                "id": 977,
+                                "id": 751,
                                 "name": "VariableDeclaration",
                                 "src": "2207:23:2"
                               },
@@ -3834,7 +3834,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "balances",
-                                      "referencedDeclaration": 729,
+                                      "referencedDeclaration": 503,
                                       "type": "mapping(address => struct GameController.Balance storage ref)"
                                     },
                                     "children": [
@@ -3854,11 +3854,11 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 736,
+                                              "referencedDeclaration": 510,
                                               "type": "mapping(address => struct GameController.Allowance storage ref)",
                                               "value": "allowances"
                                             },
-                                            "id": 978,
+                                            "id": 752,
                                             "name": "Identifier",
                                             "src": "2233:10:2"
                                           },
@@ -3868,21 +3868,21 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 942,
+                                              "referencedDeclaration": 716,
                                               "type": "address",
                                               "value": "_to"
                                             },
-                                            "id": 979,
+                                            "id": 753,
                                             "name": "Identifier",
                                             "src": "2244:3:2"
                                           }
                                         ],
-                                        "id": 980,
+                                        "id": 754,
                                         "name": "IndexAccess",
                                         "src": "2233:15:2"
                                       }
                                     ],
-                                    "id": 981,
+                                    "id": 755,
                                     "name": "MemberAccess",
                                     "src": "2233:24:2"
                                   },
@@ -3892,21 +3892,21 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 968,
+                                      "referencedDeclaration": 742,
                                       "type": "address",
                                       "value": "owner"
                                     },
-                                    "id": 982,
+                                    "id": 756,
                                     "name": "Identifier",
                                     "src": "2258:5:2"
                                   }
                                 ],
-                                "id": 983,
+                                "id": 757,
                                 "name": "IndexAccess",
                                 "src": "2233:31:2"
                               }
                             ],
-                            "id": 984,
+                            "id": 758,
                             "name": "VariableDeclarationStatement",
                             "src": "2207:57:2"
                           },
@@ -3938,7 +3938,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "approved_amount",
-                                      "referencedDeclaration": 719,
+                                      "referencedDeclaration": 493,
                                       "type": "uint256"
                                     },
                                     "children": [
@@ -3948,16 +3948,16 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 977,
+                                          "referencedDeclaration": 751,
                                           "type": "struct GameController.Balance storage pointer",
                                           "value": "balance"
                                         },
-                                        "id": 985,
+                                        "id": 759,
                                         "name": "Identifier",
                                         "src": "2281:7:2"
                                       }
                                     ],
-                                    "id": 986,
+                                    "id": 760,
                                     "name": "MemberAccess",
                                     "src": "2281:23:2"
                                   },
@@ -3982,11 +3982,11 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 944,
+                                          "referencedDeclaration": 718,
                                           "type": "uint256",
                                           "value": "_amount"
                                         },
-                                        "id": 987,
+                                        "id": 761,
                                         "name": "Identifier",
                                         "src": "2308:7:2"
                                       },
@@ -3998,7 +3998,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "reserved_amount",
-                                          "referencedDeclaration": 721,
+                                          "referencedDeclaration": 495,
                                           "type": "uint256"
                                         },
                                         "children": [
@@ -4008,26 +4008,26 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 977,
+                                              "referencedDeclaration": 751,
                                               "type": "struct GameController.Balance storage pointer",
                                               "value": "balance"
                                             },
-                                            "id": 988,
+                                            "id": 762,
                                             "name": "Identifier",
                                             "src": "2318:7:2"
                                           }
                                         ],
-                                        "id": 989,
+                                        "id": 763,
                                         "name": "MemberAccess",
                                         "src": "2318:23:2"
                                       }
                                     ],
-                                    "id": 990,
+                                    "id": 764,
                                     "name": "BinaryOperation",
                                     "src": "2308:33:2"
                                   }
                                 ],
-                                "id": 991,
+                                "id": 765,
                                 "name": "BinaryOperation",
                                 "src": "2281:60:2"
                               },
@@ -4035,7 +4035,7 @@
                                 "children": [
                                   {
                                     "attributes": {
-                                      "functionReturnParameters": 948
+                                      "functionReturnParameters": 722
                                     },
                                     "children": [
                                       {
@@ -4044,42 +4044,42 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 968,
+                                          "referencedDeclaration": 742,
                                           "type": "address",
                                           "value": "owner"
                                         },
-                                        "id": 992,
+                                        "id": 766,
                                         "name": "Identifier",
                                         "src": "2367:5:2"
                                       }
                                     ],
-                                    "id": 993,
+                                    "id": 767,
                                     "name": "Return",
                                     "src": "2360:12:2"
                                   }
                                 ],
-                                "id": 994,
+                                "id": 768,
                                 "name": "Block",
                                 "src": "2342:45:2"
                               }
                             ],
-                            "id": 995,
+                            "id": 769,
                             "name": "IfStatement",
                             "src": "2278:109:2"
                           }
                         ],
-                        "id": 996,
+                        "id": 770,
                         "name": "Block",
                         "src": "2138:259:2"
                       }
                     ],
-                    "id": 997,
+                    "id": 771,
                     "name": "ForStatement",
                     "src": "2106:291:2"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 948
+                      "functionReturnParameters": 722
                     },
                     "children": [
                       {
@@ -4112,7 +4112,7 @@
                               "type": "type(address)",
                               "value": "address"
                             },
-                            "id": 998,
+                            "id": 772,
                             "name": "ElementaryTypeNameExpression",
                             "src": "2413:7:2"
                           },
@@ -4129,27 +4129,27 @@
                               "type": "int_const 0",
                               "value": "0"
                             },
-                            "id": 999,
+                            "id": 773,
                             "name": "Literal",
                             "src": "2421:1:2"
                           }
                         ],
-                        "id": 1000,
+                        "id": 774,
                         "name": "FunctionCall",
                         "src": "2413:10:2"
                       }
                     ],
-                    "id": 1001,
+                    "id": 775,
                     "name": "Return",
                     "src": "2406:17:2"
                   }
                 ],
-                "id": 1002,
+                "id": 776,
                 "name": "Block",
                 "src": "2041:389:2"
               }
             ],
-            "id": 1003,
+            "id": 777,
             "name": "FunctionDefinition",
             "src": "1961:469:2"
           },
@@ -4163,7 +4163,7 @@
               ],
               "name": "approved_amount",
               "payable": false,
-              "scope": 1073,
+              "scope": 847,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4175,7 +4175,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_owner",
-                      "scope": 1019,
+                      "scope": 793,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -4188,12 +4188,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1004,
+                        "id": 778,
                         "name": "ElementaryTypeName",
                         "src": "2461:7:2"
                       }
                     ],
-                    "id": 1005,
+                    "id": 779,
                     "name": "VariableDeclaration",
                     "src": "2461:14:2"
                   },
@@ -4201,7 +4201,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_game",
-                      "scope": 1019,
+                      "scope": 793,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -4214,17 +4214,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1006,
+                        "id": 780,
                         "name": "ElementaryTypeName",
                         "src": "2477:7:2"
                       }
                     ],
-                    "id": 1007,
+                    "id": 781,
                     "name": "VariableDeclaration",
                     "src": "2477:13:2"
                   }
                 ],
-                "id": 1008,
+                "id": 782,
                 "name": "ParameterList",
                 "src": "2460:31:2"
               },
@@ -4234,7 +4234,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1019,
+                      "scope": 793,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4247,17 +4247,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 1009,
+                        "id": 783,
                         "name": "ElementaryTypeName",
                         "src": "2512:7:2"
                       }
                     ],
-                    "id": 1010,
+                    "id": 784,
                     "name": "VariableDeclaration",
                     "src": "2512:7:2"
                   }
                 ],
-                "id": 1011,
+                "id": 785,
                 "name": "ParameterList",
                 "src": "2511:9:2"
               },
@@ -4265,7 +4265,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 1011
+                      "functionReturnParameters": 785
                     },
                     "children": [
                       {
@@ -4276,7 +4276,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "approved_amount",
-                          "referencedDeclaration": 719,
+                          "referencedDeclaration": 493,
                           "type": "uint256"
                         },
                         "children": [
@@ -4310,11 +4310,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1072,
+                                  "referencedDeclaration": 846,
                                   "type": "function (address,address) view returns (struct GameController.Balance memory)",
                                   "value": "owner_balance"
                                 },
-                                "id": 1012,
+                                "id": 786,
                                 "name": "Identifier",
                                 "src": "2537:13:2"
                               },
@@ -4324,11 +4324,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1005,
+                                  "referencedDeclaration": 779,
                                   "type": "address",
                                   "value": "_owner"
                                 },
-                                "id": 1013,
+                                "id": 787,
                                 "name": "Identifier",
                                 "src": "2551:6:2"
                               },
@@ -4338,36 +4338,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1007,
+                                  "referencedDeclaration": 781,
                                   "type": "address",
                                   "value": "_game"
                                 },
-                                "id": 1014,
+                                "id": 788,
                                 "name": "Identifier",
                                 "src": "2559:5:2"
                               }
                             ],
-                            "id": 1015,
+                            "id": 789,
                             "name": "FunctionCall",
                             "src": "2537:28:2"
                           }
                         ],
-                        "id": 1016,
+                        "id": 790,
                         "name": "MemberAccess",
                         "src": "2537:44:2"
                       }
                     ],
-                    "id": 1017,
+                    "id": 791,
                     "name": "Return",
                     "src": "2530:51:2"
                   }
                 ],
-                "id": 1018,
+                "id": 792,
                 "name": "Block",
                 "src": "2520:68:2"
               }
             ],
-            "id": 1019,
+            "id": 793,
             "name": "FunctionDefinition",
             "src": "2436:152:2"
           },
@@ -4381,7 +4381,7 @@
               ],
               "name": "reserved_amount",
               "payable": false,
-              "scope": 1073,
+              "scope": 847,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4393,7 +4393,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_owner",
-                      "scope": 1035,
+                      "scope": 809,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -4406,12 +4406,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1020,
+                        "id": 794,
                         "name": "ElementaryTypeName",
                         "src": "2619:7:2"
                       }
                     ],
-                    "id": 1021,
+                    "id": 795,
                     "name": "VariableDeclaration",
                     "src": "2619:14:2"
                   },
@@ -4419,7 +4419,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_game",
-                      "scope": 1035,
+                      "scope": 809,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -4432,17 +4432,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1022,
+                        "id": 796,
                         "name": "ElementaryTypeName",
                         "src": "2635:7:2"
                       }
                     ],
-                    "id": 1023,
+                    "id": 797,
                     "name": "VariableDeclaration",
                     "src": "2635:13:2"
                   }
                 ],
-                "id": 1024,
+                "id": 798,
                 "name": "ParameterList",
                 "src": "2618:31:2"
               },
@@ -4452,7 +4452,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1035,
+                      "scope": 809,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4465,17 +4465,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 1025,
+                        "id": 799,
                         "name": "ElementaryTypeName",
                         "src": "2670:7:2"
                       }
                     ],
-                    "id": 1026,
+                    "id": 800,
                     "name": "VariableDeclaration",
                     "src": "2670:7:2"
                   }
                 ],
-                "id": 1027,
+                "id": 801,
                 "name": "ParameterList",
                 "src": "2669:9:2"
               },
@@ -4483,7 +4483,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 1027
+                      "functionReturnParameters": 801
                     },
                     "children": [
                       {
@@ -4494,7 +4494,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "reserved_amount",
-                          "referencedDeclaration": 721,
+                          "referencedDeclaration": 495,
                           "type": "uint256"
                         },
                         "children": [
@@ -4528,11 +4528,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1072,
+                                  "referencedDeclaration": 846,
                                   "type": "function (address,address) view returns (struct GameController.Balance memory)",
                                   "value": "owner_balance"
                                 },
-                                "id": 1028,
+                                "id": 802,
                                 "name": "Identifier",
                                 "src": "2695:13:2"
                               },
@@ -4542,11 +4542,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1021,
+                                  "referencedDeclaration": 795,
                                   "type": "address",
                                   "value": "_owner"
                                 },
-                                "id": 1029,
+                                "id": 803,
                                 "name": "Identifier",
                                 "src": "2709:6:2"
                               },
@@ -4556,36 +4556,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1023,
+                                  "referencedDeclaration": 797,
                                   "type": "address",
                                   "value": "_game"
                                 },
-                                "id": 1030,
+                                "id": 804,
                                 "name": "Identifier",
                                 "src": "2717:5:2"
                               }
                             ],
-                            "id": 1031,
+                            "id": 805,
                             "name": "FunctionCall",
                             "src": "2695:28:2"
                           }
                         ],
-                        "id": 1032,
+                        "id": 806,
                         "name": "MemberAccess",
                         "src": "2695:44:2"
                       }
                     ],
-                    "id": 1033,
+                    "id": 807,
                     "name": "Return",
                     "src": "2688:51:2"
                   }
                 ],
-                "id": 1034,
+                "id": 808,
                 "name": "Block",
                 "src": "2678:68:2"
               }
             ],
-            "id": 1035,
+            "id": 809,
             "name": "FunctionDefinition",
             "src": "2594:152:2"
           },
@@ -4599,7 +4599,7 @@
               ],
               "name": "owner_index",
               "payable": false,
-              "scope": 1073,
+              "scope": 847,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -4611,7 +4611,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_owner",
-                      "scope": 1051,
+                      "scope": 825,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -4624,12 +4624,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1036,
+                        "id": 810,
                         "name": "ElementaryTypeName",
                         "src": "2773:7:2"
                       }
                     ],
-                    "id": 1037,
+                    "id": 811,
                     "name": "VariableDeclaration",
                     "src": "2773:14:2"
                   },
@@ -4637,7 +4637,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_game",
-                      "scope": 1051,
+                      "scope": 825,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -4650,17 +4650,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1038,
+                        "id": 812,
                         "name": "ElementaryTypeName",
                         "src": "2789:7:2"
                       }
                     ],
-                    "id": 1039,
+                    "id": 813,
                     "name": "VariableDeclaration",
                     "src": "2789:13:2"
                   }
                 ],
-                "id": 1040,
+                "id": 814,
                 "name": "ParameterList",
                 "src": "2772:31:2"
               },
@@ -4670,7 +4670,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1051,
+                      "scope": 825,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -4683,17 +4683,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 1041,
+                        "id": 815,
                         "name": "ElementaryTypeName",
                         "src": "2824:7:2"
                       }
                     ],
-                    "id": 1042,
+                    "id": 816,
                     "name": "VariableDeclaration",
                     "src": "2824:7:2"
                   }
                 ],
-                "id": 1043,
+                "id": 817,
                 "name": "ParameterList",
                 "src": "2823:9:2"
               },
@@ -4701,7 +4701,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 1043
+                      "functionReturnParameters": 817
                     },
                     "children": [
                       {
@@ -4712,7 +4712,7 @@
                           "isPure": false,
                           "lValueRequested": false,
                           "member_name": "key_index",
-                          "referencedDeclaration": 717,
+                          "referencedDeclaration": 491,
                           "type": "uint256"
                         },
                         "children": [
@@ -4746,11 +4746,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1072,
+                                  "referencedDeclaration": 846,
                                   "type": "function (address,address) view returns (struct GameController.Balance memory)",
                                   "value": "owner_balance"
                                 },
-                                "id": 1044,
+                                "id": 818,
                                 "name": "Identifier",
                                 "src": "2849:13:2"
                               },
@@ -4760,11 +4760,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1037,
+                                  "referencedDeclaration": 811,
                                   "type": "address",
                                   "value": "_owner"
                                 },
-                                "id": 1045,
+                                "id": 819,
                                 "name": "Identifier",
                                 "src": "2863:6:2"
                               },
@@ -4774,36 +4774,36 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1039,
+                                  "referencedDeclaration": 813,
                                   "type": "address",
                                   "value": "_game"
                                 },
-                                "id": 1046,
+                                "id": 820,
                                 "name": "Identifier",
                                 "src": "2871:5:2"
                               }
                             ],
-                            "id": 1047,
+                            "id": 821,
                             "name": "FunctionCall",
                             "src": "2849:28:2"
                           }
                         ],
-                        "id": 1048,
+                        "id": 822,
                         "name": "MemberAccess",
                         "src": "2849:38:2"
                       }
                     ],
-                    "id": 1049,
+                    "id": 823,
                     "name": "Return",
                     "src": "2842:45:2"
                   }
                 ],
-                "id": 1050,
+                "id": 824,
                 "name": "Block",
                 "src": "2832:62:2"
               }
             ],
-            "id": 1051,
+            "id": 825,
             "name": "FunctionDefinition",
             "src": "2752:142:2"
           },
@@ -4817,7 +4817,7 @@
               ],
               "name": "owner_balance",
               "payable": false,
-              "scope": 1073,
+              "scope": 847,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "internal"
@@ -4829,7 +4829,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_owner",
-                      "scope": 1072,
+                      "scope": 846,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -4842,12 +4842,12 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1052,
+                        "id": 826,
                         "name": "ElementaryTypeName",
                         "src": "2923:7:2"
                       }
                     ],
-                    "id": 1053,
+                    "id": 827,
                     "name": "VariableDeclaration",
                     "src": "2923:14:2"
                   },
@@ -4855,7 +4855,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_game",
-                      "scope": 1072,
+                      "scope": 846,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -4868,17 +4868,17 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 1054,
+                        "id": 828,
                         "name": "ElementaryTypeName",
                         "src": "2939:7:2"
                       }
                     ],
-                    "id": 1055,
+                    "id": 829,
                     "name": "VariableDeclaration",
                     "src": "2939:13:2"
                   }
                 ],
-                "id": 1056,
+                "id": 830,
                 "name": "ParameterList",
                 "src": "2922:31:2"
               },
@@ -4888,7 +4888,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 1072,
+                      "scope": 846,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "struct GameController.Balance memory",
@@ -4900,20 +4900,20 @@
                         "attributes": {
                           "contractScope": null,
                           "name": "Balance",
-                          "referencedDeclaration": 722,
+                          "referencedDeclaration": 496,
                           "type": "struct GameController.Balance storage pointer"
                         },
-                        "id": 1057,
+                        "id": 831,
                         "name": "UserDefinedTypeName",
                         "src": "2976:7:2"
                       }
                     ],
-                    "id": 1058,
+                    "id": 832,
                     "name": "VariableDeclaration",
                     "src": "2976:7:2"
                   }
                 ],
-                "id": 1059,
+                "id": 833,
                 "name": "ParameterList",
                 "src": "2975:9:2"
               },
@@ -4922,7 +4922,7 @@
                   {
                     "attributes": {
                       "assignments": [
-                        1061
+                        835
                       ]
                     },
                     "children": [
@@ -4930,7 +4930,7 @@
                         "attributes": {
                           "constant": false,
                           "name": "allowance",
-                          "scope": 1072,
+                          "scope": 846,
                           "stateVariable": false,
                           "storageLocation": "storage",
                           "type": "struct GameController.Allowance storage pointer",
@@ -4942,15 +4942,15 @@
                             "attributes": {
                               "contractScope": null,
                               "name": "Allowance",
-                              "referencedDeclaration": 730,
+                              "referencedDeclaration": 504,
                               "type": "struct GameController.Allowance storage pointer"
                             },
-                            "id": 1060,
+                            "id": 834,
                             "name": "UserDefinedTypeName",
                             "src": "2994:9:2"
                           }
                         ],
-                        "id": 1061,
+                        "id": 835,
                         "name": "VariableDeclaration",
                         "src": "2994:27:2"
                       },
@@ -4970,11 +4970,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 736,
+                              "referencedDeclaration": 510,
                               "type": "mapping(address => struct GameController.Allowance storage ref)",
                               "value": "allowances"
                             },
-                            "id": 1062,
+                            "id": 836,
                             "name": "Identifier",
                             "src": "3024:10:2"
                           },
@@ -4984,27 +4984,27 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1055,
+                              "referencedDeclaration": 829,
                               "type": "address",
                               "value": "_game"
                             },
-                            "id": 1063,
+                            "id": 837,
                             "name": "Identifier",
                             "src": "3035:5:2"
                           }
                         ],
-                        "id": 1064,
+                        "id": 838,
                         "name": "IndexAccess",
                         "src": "3024:17:2"
                       }
                     ],
-                    "id": 1065,
+                    "id": 839,
                     "name": "VariableDeclarationStatement",
                     "src": "2994:47:2"
                   },
                   {
                     "attributes": {
-                      "functionReturnParameters": 1059
+                      "functionReturnParameters": 833
                     },
                     "children": [
                       {
@@ -5025,7 +5025,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "balances",
-                              "referencedDeclaration": 729,
+                              "referencedDeclaration": 503,
                               "type": "mapping(address => struct GameController.Balance storage ref)"
                             },
                             "children": [
@@ -5035,16 +5035,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1061,
+                                  "referencedDeclaration": 835,
                                   "type": "struct GameController.Allowance storage pointer",
                                   "value": "allowance"
                                 },
-                                "id": 1066,
+                                "id": 840,
                                 "name": "Identifier",
                                 "src": "3058:9:2"
                               }
                             ],
-                            "id": 1067,
+                            "id": 841,
                             "name": "MemberAccess",
                             "src": "3058:18:2"
                           },
@@ -5054,41 +5054,41 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 1053,
+                              "referencedDeclaration": 827,
                               "type": "address",
                               "value": "_owner"
                             },
-                            "id": 1068,
+                            "id": 842,
                             "name": "Identifier",
                             "src": "3077:6:2"
                           }
                         ],
-                        "id": 1069,
+                        "id": 843,
                         "name": "IndexAccess",
                         "src": "3058:26:2"
                       }
                     ],
-                    "id": 1070,
+                    "id": 844,
                     "name": "Return",
                     "src": "3051:33:2"
                   }
                 ],
-                "id": 1071,
+                "id": 845,
                 "name": "Block",
                 "src": "2984:107:2"
               }
             ],
-            "id": 1072,
+            "id": 846,
             "name": "FunctionDefinition",
             "src": "2900:191:2"
           }
         ],
-        "id": 1073,
+        "id": 847,
         "name": "ContractDefinition",
         "src": "67:3026:2"
       }
     ],
-    "id": 1074,
+    "id": 848,
     "name": "SourceUnit",
     "src": "0:3093:2"
   },
@@ -5098,5 +5098,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2017-12-27T18:08:31.737Z"
+  "updatedAt": "2017-12-28T16:27:57.937Z"
 }

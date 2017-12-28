@@ -3,6 +3,12 @@ pragma solidity ^0.4.11;
 import "../util/Owned.sol";
 import "../token/ControlledToken.sol";
 
+/**
+ * @title ProxyController
+ * @dev ProxyController allows to change a controller for the token without modifying it.
+ *
+ * @author Aleksey Studnev <studnev@izx.io>
+ */
 contract ProxyController is Owned, TokenController {
 
     ControlledToken public tokenContract;       // token controlled

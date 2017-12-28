@@ -1,6 +1,35 @@
 # IZX Smart Contracts and Game Protocol
 
-## Game Protocol
+The project contains:
+
+1) IZX Game Protocol
+2) IZX Crowdsale and Token Smart Contracts
+3) Supporting scripts
+
+## IZX Game Protocol
+
+**IZX Game protocol** is a set of Ethereum Smart contracts to implement games on IZX token.
+The protocol is mainly based on IZX White paper (published on [izx.io](https://izx.io)) web site.
+
+The protocol consists of the following Smart contracts:
+
+1) **Game** smart contract is the base abstract contract, defining basic rules
+of the game. The game developer can sub-class from this contract
+2) **FreeGame** smart contract is an example of the game, where players 
+exchange tokens without any value. Winner gets all the tokens, initially owned by token
+holder.
+3) **RevShareGame** smart contract is another example of the game, which is close
+to what is described in IZX White Paper. It distribues Ether, initially payed by
+issuer (e.g. Advertiser) to initiate the game. Ether value is distributed between
+game owner (developer), issuer, winner and token holder. All tokens, used in the game,
+are returned to initial token holder.
+4) **GameController** is the TokenController, which controls which token holder and in which extent
+can participate in the game. This is conformant to IZX White Paper, which defines the rules and limitation
+for token holders.
+
+### Game Smart Contract
+
+Sources are located in [Game.sol](contracts/game/Game.sol).
 
 Game is a contract to perform the game by guessing seed to hash.
 
@@ -23,12 +52,42 @@ and money returned to issuer.
 
 Money are pulled from the contract using the withdraw() method.
  
+### FreeGame Smart Contract
  
-#### FreeGame
+Sources are located in [FreeGame.sol](contracts/game/FreeGame.sol).
 
-#### RevShareGame
+FreeGame is a contract to perform the game free of charge. In the FreeGame, issuing prizes do not require Ether to pay.
+Winner of the game receives all the tokens, used in the game.
+
+
+### RevShareGame
+
+Sources are located in [RevShareGame.sol](contracts/game/RevShareGame.sol).
+
+RevShareGame is a contract to perform the game with Ether payout to winner, game owner, issuer and token holder
+in persentages. In the RevShareGame, issuing prizes happens on fixed prize price,
+setup by game developer.
+
 
 ### GameController
+
+Sources are located in [GameController.sol](contracts/game/GameController.sol).
+
+GameController is a TokenController contract to calculate the amount of tokens,
+  which can be used in the game.
+
+The contract ensures, that the game can use the amount of tokens, allowed by
+token holders. Note, that token holder may allow more tokens, that it holds, to more than one game.
+
+After the tokens are used in prize, they are transfered to the game, and token holder apparently
+may not use them before the prize is claimed or expired.
+
+Contract also ensures the rotation of token holders, so that the last used token holder is placed
+to the end of the queue. It guarantees that all token holders have the same chance to participate in the
+game.
+
+Game requests the amount of tokens from GameController using amount_owner() method.
+
 
 ## Installation
 

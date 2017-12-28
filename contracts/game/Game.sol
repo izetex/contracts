@@ -20,7 +20,7 @@ import "../util/SafeMath.sol";
  * calculate_amount and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
  * game owner and others.
  *
- * The prize is issued using a token reservation. The token controls the amount pf prize to be issued.
+ * The prize is issued using a token reservation. The token controls the amount of prize to be issued.
  * Token owners first allow the game to transfer certain amount of tokens, the GameController contract is responsibe for this.
  *
  * The prize can be set to be expired at some moment in the future. When expired, tokens will be returned to token owners,

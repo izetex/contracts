@@ -2,7 +2,25 @@ pragma solidity ^0.4.11;
 
 import "../token/TokenController.sol";
 
-
+/**
+ * @title GameController
+ * @dev GameController is a TokenController contract to calculate the amount of tokens,
+ *  which can be used in the game.
+ *
+ * The contract ensures, that the game can use the amount of tokens, allowed by
+ * token holders. Note, that token holder may allow more tokens, that it holds, to more than one game.
+ *
+ * After the tokens are used in prize, they are transfered to the game, and token holder apparently
+ * may not use them before the prize is claimed or expired.
+ *
+ * Contract also ensures the rotation of token holders, so that the last used token holder is placed
+ * to the end of the queue. It guarantees that all token holders have the same chance to participate in the
+ * game.
+ *
+ * Game requests the amount of tokens from GameController using amount_owner() method.
+ *
+ * @author Aleksey Studnev <studnev@izx.io>
+ */
 contract GameController is TokenController {
 
     struct Balance {

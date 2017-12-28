@@ -2,15 +2,19 @@ pragma solidity ^0.4.11;
 
 import "./Game.sol";
 
+/**
+ * @title FreeGame
+ * @dev FreeGame is a contract to perform the game free of charge.
+ *
+ * Look Game contract on the rule games. In the FreeGame, issuing prizes do not require Ether to pay.
+ * Winner of the game receives all the tokens, used in the game.
+ *
+ * @author Aleksey Studnev <studnev@izx.io>
+ */
 contract FreeGame is Game {
 
     function FreeGame(  ERC20 _token, GameController _controller, uint256 _prize_life_time  )
         Game(_token, _controller, _prize_life_time) public {
-    }
-
-    function issue(uint256[] _hashes) payable public {
-        require(msg.value==0);
-        super.issue(_hashes);
     }
 
     function calculate_amount( uint256 _requested_amount, uint256  ) internal

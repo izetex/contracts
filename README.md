@@ -1,12 +1,6 @@
-# IZX Smart Contracts
+# IZX Smart Contracts and Game Protocol
 
-## Smart Contracts
-
-### IZXToken
-
-### TokenSale
-
-### Game
+## Game Protocol
 
 Game is a contract to perform the game by guessing seed to hash.
 

@@ -44,17 +44,23 @@ contract Game is Owned, SafeMath {
         uint256 expiration;
     }
 
-    ERC20                       public token;
-    GameController              public controller;
-    uint256                     public prize_life_time;
-    mapping (uint256 => Prize)  public prizes;
-    mapping (address => uint)   public pendingWithdrawals;
-    mapping (address => uint)   public issuedPrizes;
+    // State variables
+    ERC20                       public token;               // token used to create a prize for the game
+    GameController              public controller;          // game controller for token allowance control
+    uint256                     public prize_life_time;     // time from prize creation to expiration in seconds
+    mapping (uint256 => Prize)  public prizes;              // prizes by hashes
+    mapping (address => uint)   public pendingWithdrawals;  // withdrawal amounts for pull payments
+    mapping (address => uint)   public issuedPrizes;        // information mapping prize count by issuer
 
+    // Events
     event Issue(address indexed issuer, address indexed owner, uint amount);
     event Claim(address indexed issuer, address indexed owner, address indexed winner, uint amount);
     event Expired(address indexed issuer, address indexed owner, uint amount);
 
+    /// @notice Game constructor. Called by game owner ("developer")
+    /// @param _token ERC20 token, used in game, not 0
+    /// @param _controller GameController, used to controlled token allowances, not 0
+    /// @param _prize_life_time time from prize creation to expiration in seconds
     function Game(  ERC20 _token, GameController _controller, uint256 _prize_life_time  ) public {
         require(address(_token)!=address(0));
         require(address(_controller)!=address(0));
@@ -63,15 +69,18 @@ contract Game is Owned, SafeMath {
         prize_life_time = _prize_life_time;
     }
 
+    /// @notice issue prizes for specified hashes. Function is payable, and in non-free games the amount being payed
+    /// defines the number of prizes
+    /// @param _hashes array of hashes to setup prizes
     function issue(uint256[] _hashes) payable public {
 
-        var (prize_count, prize_value) = calculate_amount(_hashes.length, msg.value);
+        var (prize_count, prize_value, prize_tokens, total_tokens) = calculate_amount(_hashes.length, msg.value);
         require(prize_count>0);
 
-        address tokens_owner = controller.amount_owner(this, prize_count);
+        address tokens_owner = controller.amount_owner(this, total_tokens );
 
         if(tokens_owner!=address(0)){
-            require( token.transferFrom(tokens_owner, this, prize_count) );
+            require( token.transferFrom(tokens_owner, this, total_tokens) );
 
             if(msg.value>0){
                 uint256 change = sub(msg.value, mul(prize_count, prize_value));
@@ -81,13 +90,18 @@ contract Game is Owned, SafeMath {
             }
 
             for(uint i=0;i<prize_count;i++){
-                prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, 1, prize_value, now + prize_life_time);
+                prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, prize_tokens, prize_value, now + prize_life_time);
             }
             issuedPrizes[msg.sender] += prize_count;
             Issue(msg.sender, tokens_owner, prize_count);
         }
     }
 
+    /// @notice prize, claimed by using a key. Prize can be claimed in reward to winner by the winner himself
+    /// or third party. Apparently, key can be used just once, as it is revealed after this call and the prize is deleted.
+    /// @param _key to get the prize
+    /// @param _winner a winner, rewarded for the prize
+    /// @return True if prize is not expired and rewarded, False if not
     function claim(uint256 _key, address _winner) public returns (bool){
 
         uint256 hash = key_hash256(_key);
@@ -120,11 +134,14 @@ contract Game is Owned, SafeMath {
 
     }
 
-
+    /// @notice calculate hash using a seed. The same method used to claim a prize
+    /// @param _key to get the prize
+    /// @return hash of the prize
     function key_hash256(uint256 _key) public view returns(uint256) {
         return uint256(sha256(_key, address(this)));
     }
 
+    /// @notice withdraw an amount if pending withdrawals present
     function withdraw() public {
         uint amount = pendingWithdrawals[msg.sender];
         pendingWithdrawals[msg.sender] = 0;
@@ -133,10 +150,22 @@ contract Game is Owned, SafeMath {
         }
     }
 
-
+    /// @notice this method to be implemented in game contracts, based on this protocol
+    /// calculate_amount expects to calulate an amount of prizes to issue and the value for each prize
+    /// @param _requested_amount maximum number of prizes requested to issue
+    /// @param _payed_value payed value in wei
+    /// @return prize_count actial number of prizes that can be issued for the price
+    /// @return prize_value the price for every prize
+    /// @return prize_tokens tokens used to secure the prize
+    /// @return total_tokens total number of tokens required
     function calculate_amount( uint256 _requested_amount, uint256 _payed_value ) internal
-            returns( uint256 prize_count, uint256 prize_value );
+            returns( uint256 prize_count, uint256 prize_value, uint256 prize_tokens, uint256 total_tokens );
 
+
+    /// @notice this method to be implemented in game contracts, based on this protocol
+    /// payout expects to make a payout to all parties in tokens and Ether
+    /// @param _prize prize being claimed
+    /// @param _winner winner, claiming the prize
     function payout(Prize storage _prize, address _winner) internal;
 
 

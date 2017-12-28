@@ -14,8 +14,8 @@ contract FreeGame is Game {
     }
 
     function calculate_amount( uint256 _requested_amount, uint256  ) internal
-        returns(uint256 prize_count, uint256 prize_value) {
-            return (_requested_amount, 0);
+        returns(uint256 prize_count, uint256 prize_value, uint256 prize_tokens, uint256 total_tokens) {
+            return (_requested_amount, 0, 1, _requested_amount);
     }
 
     function payout(Prize storage _prize, address ) internal {

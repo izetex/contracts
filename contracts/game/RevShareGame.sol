@@ -30,7 +30,7 @@ contract RevShareGame is Game {
 
 
      function calculate_amount( uint256 _requested_amount, uint256 _payed_value ) internal
-            returns(uint256 prize_count, uint256 prize_value) {
+            returns(uint256 prize_count, uint256 prize_value, uint256 prize_tokens, uint256 total_tokens) {
      
         prize_count = _payed_value / token_price;
         prize_value = token_price;
@@ -39,7 +39,7 @@ contract RevShareGame is Game {
             prize_count = _requested_amount;
         }
 
-        return (prize_count, prize_value);
+        return (prize_count, prize_value, 1, prize_count);
      }
 
      function set_token_price(uint256 _token_price) onlyOwner public {

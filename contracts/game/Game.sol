@@ -4,6 +4,31 @@ import "../token/ERC20.sol";
 import "../util/Owned.sol";
 import "./GameController.sol";
 
+/**
+ * @title Game
+ * @dev Game is a contract to perform the game by guessing seed to hash.
+ *
+ * Rules of the game are:
+ *
+ * 1) Game issuer places number of prizes, identified by hashes. The seed to calculate that hashes are unknown
+ *   and  kept in secret
+ * 2) Players play the game, and the issuer may give a secret seed to a winner. Winner claims the prize and gets a reward
+ *
+ * The reward can be distributed in arbitrary way, depending on the sub-classed contract for a real game.
+ * Look FreeGame and RevShareGame for real examples. The contract can be extended by overriding methods
+ * reserve_amount and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
+ * game owner and others.
+ *
+ * The prize is issued using a token reservation. The token controls the amount pf prize to be issued.
+ * Token owners first allow the game to transfer certain amount of tokens, the GameController contract is responsibe for this.
+ *
+ * The prize can be set to be expired at some moment in the future. When expired, tokens will be returned to token owners,
+ * and money returned to issuer.
+ *
+ * Money are pulled from the contract using the withdraw() method.
+ *
+ * @author Aleksey Studnev <studnev@izx.io>
+ */
 contract Game is Owned {
 
     struct Prize {

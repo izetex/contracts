@@ -23,11 +23,33 @@ contract ProxyController is Owned, TokenController {
         proxiedController = TokenController(_controller);
     }
 
-
     /// @notice `onlyOwner` changes the controller of the tokenContract
     /// @param _newController - controller to be used with token
     function changeTokenController(address _newController) onlyOwner public {
         tokenContract.changeController(_newController);
+    }
+
+    /// @notice `onlyOwner` generates `_amount` tokens that are assigned to `_owner`
+    /// @param _owner The address that will be assigned the new tokens
+    /// @param _amount The quantity of tokens generated
+    /// @return True if the tokens are generated correctly
+    function generateTokens(address _owner, uint _amount ) onlyOwner returns (bool) {
+        return tokenContract.generateTokens(_owner, _amount);
+    }
+
+    /// @notice `onlyOwner` Burns `_amount` tokens from `_owner`
+    /// @param _owner The address that will lose the tokens
+    /// @param _amount The quantity of tokens to burn
+    /// @return True if the tokens are burned correctly
+    function destroyTokens(address _owner, uint _amount ) onlyOwner returns (bool) {
+        return tokenContract.destroyTokens(_owner, _amount);
+    }
+
+    /// @notice  `onlyOwner`  can use by controller to extract mistakenly sent tokens to this contract.
+    /// @param _token The address of the token contract that you want to recover
+    ///  set to 0 in case you want to extract ether.
+    function claimTokens(address _token) onlyOwner {
+        return tokenContract.claimTokens(_token);
     }
 
     /// @notice `onlyOwner` changes the proxied controller

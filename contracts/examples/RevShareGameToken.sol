@@ -4,6 +4,6 @@ import '../token/ControlledToken.sol';
 
 contract RevShareGameToken is ControlledToken {
 
-   function RevShareGameToken() ControlledToken( 1, 'Rev Share Game Token', 18, 'RSGT' ) public {}
+   function RevShareGameToken() ControlledToken( 0, 'Rev Share Game Token', 18, 'RSGT' ) public {}
 
 }

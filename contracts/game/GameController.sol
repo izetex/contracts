@@ -1,6 +1,7 @@
 pragma solidity ^0.4.11;
 
 import "../token/TokenController.sol";
+import "../token/ERC20.sol";
 
 /**
  * @title GameController
@@ -35,12 +36,15 @@ contract GameController is TokenController {
     }
 
     address public master;
+    ERC20   public token;
+
     mapping( address => Allowance) allowances;
 
-
-    function GameController(address _master) public {
+    function GameController(ERC20 _token, address _master) public {
         require(_master != address(0));
+        require(address(_token) != address(0));
         master = _master;
+        token = _token;
     }
 
     function onApprove(address _owner, address _spender, uint _amount) public returns(bool){
@@ -96,9 +100,11 @@ contract GameController is TokenController {
         uint256 count = allowances[_to].owners.length;
         for(uint i = 0; i < count; i++ ){
             address owner = allowances[_to].owners[i];
-            Balance storage balance = allowances[_to].balances[owner];
-            if(balance.approved_amount >= _amount + balance.reserved_amount){
-                return owner;
+            if(token.balanceOf(owner)>=_amount){
+                Balance storage balance = allowances[_to].balances[owner];
+                if(balance.approved_amount >= _amount + balance.reserved_amount){
+                    return owner;
+                }
             }
         }
         return address(0);

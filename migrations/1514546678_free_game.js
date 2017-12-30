@@ -18,7 +18,7 @@ module.exports = function(deployer) {
         proxy = instance;
         return token.changeController(proxy.address);
     }).then(function(){
-        return GameController.new(proxy.address);
+        return GameController.new(token.address, proxy.address);
     }).then(function(instance){
         controller = instance;
         return proxy.changeProxiedController(controller.address);

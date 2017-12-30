@@ -79,22 +79,21 @@ contract Game is Owned, SafeMath {
 
         address tokens_owner = controller.amount_owner(this, total_tokens );
 
-        if(tokens_owner!=address(0)){
-            require( token.transferFrom(tokens_owner, this, total_tokens) );
+        require(tokens_owner!=address(0));
+        require( token.transferFrom(tokens_owner, this, total_tokens) );
 
-            if(msg.value>0){
-                uint256 change = sub(msg.value, mul(prize_count, prize_value));
-                if(change>0){
-                    pendingWithdrawals[msg.sender] += change;
-                }
+        if(msg.value>0){
+            uint256 change = sub(msg.value, mul(prize_count, prize_value));
+            if(change>0){
+                pendingWithdrawals[msg.sender] += change;
             }
-
-            for(uint i=0;i<prize_count;i++){
-                prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, prize_tokens, prize_value, now + prize_life_time);
-            }
-            issuedPrizes[msg.sender] += prize_count;
-            Issue(msg.sender, tokens_owner, prize_count);
         }
+
+        for(uint i=0;i<prize_count;i++){
+            prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, prize_tokens, prize_value, now + prize_life_time);
+        }
+        issuedPrizes[msg.sender] += prize_count;
+        Issue(msg.sender, tokens_owner, prize_count);
     }
 
     /// @notice prize, claimed by using a key. Prize can be claimed in reward to winner by the winner himself

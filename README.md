@@ -16,13 +16,13 @@ The protocol consists of the following Smart contracts:
 1) **Game** smart contract is the base abstract contract, defining basic rules
 of the game. The game developer can sub-class from this contract
 2) **FreeGame** smart contract is an example of the game, where players 
-exchange tokens without any value. Winner gets all the tokens, initially owned by token
+exchange tokens without any value. Winner gets 1 token, initially owned by token
 holder.
 3) **RevShareGame** smart contract is another example of the game, which is close
 to what is described in IZX White Paper. It distribues Ether, initially payed by
 issuer (e.g. Advertiser) to initiate the game. Ether value is distributed between
 game owner (developer), issuer, winner and token holder. All tokens, used in the game,
-are returned to initial token holder.
+are ultimately returned to initial token holder.
 4) **GameController** is the TokenController, which controls which token holder and in which extent
 can participate in the game. This is conformant to IZX White Paper, which defines the rules and limitation
 for token holders.

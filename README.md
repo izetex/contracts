@@ -14,7 +14,8 @@ The protocol is mainly based on IZX White paper (published on [izx.io](https://i
 The protocol consists of the following Smart contracts:
 
 1) **Game** smart contract is the base abstract contract, defining basic rules
-of the game. The game developer can sub-class from this contract
+of the game. The game developer can sub-class from this contract to implement the new rules
+or make a new game with IZX token.
 2) **FreeGame** smart contract is an example of the game, where players 
 exchange tokens without any value. Winner gets 1 token, initially owned by token
 holder.
@@ -35,9 +36,9 @@ Game is a contract to perform the game by guessing seed to hash.
 
 Rules of the game are:
 
-1) Game issuer places number of prizes, identified by hashes. The seed to calculate that hashes are unknown
-  and  kept in secret
-2) Players play the game, and the issuer may give a secret seed to a winner. Winner claims the prize and gets a reward
+1) Game issuer places number of prizes, identified by hashes. The seed to calculate that hashes are known
+only to issuer and  kept in secret
+2) Issuer gives the winner of the game the secret seed. Winner claims the prize and gets a reward
 
 The reward can be distributed in arbitrary way, depending on the sub-classed contract for a real game.
 Look FreeGame and RevShareGame for real examples. The contract can be extended by overriding methods

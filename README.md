@@ -58,7 +58,7 @@ Money are pulled from the contract using the withdraw() method.
 Sources are located in [FreeGame.sol](contracts/game/FreeGame.sol).
 
 FreeGame is a contract to perform the game free of charge. In the FreeGame, issuing prizes do not require Ether to pay.
-Winner of the game receives all the tokens, used in the game.
+Winner of the game receives 1 token, initially owned by token holder.
 
 
 ### RevShareGame

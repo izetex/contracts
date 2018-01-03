@@ -28,11 +28,11 @@ deployed_token.controller(function(error,result){
             }else if(result.toUpperCase() == connection.config.tokensale.toUpperCase()){
                 use_contract = deployed_tokensale;  using = 'Crowdsale';
             }else{
-                console.log( 'Unexpected address '+ new_controller );
+                console.log( 'Unexpected address '+ result.toUpperCase() );
                 process.exit(1);
             }
 
-            var yesno = cli.question('Enter Yes! to change token controller calling '+using+ ' contract ('+ use_contract.address +
+            var yesno = cli.question('Enter Yes! to change token controller to '+new_controller+' calling '+using+ ' contract ('+ use_contract.address +
                 ') in '+environment+ ' with these parameters: ');
             if(yesno!='Yes!'){
                 console.log('Not confirmed, stopping');

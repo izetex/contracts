@@ -63,6 +63,7 @@ contract Game is Owned, SafeMath {
     function Game(  ERC20 _token, GameController _controller, uint256 _prize_life_time  ) public {
         require(address(_token)!=address(0));
         require(address(_controller)!=address(0));
+        require( _prize_life_time > 0 );
         token = _token;
         controller = _controller;
         prize_life_time = _prize_life_time;

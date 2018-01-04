@@ -152,3 +152,91 @@ contract('ProxyController', function(accounts) {
     });
 
 });
+
+contract('FreeGame', function(accounts) {
+
+    it("should accept tokens approval for prizes", function() {
+        var token, game, controller;
+        return FreeGameToken.deployed().then(function(instance) {
+            token = instance;
+            return FreeGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(instance) {
+            controller = GameController.at(instance);
+            return controller.approved_amount(accounts[0], game.address);
+        }).then(function(result) {
+            assert.equal(0, result.toNumber());
+            return token.approve(game.address, web3.toWei(2.0), { from: accounts[0], gas: 150000 });
+        }).then(function() {
+            return token.allowance(accounts[0], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(2.0), result.toNumber());
+            return controller.owners(game.address);
+        }).then(function(result) {
+            assert.equal(1, result.length);
+            assert.equal(accounts[0], result[0]);
+            return controller.owner_index(accounts[0], game.address);
+        }).then(function(result) {
+            assert.equal(1, result.toNumber());
+            return controller.approved_amount(accounts[0], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(2.0), result.toNumber());
+            return controller.reserved_amount(accounts[0], game.address);
+        }).then(function(result) {
+            assert.equal(0, result.toNumber());
+            return token.approve(game.address, web3.toWei(3.0), { from: accounts[1], gas: 150000 });
+        }).then(function() {
+            return token.allowance(accounts[1], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(3.0), result.toNumber());
+            return controller.approved_amount(accounts[1], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(3.0), result.toNumber());
+            return controller.owner_index(accounts[1], game.address);
+        }).then(function(result) {
+            assert.equal(2, result.toNumber());
+            return controller.owners(game.address);
+        }).then(function(result) {
+            assert.equal(2, result.length);
+            assert.equal(accounts[0], result[0]);
+            assert.equal(accounts[1], result[1]);
+        });
+
+    });
+
+
+    it("should update tokens approval for prizes", function() {
+        var token, game, controller;
+        return FreeGameToken.deployed().then(function(instance) {
+            token = instance;
+            return FreeGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(instance) {
+            controller = GameController.at(instance);
+            return controller.approved_amount(accounts[0], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(2.0), result.toNumber());
+            return token.approve(game.address, web3.toWei(4.0), { from: accounts[0], gas: 150000 });
+        }).then(function() {
+            return token.allowance(accounts[0], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(4.0), result.toNumber());
+            return controller.owners(game.address);
+        }).then(function(result) {
+            assert.equal(2, result.length);
+            assert.equal(accounts[0], result[0]);
+            assert.equal(accounts[1], result[1]);
+            return controller.owner_index(accounts[0], game.address);
+        }).then(function(result) {
+            assert.equal(1, result.toNumber());
+        });
+
+    });
+
+
+});
+

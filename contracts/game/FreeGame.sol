@@ -7,7 +7,7 @@ import "./Game.sol";
  * @dev FreeGame is a contract to perform the game free of charge.
  *
  * Look Game contract on the rule games. In the FreeGame, issuing prizes do not require Ether to pay.
- * Winner of the game receives all the tokens, used in the game.
+ * Winner of the game receives all tokens of the prize
  *
  * @author Aleksey Studnev <studnev@izx.io>
  */
@@ -22,7 +22,7 @@ contract FreeGame is Game {
             return (_requested_amount, 0, 1, _requested_amount);
     }
 
-    function payout(Prize storage _prize, address ) internal {
-        require(token.transfer(_prize.owner, _prize.tokens));
+    function payout(Prize storage _prize, address _winner) internal {
+        require(token.transfer(_winner, _prize.tokens));
     }
 }

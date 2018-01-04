@@ -38,24 +38,23 @@ contract Game is Owned, SafeMath {
     // fetched back
     struct Prize {
         address issuer;     // issuer of the prize. He setup the game rules and hash to guess
-        address owner;      // owner of the tokens, used as a garant in prize
+        address owner;      // owner of the tokens, used in prize
         uint256 tokens;     // number of tokens per prize ( 1 by default )
         uint256 value;      // money spent on the prize
-        uint256 expiration;
+        uint256 expiration; // unix timestamp of expiration
     }
 
     // State variables
-    ERC20                       public token;               // token used to create a prize for the game
-    GameController              public controller;          // game controller for token allowance control
-    uint256                     public prize_life_time;     // time from prize creation to expiration in seconds
-    mapping (uint256 => Prize)  public prizes;              // prizes by hashes
-    mapping (address => uint)   public pendingWithdrawals;  // withdrawal amounts for pull payments
-    mapping (address => uint)   public issuedPrizes;        // information mapping prize count by issuer
+    ERC20                           public token;               // token used to create a prize for the game
+    GameController                  public controller;          // game controller for token allowance control
+    uint256                         public prize_life_time;     // time from prize creation to expiration in seconds
+    mapping (uint256 => Prize)      public prizes;              // prizes by hashes
+    mapping (address => uint)       public pendingWithdrawals;  // withdrawal amounts for pull payments
 
     // Events
-    event Issue(address indexed issuer, address indexed owner, uint amount);
-    event Claim(address indexed issuer, address indexed owner, address indexed winner, uint amount);
-    event Expired(address indexed issuer, address indexed owner, uint amount);
+    event Issue(address indexed issuer, address indexed owner, uint256 hash, uint256 tokens, uint256 value, uint256 expiration);
+    event Claim(address indexed issuer, address indexed owner, address indexed winner, uint256 hash, uint256 tokens, uint256 value);
+    event Revoke(address indexed issuer, address indexed owner, uint256 hash, uint256 tokens, uint256 value);
 
     /// @notice Game constructor. Called by game owner ("developer")
     /// @param _token ERC20 token, used in game, not 0
@@ -79,7 +78,7 @@ contract Game is Owned, SafeMath {
 
         address tokens_owner = controller.amount_owner(this, total_tokens );
 
-        require(tokens_owner!=address(0));
+        require( tokens_owner!=address(0) );
         require( token.transferFrom(tokens_owner, this, total_tokens) );
 
         if(msg.value>0){
@@ -89,11 +88,22 @@ contract Game is Owned, SafeMath {
             }
         }
 
+        uint256 expired_at = now + prize_life_time;
         for(uint i=0;i<prize_count;i++){
-            prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, prize_tokens, prize_value, now + prize_life_time);
+            prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, prize_tokens, prize_value, expired_at);
+            Issue(msg.sender, tokens_owner, _hashes[i], prize_tokens, prize_value, expired_at);
         }
-        issuedPrizes[msg.sender] += prize_count;
-        Issue(msg.sender, tokens_owner, prize_count);
+    }
+
+    /// @notice revoke prizes. Issuer can revoke all prizes issued by him, at any time. All other can revoke only expired prizes
+    /// @param _hashes array of hashes to revoke prizes
+   function revoke(uint256[] _hashes) public {
+        for(uint i=0;i<_hashes.length;i++){
+           Prize storage prize = prizes[_hashes[i]];
+           if( now>prize.expiration || msg.sender==prize.issuer ){
+              expire_prize(prize, _hashes[i]);
+           }
+        }
     }
 
     /// @notice prize, claimed by using a key. Prize can be claimed in reward to winner by the winner himself
@@ -109,28 +119,31 @@ contract Game is Owned, SafeMath {
         require(prize.owner != address(0));
 
         if( now>prize.expiration ){
-
-            require( token.transfer(prize.owner, prize.tokens) );
-            if(prize.value>0){
-                pendingWithdrawals[prize.issuer] += prize.value;
-            }
-            issuedPrizes[msg.sender] -= 1;
-
-            Expired(prize.issuer, prize.owner, prize.tokens);
-
-            delete(prizes[hash]);
+            expire_prize(prize, hash);
             return false;
         }else{
             payout(prize, _winner);
-            issuedPrizes[msg.sender] -= 1;
 
-            Claim(prize.issuer, prize.owner, _winner, prize.tokens);
+            Claim( prize.issuer, prize.owner, _winner, hash, prize.tokens, prize.value );
 
             delete(prizes[hash]);
             return true;
         }
 
 
+    }
+
+
+    function expire_prize(Prize prize, uint256 hash) internal {
+
+       require( token.transfer(prize.owner, prize.tokens) );
+       if(prize.value>0){
+            pendingWithdrawals[prize.issuer] += prize.value;
+       }
+
+       Revoke(prize.issuer, prize.owner, hash, prize.tokens, prize.value);
+
+       delete(prizes[hash]);
     }
 
     /// @notice calculate hash using a seed. The same method used to claim a prize

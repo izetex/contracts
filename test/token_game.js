@@ -163,6 +163,28 @@ contract('TokenGame', function(accounts) {
 
     });
 
+    it("should not allow claim same prize second time", function() {
+
+        var token, game, game_controller, hash;
+
+        return GameToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(result) {
+            game_controller = GameController.at(result);
+            return game.key_hash256(0);
+        }).then(function(result) {
+            hash = result;
+            return game.claim( 0, { from: accounts[3] } );
+        }).then(function(result) {
+            assert.fail("Exception expected");
+        }).catch(function(error) {
+        });
+
+    });
 
     it("should allow owner to issue many prizes", function() {
 

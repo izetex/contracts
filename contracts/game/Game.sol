@@ -81,12 +81,20 @@ contract Game is Owned, SafeMath {
         }
     }
 
+    /// @notice prize for sender, claimed by using a key. Prize can be claimed in reward to winner by the winner himself
+    /// or third party. Apparently, key can be used just once, as it is revealed after this call and the prize is deleted.
+    /// @param _key to get the prize
+    /// @return True if prize is not expired and rewarded, False if not
+    function claim( uint256 _key ) public returns (bool){
+        return claim_winner( _key, msg.sender );
+    }
+
     /// @notice prize, claimed by using a key. Prize can be claimed in reward to winner by the winner himself
     /// or third party. Apparently, key can be used just once, as it is revealed after this call and the prize is deleted.
     /// @param _key to get the prize
     /// @param _winner a winner, rewarded for the prize
     /// @return True if prize is not expired and rewarded, False if not
-    function claim(uint256 _key, address _winner) public returns (bool){
+    function claim_winner( uint256 _key, address _winner ) public returns (bool){
 
         uint256 hash = key_hash256(_key);
 

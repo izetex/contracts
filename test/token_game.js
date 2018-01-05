@@ -3,6 +3,11 @@ var GameController = artifacts.require("GameController");
 var ProxyController = artifacts.require("ProxyController");
 var TokenGame = artifacts.require("TokenGame");
 
+function delay(t) {
+    return new Promise(function(resolve) {
+        setTimeout(resolve, t)
+    });
+}
 
 contract('TokenGame', function(accounts) {
 
@@ -40,11 +45,18 @@ contract('TokenGame', function(accounts) {
             assert.equal(2, result.length);
             assert.equal(accounts[1], result[0]);
             assert.equal(accounts[2], result[1]);
+            return game_controller.owner_index(accounts[1], game.address);
+        }).then(function(result) {
+            assert.equal(1, result);
+            return game_controller.owner_index(accounts[2], game.address);
+        }).then(function(result) {
+            assert.equal(2, result);
         });
     });
 
 
-    it("should issue prize", function() {
+    it("should allow owner to issue prize", function() {
+
         var token, game, game_controller, hash;
 
         return GameToken.deployed().then(function(instance) {
@@ -86,7 +98,7 @@ contract('TokenGame', function(accounts) {
             assert.equal(hash.toString(16), args.hash.toString(16));
             assert.equal(web3.toWei(0.5), args.tokens.toNumber());
             assert.equal(0, args.value.toNumber());
-            assert.isTrue(args.expiration.toNumber() > (new Date().getTime()/1000 + 5));
+            assert.isTrue(args.expiration.toNumber() > (new Date().getTime()/1000 + 3));
 
             return token.balanceOf(game.address);
         }).then(function(result) {
@@ -97,7 +109,7 @@ contract('TokenGame', function(accounts) {
             assert.equal(accounts[1], result[1]);
             assert.equal(web3.toWei(0.5), result[2].toNumber());
             assert.equal(web3.toWei(0), result[3].toNumber());
-            assert.isTrue(result[4].toNumber()  > (new Date().getTime()/1000 + 5));
+            assert.isTrue(result[4].toNumber()  > (new Date().getTime()/1000 + 3));
 
             return game_controller.approved_amount(accounts[1], game.address);
         }).then(function(result) {
@@ -105,13 +117,252 @@ contract('TokenGame', function(accounts) {
             return game_controller.reserved_amount(accounts[1], game.address);
         }).then(function(result) {
             assert.equal(web3.toWei(0.5), result.toNumber());
-            return game_controller.owners(game.address);
-        }).then(function(result) {
-            assert.equal(2, result.length);
-            assert.equal(accounts[1], result[1]); // note: switched owners!
-            assert.equal(accounts[2], result[0]);
         });
     });
 
+
+    it("should give the prize to winner", function() {
+
+        var token, game, game_controller, hash;
+
+        return GameToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(result) {
+            game_controller = GameController.at(result);
+            return game.key_hash256(0);
+        }).then(function(result) {
+            hash = result;
+            return game.claim( 0, { from: accounts[3] } );
+        }).then(function(result) {
+            assert.equal(1, result.logs.length);
+
+            var log = result.logs[0];
+            var args = log.args;
+
+            assert.equal('Claim', log.event);
+            assert.equal(accounts[1], args.issuer);
+            assert.equal(accounts[1], args.owner);
+            assert.equal(accounts[3], args.winner);
+            assert.equal(hash.toNumber(), args.hash.toNumber());
+            assert.equal(web3.toWei(0.5), args.tokens.toNumber());
+            assert.equal(0, args.value.toNumber());
+
+            assert.equal(2, result.receipt.logs.length);
+
+            return token.balanceOf(game.address);
+        }).then(function(result) {
+            assert.equal(0, result.toNumber());
+            return token.balanceOf(accounts[3]);
+        }).then(function(result) {
+            assert.equal(web3.toWei(0.5), result.toNumber());
+        });
+
+    });
+
+    it("should not allow claim same prize second time", function() {
+
+        var token, game, game_controller, hash;
+
+        return GameToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(result) {
+            game_controller = GameController.at(result);
+            return game.key_hash256(0);
+        }).then(function(result) {
+            hash = result;
+            return game.claim( 0, { from: accounts[3] } );
+        }).then(function(result) {
+            assert.fail("Exception expected");
+        }).catch(function(error) {
+        });
+
+    });
+
+    it("should allow owner to issue many prizes", function() {
+
+        var token, game, game_controller;
+        var hashes = [];
+
+        return GameToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(result) {
+            game_controller = GameController.at(result);
+            return game.key_hash256(1);
+        }).then(function(result) {
+            hashes.push(result);
+            return game.key_hash256(2);
+        }).then(function(result) {
+            hashes.push(result);
+            return game.key_hash256(3);
+        }).then(function(result) {
+            hashes.push(result);
+            return game.issue(hashes, {from: accounts[2], gas: 650000 });
+        }).then(function(result) {
+            assert.equal(3, result.logs.length);
+            return token.balanceOf(game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(1.5), result.toNumber());
+            return game_controller.approved_amount(accounts[2], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(7), result.toNumber());
+            return game_controller.reserved_amount(accounts[2], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(1.5), result.toNumber());
+        });
+    });
+
+
+    it("should allow issuer to revoke by hash at any time", function() {
+
+        var token, game, game_controller, hash;
+
+        return GameToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(result) {
+            game_controller = GameController.at(result);
+            return game.key_hash256(3);
+        }).then(function(result) {
+            hash = result;
+            return token.balanceOf(accounts[2]);
+        }).then(function(result) {
+            assert.equal(web3.toWei(8.5), result.toNumber());
+        }).then(function() {
+            return game.revoke( [hash], { from: accounts[2] } );
+        }).then(function(result) {
+            assert.equal(1, result.logs.length);
+
+            var log = result.logs[0];
+            var args = log.args;
+
+            assert.equal('Revoke', log.event);
+            assert.equal(accounts[2], args.issuer);
+            assert.equal(accounts[2], args.owner);
+            assert.equal(web3.toWei(0.5), args.tokens.toNumber());
+
+            assert.equal(2, result.receipt.logs.length);
+
+            return token.balanceOf(game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(1.0), result.toNumber());
+            return token.balanceOf(accounts[4]);
+        }).then(function(result) {
+            assert.equal(0, result.toNumber());
+            return token.balanceOf(accounts[2]);
+        }).then(function(result) {
+            assert.equal(web3.toWei(9.0), result.toNumber());
+            return game_controller.reserved_amount(accounts[2], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(1.0), result.toNumber());
+        });
+
+    });
+
+
+    it("should revoke the prize after expiration", function() {
+
+        var token, game, game_controller;
+
+        return GameToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(result) {
+            game_controller = GameController.at(result);
+            return delay(6000);
+        }).then(function() {
+            return game.claim( 1, { from: accounts[4] } );
+        }).then(function(result) {
+            assert.equal(1, result.logs.length);
+
+            var log = result.logs[0];
+            var args = log.args;
+
+            assert.equal('Revoke', log.event);
+            assert.equal(accounts[2], args.issuer);
+            assert.equal(accounts[2], args.owner);
+            assert.equal(web3.toWei(0.5), args.tokens.toNumber());
+
+            assert.equal(2, result.receipt.logs.length);
+
+            return token.balanceOf(game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(0.5), result.toNumber());
+            return token.balanceOf(accounts[4]);
+        }).then(function(result) {
+            assert.equal(0, result.toNumber());
+            return token.balanceOf(accounts[2]);
+        }).then(function(result) {
+            assert.equal(web3.toWei(9.5), result.toNumber());
+            return game_controller.reserved_amount(accounts[2], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(0.5), result.toNumber());
+        });
+
+    });
+
+
+    it("should allow to revoke by hash", function() {
+
+        var token, game, game_controller, hash;
+
+
+        return GameToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(result) {
+            game_controller = GameController.at(result);
+            return game.key_hash256(2);
+        }).then(function(result) {
+            hash = result;
+            return game.revoke( [hash], { from: accounts[4] } );
+        }).then(function(result) {
+            assert.equal(1, result.logs.length);
+
+            var log = result.logs[0];
+            var args = log.args;
+
+            assert.equal('Revoke', log.event);
+            assert.equal(accounts[2], args.issuer);
+            assert.equal(accounts[2], args.owner);
+            assert.equal(web3.toWei(0.5), args.tokens.toNumber());
+
+            assert.equal(2, result.receipt.logs.length);
+
+            return token.balanceOf(game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(0), result.toNumber());
+            return token.balanceOf(accounts[4]);
+        }).then(function(result) {
+            assert.equal(0, result.toNumber());
+            return token.balanceOf(accounts[2]);
+        }).then(function(result) {
+            assert.equal(web3.toWei(10.0), result.toNumber());
+            return game_controller.reserved_amount(accounts[2], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(0), result.toNumber());
+        });
+
+    });
 
 });

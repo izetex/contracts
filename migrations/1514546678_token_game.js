@@ -3,7 +3,6 @@ var GameController = artifacts.require("GameController");
 var ProxyController = artifacts.require("ProxyController");
 var TokenGame = artifacts.require("TokenGame");
 
-
 module.exports = function(deployer) {
 
 
@@ -26,7 +25,7 @@ module.exports = function(deployer) {
         return deployer.deploy( TokenGame,
                                 token.address,
                                 controller.address,
-                                10, //_prize_life_time
+                                5, //_prize_life_time
                                 web3.toWei(0.5)  // prize tokens
         );
     }).then(function(){

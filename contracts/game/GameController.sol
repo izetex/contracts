@@ -71,11 +71,18 @@ contract GameController is TokenController {
         Balance storage balance = allowance.balances[_from];
 
         if(balance.key_index>0){
+
             balance.reserved_amount += _amount;
             address[] storage owners = allowance.owners;
 
-            owners[balance.key_index-1] = owners[owners.length-1];
-            owners[owners.length-1] = _from;
+            uint256 switch_index = (block.timestamp % owners.length);
+            address switch_owner = owners[switch_index];
+
+            owners[balance.key_index-1] = switch_owner;
+            owners[switch_index] = _from;
+
+            allowance.balances[switch_owner].key_index = balance.key_index;
+            balance.key_index = switch_index + 1;
 
             return true;
         }else{

@@ -40,11 +40,18 @@ contract('TokenGame', function(accounts) {
             assert.equal(2, result.length);
             assert.equal(accounts[1], result[0]);
             assert.equal(accounts[2], result[1]);
+            return game_controller.owner_index(accounts[1], game.address);
+        }).then(function(result) {
+            assert.equal(1, result);
+            return game_controller.owner_index(accounts[2], game.address);
+        }).then(function(result) {
+            assert.equal(2, result);
         });
     });
 
 
-    it("should issue prize", function() {
+    it("should allow owner to issue prize", function() {
+
         var token, game, game_controller, hash;
 
         return GameToken.deployed().then(function(instance) {
@@ -105,13 +112,50 @@ contract('TokenGame', function(accounts) {
             return game_controller.reserved_amount(accounts[1], game.address);
         }).then(function(result) {
             assert.equal(web3.toWei(0.5), result.toNumber());
-            return game_controller.owners(game.address);
-        }).then(function(result) {
-            assert.equal(2, result.length);
-            assert.equal(accounts[1], result[1]); // note: switched owners!
-            assert.equal(accounts[2], result[0]);
         });
     });
 
+
+    it("should give the prize to winner", function() {
+
+        var token, game, game_controller, hash;
+
+        return GameToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenGame.deployed();
+        }).then(function(instance) {
+            game = instance;
+            return game.controller();
+        }).then(function(result) {
+            game_controller = GameController.at(result);
+            return game.key_hash256(0);
+        }).then(function(result) {
+            hash = result;
+            return game.claim( 0, { from: accounts[3] } );
+        }).then(function(result) {
+            assert.equal(1, result.logs.length);
+
+            var log = result.logs[0];
+            var args = log.args;
+
+            assert.equal('Claim', log.event);
+            assert.equal(accounts[1], args.issuer);
+            assert.equal(accounts[1], args.owner);
+            assert.equal(accounts[3], args.winner);
+            assert.equal(hash.toNumber(), args.hash.toNumber());
+            assert.equal(web3.toWei(0.5), args.tokens.toNumber());
+            assert.equal(0, args.value.toNumber());
+
+            assert.equal(2, result.receipt.logs.length);
+
+            return token.balanceOf(game.address);
+        }).then(function(result) {
+            assert.equal(0, result.toNumber());
+            return token.balanceOf(accounts[3]);
+        }).then(function(result) {
+            assert.equal(web3.toWei(0.5), result.toNumber());
+        });
+
+    });
 
 });

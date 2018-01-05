@@ -122,6 +122,15 @@ contract GameController is TokenController {
         return allowances[_game].balances[_owner].key_index;
     }
 
+    function available_amount(address _owner, address _game) view public returns(uint256){
+        uint256 amt = allowances[_game].balances[_owner].approved_amount;
+        uint256 bal = token.balanceOf(_owner);
+        if( bal < amt){
+            amt = bal;
+        }
+        return amt;
+    }
+
     function owners(address _game) view public returns(address[]){
         return allowances[_game].owners;
     }

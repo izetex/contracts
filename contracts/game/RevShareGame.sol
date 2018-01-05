@@ -16,6 +16,7 @@ import "./Game.sol";
 contract RevShareGame is Game {
 
     uint256 public prize_price; // price of the single issuance of the prize in wei
+    uint256 public prize_tokens; // amount of tokens in one prize
     uint256 dev_commission;     // commission in percentage, payed to game owner (developer)
     uint256 owner_commission;   // commission in percentage, payed to tokens holder
     uint256 issuer_commission;  // commission in percentage, payed to issuer
@@ -24,6 +25,7 @@ contract RevShareGame is Game {
     /// @param _token ERC20 token, used in game, not 0
     /// @param _controller GameController, used to controlled token allowances, not 0
     /// @param _prize_life_time time from prize creation to expiration in seconds
+    /// @param _prize_tokens amount of tokens in one prize
     /// @param _prize_price price of the single issuance of the prize in wei
     /// @param _dev_commission commission in percentage, payed to game owner (developer)
     /// @param _owner_commission commission in percentage, payed to tokens holder
@@ -31,6 +33,7 @@ contract RevShareGame is Game {
     function RevShareGame( ERC20 _token,
                         GameController _controller,
                         uint256 _prize_life_time,
+                        uint256 _prize_tokens,
                         uint256 _prize_price,
                         uint256 _dev_commission,
                         uint256 _owner_commission,
@@ -40,26 +43,47 @@ contract RevShareGame is Game {
 
         require( (_dev_commission + _owner_commission + _issuer_commission) == 100 );
         require( _prize_price > 0 );
+        require( _prize_tokens > 0 );
 
         prize_price = _prize_price;
+        prize_tokens = _prize_tokens;
         dev_commission = _dev_commission;
         owner_commission = _owner_commission;
         issuer_commission = _issuer_commission;
 
     }
 
+    /// @notice issue prizes using approved tokens from token owners and based on token price specified
+    /// @param _hashes array of hashes to setup prizes
+    function issue(uint256[] _hashes) payable public {
 
-     function calculate_amount( uint256 _requested_amount, uint256 _payed_value ) internal
-            returns(uint256 prize_count, uint256 prize_value, uint256 prize_tokens, uint256 total_tokens) {
-     
-        prize_count = _payed_value / prize_price;
-        prize_value = prize_price;
-
-        if(prize_count > _requested_amount){
-            prize_count = _requested_amount;
+        uint256 prize_count = msg.value / prize_price;
+        if(prize_count > _hashes.length){
+            prize_count = _hashes.length;
         }
 
-        return (prize_count, prize_value, 1, prize_count);
+        require(prize_count>0);
+
+        uint256 total_tokens = mul(prize_count, prize_tokens);
+        address tokens_owner = controller.amount_owner(this, total_tokens );
+
+        require( tokens_owner!=address(0) );
+        require( token.transferFrom(tokens_owner, this, total_tokens) );
+
+        uint256 change = sub(msg.value, mul(prize_count, prize_price));
+        if(change>0){
+            pendingWithdrawals[msg.sender] += change;
+        }
+
+        uint256 expired_at = now + prize_life_time;
+        for(uint i=0;i<prize_count;i++){
+            prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, prize_tokens, prize_price, expired_at);
+            Issue(msg.sender, tokens_owner, _hashes[i], prize_tokens, prize_price, expired_at);
+        }
+    }
+
+     function set_prize_tokens(uint256 _prize_tokens) onlyOwner public {
+        prize_tokens = _prize_tokens;
      }
 
      function set_prize_price(uint256 _prize_price) onlyOwner public {

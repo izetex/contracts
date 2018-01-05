@@ -42,7 +42,7 @@ only to issuer and  kept in secret
 
 The reward can be distributed in arbitrary way, depending on the sub-classed contract for a real game.
 Look FreeGame and RevShareGame for real examples. The contract can be extended by overriding methods
-calculate_amount and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
+issue and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
 game owner and others.
 
 The prize is issued using a token reservation. The token controls the amount pf prize to be issued.

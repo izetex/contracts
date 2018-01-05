@@ -23,7 +23,12 @@ module.exports = function(deployer) {
         controller = instance;
         return proxy.changeProxiedController(controller.address);
     }).then(function(){
-        return deployer.deploy(FreeGame, token.address, controller.address, 10  );
+        return deployer.deploy(FreeGame,
+                                token.address,
+                                controller.address,
+                                10, //_prize_life_time
+                                web3.toWei(0.5)  // prize tokens
+        );
     }).then(function(){
         return FreeGame.deployed();
     }).then(function(instance){

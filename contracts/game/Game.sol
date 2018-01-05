@@ -16,7 +16,7 @@ import "../util/SafeMath.sol";
  * 2) Players play the game, and the issuer may give a secret seed to a winner. Winner claims the prize and gets a reward
  *
  * The reward can be distributed in arbitrary way, depending on the sub-classed contract for a real game.
- * Look FreeGame and RevShareGame for real examples. The contract can be extended by overriding methods
+ * Look TokenGame and RevShareGame for real examples. The contract can be extended by overriding methods
  * issue and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
  * game owner and others.
  *

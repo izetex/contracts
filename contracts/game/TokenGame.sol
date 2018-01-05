@@ -3,24 +3,24 @@ pragma solidity ^0.4.11;
 import "./Game.sol";
 
 /**
- * @title FreeGame
- * @dev FreeGame is a contract to perform the game free of charge.
+ * @title TokenGame
+ * @dev TokenGame is a contract to perform the game for tokens, no ether required.
  *
- * Look Game contract on the rule games. In the FreeGame, issuing prizes do not require Ether to pay.
+ * Look Game contract on the rule games. In the TokenGame, issuing prizes do not require Ether to pay.
  * Winner of the game receives all tokens of the prize
  *
  * @author Aleksey Studnev <studnev@izx.io>
  */
-contract FreeGame is Game {
+contract TokenGame is Game {
 
     uint256 public prize_tokens; // amount of tokens in one prize
 
-    /// @notice FreeGame constructor. Called by game owner ("developer")
+    /// @notice TokenGame constructor. Called by game owner ("developer")
     /// @param _token ERC20 token, used in game, not 0
     /// @param _controller GameController, used to controlled token allowances, not 0
     /// @param _prize_life_time time from prize creation to expiration in seconds
     /// @param _prize_tokens amount of tokens in one prize
-    function FreeGame(  ERC20 _token,
+    function TokenGame(  ERC20 _token,
                         GameController _controller,
                         uint256 _prize_life_time,
                         uint256 _prize_tokens)
@@ -29,7 +29,7 @@ contract FreeGame is Game {
         prize_tokens = _prize_tokens;
     }
 
-    /// @notice issue prizes using own tokens, no ether is required for free game, just tokens
+    /// @notice issue prizes using own tokens, no ether is required, just tokens
     /// @param _hashes array of hashes to setup prizes
     function issue(uint256[] _hashes) payable public {
         require(msg.value==0);

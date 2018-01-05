@@ -1,7 +1,7 @@
-var FreeGameToken = artifacts.require("FreeGameToken");
+var GameToken = artifacts.require("GameToken");
 var GameController = artifacts.require("GameController");
 var ProxyController = artifacts.require("ProxyController");
-var FreeGame = artifacts.require("FreeGame");
+var TokenGame = artifacts.require("TokenGame");
 
 
 module.exports = function(deployer) {
@@ -9,8 +9,8 @@ module.exports = function(deployer) {
 
     var token, controller, proxy, game;
 
-    deployer.deploy(FreeGameToken).then(function(){
-        return FreeGameToken.deployed();
+    deployer.deploy(GameToken).then(function(){
+        return GameToken.deployed();
     }).then(function(instance){
         token = instance;
         return ProxyController.new(token.address, 0);
@@ -23,17 +23,17 @@ module.exports = function(deployer) {
         controller = instance;
         return proxy.changeProxiedController(controller.address);
     }).then(function(){
-        return deployer.deploy(FreeGame,
+        return deployer.deploy( TokenGame,
                                 token.address,
                                 controller.address,
                                 10, //_prize_life_time
                                 web3.toWei(0.5)  // prize tokens
         );
     }).then(function(){
-        return FreeGame.deployed();
+        return TokenGame.deployed();
     }).then(function(instance){
         game = instance;
-        console.log("Deployed FreeGame "+game.address+" with token "+ token.address + " and controller "+
+        console.log("Deployed TokenGame "+game.address+" with token "+ token.address + " and controller "+
             controller.address + " through proxy " + proxy.address);
     });
 

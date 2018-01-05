@@ -1,14 +1,14 @@
-var FreeGameToken = artifacts.require("FreeGameToken");
+var GameToken = artifacts.require("GameToken");
 var ProxyController = artifacts.require("ProxyController");
 var GameController = artifacts.require("GameController");
-var FreeGame = artifacts.require("FreeGame");
+var TokenGame = artifacts.require("TokenGame");
 
 
-contract('FreeGameToken', function(accounts) {
+contract('GameToken', function(accounts) {
 
 
     it("should have 18 digits", function() {
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             return instance.decimals.call();
         }).then(function(result) {
             assert.equal(result.valueOf(), 18);
@@ -16,7 +16,7 @@ contract('FreeGameToken', function(accounts) {
     });
 
     it("should have 0 supply", function() {
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             return instance.totalSupply.call();
         }).then(function(result) {
             assert.equal(result.valueOf(), 0);
@@ -24,7 +24,7 @@ contract('FreeGameToken', function(accounts) {
     });
 
     it("should have symbol", function() {
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             return instance.symbol.call();
         }).then(function(result) {
             assert.equal(result, 'FGT');
@@ -32,7 +32,7 @@ contract('FreeGameToken', function(accounts) {
     });
 
     it("should have controller", function() {
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             return instance.controller();
         }).then(function(result) {
             assert.isTrue(!!result);
@@ -47,7 +47,7 @@ contract('ProxyController', function(accounts) {
     it("should generate tokens to players", function() {
         var token, controller;
 
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             token = instance;
             return token.controller();
         }).then(function(result) {
@@ -71,7 +71,7 @@ contract('ProxyController', function(accounts) {
     it("should allow transfer tokens from player to player", function() {
         var token;
 
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
            token = instance;
            return token.transfer(accounts[2], web3.toWei(1), {from: accounts[1], gas: 150000});
         }).then(function() {
@@ -92,7 +92,7 @@ contract('ProxyController', function(accounts) {
     it("should allow approve tokens from player to player", function() {
         var token;
 
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             token = instance;
             return token.approve(accounts[1], web3.toWei(1), {from: accounts[2], gas: 150000});
         }).then(function() {
@@ -116,7 +116,7 @@ contract('ProxyController', function(accounts) {
     it("should not allow transfer tokens to contract", function() {
         var token, controller;
 
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             token = instance;
             return token.controller();
         }).then(function(result) {
@@ -157,9 +157,9 @@ contract('GameController', function(accounts) {
 
     it("should accept tokens approval for prizes", function() {
         var token, game, controller;
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             token = instance;
-            return FreeGame.deployed();
+            return TokenGame.deployed();
         }).then(function(instance) {
             game = instance;
             return game.controller();
@@ -209,9 +209,9 @@ contract('GameController', function(accounts) {
 
     it("should update tokens approval for prizes", function() {
         var token, game, controller;
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             token = instance;
-            return FreeGame.deployed();
+            return TokenGame.deployed();
         }).then(function(instance) {
             game = instance;
             return game.controller();
@@ -241,7 +241,7 @@ contract('GameController', function(accounts) {
     it("should allow generate tokens to players throw proxy", function() {
         var token, controller;
 
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             token = instance;
             return token.controller();
         }).then(function(result) {
@@ -264,9 +264,9 @@ contract('GameController', function(accounts) {
 
     it("should find amount_owner", function() {
         var token, game, controller;
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             token = instance;
-            return FreeGame.deployed();
+            return TokenGame.deployed();
         }).then(function(instance) {
             game = instance;
             return game.controller();
@@ -285,14 +285,13 @@ contract('GameController', function(accounts) {
         }).then(function(result) {
             assert.equal(accounts[1], result);
         });
-
     });
 
     it("should limit amount_owner by balance", function() {
         var token, game, controller;
-        return FreeGameToken.deployed().then(function(instance) {
+        return GameToken.deployed().then(function(instance) {
             token = instance;
-            return FreeGame.deployed();
+            return TokenGame.deployed();
         }).then(function(instance) {
             game = instance;
             return game.controller();

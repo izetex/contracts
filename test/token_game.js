@@ -35,6 +35,11 @@ contract('TokenGame', function(accounts) {
             return game_controller.available_amount(accounts[2], game.address);
         }).then(function(result) {
             assert.equal(web3.toWei(7), result.toNumber());
+            return game_controller.owners(game.address);
+        }).then(function(result) {
+            assert.equal(2, result.length);
+            assert.equal(accounts[1], result[0]);
+            assert.equal(accounts[2], result[1]);
         });
     });
 
@@ -53,7 +58,6 @@ contract('TokenGame', function(accounts) {
             return game.key_hash256(0);
         }).then(function(result) {
             hash = result;
-            console.log(hash.toString(16));
             return game.issue([hash], {from: accounts[1], gas: 250000 });
         }).then(function(result) {
 
@@ -84,6 +88,28 @@ contract('TokenGame', function(accounts) {
             assert.equal(0, args.value.toNumber());
             assert.isTrue(args.expiration.toNumber() > (new Date().getTime()/1000 + 5));
 
+            return token.balanceOf(game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(0.5), result.toNumber());
+            return game.prizes(hash);
+        }).then(function(result) {
+            assert.equal(accounts[1], result[0]);
+            assert.equal(accounts[1], result[1]);
+            assert.equal(web3.toWei(0.5), result[2].toNumber());
+            assert.equal(web3.toWei(0), result[3].toNumber());
+            assert.isTrue(result[4].toNumber()  > (new Date().getTime()/1000 + 5));
+
+            return game_controller.approved_amount(accounts[1], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(5), result.toNumber());
+            return game_controller.reserved_amount(accounts[1], game.address);
+        }).then(function(result) {
+            assert.equal(web3.toWei(0.5), result.toNumber());
+            return game_controller.owners(game.address);
+        }).then(function(result) {
+            assert.equal(2, result.length);
+            assert.equal(accounts[1], result[1]); // note: switched owners!
+            assert.equal(accounts[2], result[0]);
         });
     });
 

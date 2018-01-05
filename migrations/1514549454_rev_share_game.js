@@ -1,7 +1,7 @@
 var RevShareGameToken = artifacts.require("RevShareGameToken");
 var GameController = artifacts.require("GameController");
 var ProxyController = artifacts.require("ProxyController");
-var RevShareGame = artifacts.require("FreeGame");
+var RevShareGame = artifacts.require("RevShareGame");
 
 
 module.exports = function(deployer) {
@@ -23,7 +23,17 @@ module.exports = function(deployer) {
         controller = instance;
         return proxy.changeProxiedController(controller.address);
     }).then(function(){
-        return deployer.deploy(RevShareGame, token.address, controller.address, 10  );
+        return deployer.deploy(RevShareGame,
+                            token.address,
+                            controller.address,
+                            10, //_prize_life_time
+                            web3.toWei(0.1), // prize tokens
+                            web3.toWei(0.01), // prize_price
+                            25,     // _dev_commission,
+                            70,     // _owner_commission,
+                            5       // _issuer_commission
+            );
+
     }).then(function(){
         return RevShareGame.deployed();
     }).then(function(instance){

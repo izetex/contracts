@@ -53,7 +53,7 @@ contract GameController is TokenController {
         Allowance storage allowance = allowances[_spender];
         Balance storage balance = allowance.balances[_owner];
 
-        if(balance.key_index>0){
+        if(balance.key_index==0){
             uint next = allowance.owners.length++;
             allowance.owners[next] = _owner;
             balance.key_index = next + 1;
@@ -111,19 +111,27 @@ contract GameController is TokenController {
     }
 
     function approved_amount(address _owner, address _game) view public returns(uint256){
-        return owner_balance(_owner, _game).approved_amount;
+        return allowances[_game].balances[_owner].approved_amount;
     }
 
     function reserved_amount(address _owner, address _game) view public returns(uint256){
-        return owner_balance(_owner, _game).reserved_amount;
+        return allowances[_game].balances[_owner].reserved_amount;
     }
 
     function owner_index(address _owner, address _game) view public returns(uint256){
-        return owner_balance(_owner, _game).key_index;
+        return allowances[_game].balances[_owner].key_index;
     }
 
-    function owner_balance(address _owner, address _game) view internal returns(Balance){
-        Allowance storage allowance = allowances[_game];
-        return allowance.balances[_owner];
+    function available_amount(address _owner, address _game) view public returns(uint256){
+        uint256 amt = allowances[_game].balances[_owner].approved_amount;
+        uint256 bal = token.balanceOf(_owner);
+        if( bal < amt){
+            amt = bal;
+        }
+        return amt;
+    }
+
+    function owners(address _game) view public returns(address[]){
+        return allowances[_game].owners;
     }
 }

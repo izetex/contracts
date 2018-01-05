@@ -16,8 +16,8 @@ import "../util/SafeMath.sol";
  * 2) Players play the game, and the issuer may give a secret seed to a winner. Winner claims the prize and gets a reward
  *
  * The reward can be distributed in arbitrary way, depending on the sub-classed contract for a real game.
- * Look FreeGame and RevShareGame for real examples. The contract can be extended by overriding methods
- * calculate_amount and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
+ * Look TokenGame and RevShareGame for real examples. The contract can be extended by overriding methods
+ * issue and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
  * game owner and others.
  *
  * The prize is issued using a token reservation. The token controls the amount of prize to be issued.
@@ -38,24 +38,23 @@ contract Game is Owned, SafeMath {
     // fetched back
     struct Prize {
         address issuer;     // issuer of the prize. He setup the game rules and hash to guess
-        address owner;      // owner of the tokens, used as a garant in prize
-        uint256 tokens;     // number of tokens per prize ( 1 by default )
+        address owner;      // owner of the tokens, used in prize
+        uint256 tokens;     // number of tokens per prize
         uint256 value;      // money spent on the prize
-        uint256 expiration;
+        uint256 expiration; // unix timestamp of expiration
     }
 
     // State variables
-    ERC20                       public token;               // token used to create a prize for the game
-    GameController              public controller;          // game controller for token allowance control
-    uint256                     public prize_life_time;     // time from prize creation to expiration in seconds
-    mapping (uint256 => Prize)  public prizes;              // prizes by hashes
-    mapping (address => uint)   public pendingWithdrawals;  // withdrawal amounts for pull payments
-    mapping (address => uint)   public issuedPrizes;        // information mapping prize count by issuer
+    ERC20                           public token;               // token used to create a prize for the game
+    GameController                  public controller;          // game controller for token allowance control
+    uint256                         public prize_life_time;     // time from prize creation to expiration in seconds
+    mapping (uint256 => Prize)      public prizes;              // prizes by hashes
+    mapping (address => uint)       public pendingWithdrawals;  // withdrawal amounts for pull payments
 
     // Events
-    event Issue(address indexed issuer, address indexed owner, uint amount);
-    event Claim(address indexed issuer, address indexed owner, address indexed winner, uint amount);
-    event Expired(address indexed issuer, address indexed owner, uint amount);
+    event Issue(address indexed issuer, address indexed owner, uint256 hash, uint256 tokens, uint256 value, uint256 expiration);
+    event Claim(address indexed issuer, address indexed owner, address indexed winner, uint256 hash, uint256 tokens, uint256 value);
+    event Revoke(address indexed issuer, address indexed owner, uint256 hash, uint256 tokens, uint256 value);
 
     /// @notice Game constructor. Called by game owner ("developer")
     /// @param _token ERC20 token, used in game, not 0
@@ -64,36 +63,22 @@ contract Game is Owned, SafeMath {
     function Game(  ERC20 _token, GameController _controller, uint256 _prize_life_time  ) public {
         require(address(_token)!=address(0));
         require(address(_controller)!=address(0));
+        require( _prize_life_time > 0 );
         token = _token;
         controller = _controller;
         prize_life_time = _prize_life_time;
     }
 
-    /// @notice issue prizes for specified hashes. Function is payable, and in non-free games the amount being payed
-    /// defines the number of prizes
-    /// @param _hashes array of hashes to setup prizes
-    function issue(uint256[] _hashes) payable public {
 
-        var (prize_count, prize_value, prize_tokens, total_tokens) = calculate_amount(_hashes.length, msg.value);
-        require(prize_count>0);
-
-        address tokens_owner = controller.amount_owner(this, total_tokens );
-
-        require(tokens_owner!=address(0));
-        require( token.transferFrom(tokens_owner, this, total_tokens) );
-
-        if(msg.value>0){
-            uint256 change = sub(msg.value, mul(prize_count, prize_value));
-            if(change>0){
-                pendingWithdrawals[msg.sender] += change;
-            }
+    /// @notice revoke prizes. Issuer can revoke all prizes issued by him, at any time. All other can revoke only expired prizes
+    /// @param _hashes array of hashes to revoke prizes
+    function revoke(uint256[] _hashes) public {
+        for(uint i=0;i<_hashes.length;i++){
+           Prize storage prize = prizes[_hashes[i]];
+           if( now>prize.expiration || msg.sender==prize.issuer ){
+              expire_prize(prize, _hashes[i]);
+           }
         }
-
-        for(uint i=0;i<prize_count;i++){
-            prizes[_hashes[i]] = Prize(msg.sender, tokens_owner, prize_tokens, prize_value, now + prize_life_time);
-        }
-        issuedPrizes[msg.sender] += prize_count;
-        Issue(msg.sender, tokens_owner, prize_count);
     }
 
     /// @notice prize, claimed by using a key. Prize can be claimed in reward to winner by the winner himself
@@ -109,28 +94,31 @@ contract Game is Owned, SafeMath {
         require(prize.owner != address(0));
 
         if( now>prize.expiration ){
-
-            require( token.transfer(prize.owner, prize.tokens) );
-            if(prize.value>0){
-                pendingWithdrawals[prize.issuer] += prize.value;
-            }
-            issuedPrizes[msg.sender] -= 1;
-
-            Expired(prize.issuer, prize.owner, prize.tokens);
-
-            delete(prizes[hash]);
+            expire_prize(prize, hash);
             return false;
         }else{
             payout(prize, _winner);
-            issuedPrizes[msg.sender] -= 1;
 
-            Claim(prize.issuer, prize.owner, _winner, prize.tokens);
+            Claim( prize.issuer, prize.owner, _winner, hash, prize.tokens, prize.value );
 
             delete(prizes[hash]);
             return true;
         }
 
 
+    }
+
+
+    function expire_prize(Prize prize, uint256 hash) internal {
+
+       require( token.transfer(prize.owner, prize.tokens) );
+       if(prize.value>0){
+            pendingWithdrawals[prize.issuer] += prize.value;
+       }
+
+       Revoke(prize.issuer, prize.owner, hash, prize.tokens, prize.value);
+
+       delete(prizes[hash]);
     }
 
     /// @notice calculate hash using a seed. The same method used to claim a prize
@@ -149,17 +137,14 @@ contract Game is Owned, SafeMath {
         }
     }
 
-    /// @notice this method to be implemented in game contracts, based on this protocol
-    /// calculate_amount expects to calulate an amount of prizes to issue and the value for each prize
-    /// @param _requested_amount maximum number of prizes requested to issue
-    /// @param _payed_value payed value in wei
-    /// @return prize_count actial number of prizes that can be issued for the price
-    /// @return prize_value the price for every prize
-    /// @return prize_tokens tokens used to secure the prize
-    /// @return total_tokens total number of tokens required
-    function calculate_amount( uint256 _requested_amount, uint256 _payed_value ) internal
-            returns( uint256 prize_count, uint256 prize_value, uint256 prize_tokens, uint256 total_tokens );
 
+    /// --- METHDOS TO BE IMPLEMENTED IN GAME CONTRACTS ----
+
+    /// @notice issue prizes for specified hashes. Function is payable, and in non-free games the amount being payed
+    /// defines the number of prizes.
+    /// This method to be implemented in game contracts, based on this protocol
+    /// @param _hashes array of hashes to setup prizes
+    function issue(uint256[] _hashes) payable public;
 
     /// @notice this method to be implemented in game contracts, based on this protocol
     /// payout expects to make a payout to all parties in tokens and Ether

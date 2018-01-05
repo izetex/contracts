@@ -16,7 +16,7 @@ The protocol consists of the following Smart contracts:
 1) **Game** smart contract is the base abstract contract, defining basic rules
 of the game. The game developer can sub-class from this contract to implement the new rules
 or make a new game with IZX token.
-2) **FreeGame** smart contract is an example of the game, where players 
+2) **TokenGame** smart contract is an example of the game, where players 
 exchange tokens without any value. Winner gets 1 token, initially owned by token
 holder.
 3) **RevShareGame** smart contract is another example of the game, which is close
@@ -41,8 +41,8 @@ only to issuer and  kept in secret
 2) Issuer gives the winner of the game the secret seed. Winner claims the prize and gets a reward
 
 The reward can be distributed in arbitrary way, depending on the sub-classed contract for a real game.
-Look FreeGame and RevShareGame for real examples. The contract can be extended by overriding methods
-calculate_amount and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
+Look TokenGame and RevShareGame for real examples. The contract can be extended by overriding methods
+issue and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
 game owner and others.
 
 The prize is issued using a token reservation. The token controls the amount pf prize to be issued.
@@ -53,11 +53,11 @@ and money returned to issuer.
 
 Money are pulled from the contract using the withdraw() method.
  
-### FreeGame Smart Contract
+### TokenGame Smart Contract
  
-Sources are located in [FreeGame.sol](contracts/game/FreeGame.sol).
+Sources are located in [TokenGame.sol](contracts/game/TokenGame.sol).
 
-FreeGame is a contract to perform the game free of charge. In the FreeGame, issuing prizes do not require Ether to pay.
+TokenGame is a contract to perform the game using just tokens ( no ether required). In the TokenGame, issuing prizes do not require Ether to pay.
 Winner of the game receives 1 token, initially owned by token holder.
 
 

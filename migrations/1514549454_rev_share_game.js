@@ -26,7 +26,7 @@ module.exports = function(deployer) {
         return deployer.deploy(RevShareGame,
                             token.address,
                             controller.address,
-                            10, //_prize_life_time
+                            5, //_prize_life_time
                             web3.toWei(0.1), // prize tokens
                             web3.toWei(0.01), // prize_price
                             25,     // _dev_commission,

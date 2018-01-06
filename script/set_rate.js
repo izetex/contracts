@@ -17,9 +17,9 @@ deployed_tokensale.exchangeRate(function(error,result){
 
             console.log( "Tokensale exchange rate is: "+ (result / 100.0) + ' USD/ETH');
 
-            request('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=', function (error, response, body) {
-                var ethusd = JSON.parse(body)['result']['ethusd'];
-                console.log( 'Current USD rate on Etherscan '+ ethusd );
+            request('https://api.coinmarketcap.com/v1/ticker/ethereum/', function (error, response, body) {
+                var ethusd = JSON.parse(body)[0]['price_usd'];
+                console.log( 'Current USD rate on Coinmarketcap '+ ethusd );
 
                 var yesno = cli.question('Enter Yes! to change rate in ' + environment+': ');
                 if(yesno!='Yes!'){
@@ -44,4 +44,3 @@ deployed_tokensale.exchangeRate(function(error,result){
 
     }
 );
-

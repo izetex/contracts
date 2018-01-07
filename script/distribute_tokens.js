@@ -1,6 +1,6 @@
 const cli = require('readline-sync');
 const Connection = require('./eth_connection');
-const tokensale = require('./tokensale');
+const tokensale = require('./contracts/tokensale');
 const request = require('request');
 const fs = require('fs');
 

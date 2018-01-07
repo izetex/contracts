@@ -146,8 +146,57 @@ Using network 'development'.
     ✓ should protect to change controller (172ms)
     ✓ should protect distribute tokens (94ms)
 
+  Contract: GameToken
+    ✓ should have 18 digits
+    ✓ should have 0 supply
+    ✓ should have symbol (49ms)
+    ✓ should have controller
 
-  17 passing (6s)
+  Contract: ProxyController
+    ✓ should generate tokens to players (141ms)
+    ✓ should allow transfer tokens from player to player (137ms)
+    ✓ should allow approve tokens from player to player (175ms)
+    ✓ should not allow transfer tokens to contract (238ms)
+
+  Contract: GameController
+    ✓ should accept tokens approval for prizes (306ms)
+    ✓ should update tokens approval for prizes (132ms)
+    ✓ should allow generate tokens to players throw proxy (130ms)
+    ✓ should find amount_owner (126ms)
+    ✓ should limit amount_owner by balance (47ms)
+
+  Contract: RevShareGame
+    ✓ should have initial balances of tokens for players (298ms)
+    ✓ should allow issuer to issue prize (236ms)
+    ✓ should give issuer change
+    ✓ should allow change withdrawal by issuer (315ms)
+    ✓ should allow zero withdrawal (308ms)
+    ✓ should require ether for issuer to issue prize (56ms)
+    ✓ should allow to claim the prize by winner (126ms)
+    ✓ should return tokens to owner
+    ✓ should distribute the prize fund between owner, issuer, game developer (54ms)
+    ✓ should allow to withdraw (165ms)
+    ✓ should not allow claim same prize second time (56ms)
+    ✓ should allow owner to issue many prizes limited by value (234ms)
+    ✓ should allow issuer to revoke by hash at any time (114ms)
+    ✓ should return money to  issuer on revoke  (55ms)
+    ✓ should revoke the prize after expiration (6160ms)
+    ✓ should return money to  issuer on revoke  (59ms)
+    ✓ should allow to revoke by hash (160ms)
+    ✓ should return money to  issuer on revoke  (57ms)
+
+  Contract: TokenGame
+    ✓ should have initial balances of tokens for players (331ms)
+    ✓ should allow owner to issue prize (218ms)
+    ✓ should give the prize to winner (143ms)
+    ✓ should not allow claim same prize second time (62ms)
+    ✓ should allow owner to issue many prizes (226ms)
+    ✓ should allow issuer to revoke by hash at any time (153ms)
+    ✓ should revoke the prize after expiration (6161ms)
+    ✓ should allow to revoke by hash (145ms)
+
+  56 passing (20s)
+
 ```
 
 ## Executing deployment scripts
@@ -194,4 +243,24 @@ When using direct address it is not needed:
 ```
 truffle console --network production
 truffle(production)> IZXToken.at('0x2ad180cbaffbc97237f572148fc1b283b68d8861').name()
+```
+
+## Validating contract sources
+
+[solidity_flattener](https://github.com/BlockCatIO/solidity-flattener) generates full sources.
+Note, that the unsupported parameter --allow-paths required, Before it is integrated into release of solidity_flattener,
+use the installation from branch:
+```
+pip3 install git+https://github.com/dostu/solidity-flattener.git
+```
+
+Then execute:
+
+```
+solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/IZXDriveToken_flat.sol contracts/token/IZXDriveToken.sol
+solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/TokenGame_flat.sol contracts/game/TokenGame.sol
+solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/RevShareGame_flat.sol contracts/game/RevShareGame.sol
+solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/GameController_flat.sol contracts/game/GameController.sol
+solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/ProxyController_flat.sol contracts/token/ProxyController.sol
+
 ```

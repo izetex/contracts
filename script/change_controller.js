@@ -1,8 +1,8 @@
 const cli = require('readline-sync');
 const Connection = require('./eth_connection');
-const token = require('./token');
-const tokensale = require('./tokensale');
-const owned = require('./owned');
+const token = require('./contracts/token');
+const tokensale = require('./contracts/tokensale');
+const owned = require('./contracts/owned');
 
 const environment = 'foundation'; // ropsten/foundation, change to foundation to deploy to real
 var mnemonics = cli.question('Enter your mnemonics for '+environment+' account:');

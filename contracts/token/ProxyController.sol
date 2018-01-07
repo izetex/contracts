@@ -33,7 +33,7 @@ contract ProxyController is Owned, TokenController {
     /// @param _owner The address that will be assigned the new tokens
     /// @param _amount The quantity of tokens generated
     /// @return True if the tokens are generated correctly
-    function generateTokens(address _owner, uint _amount ) onlyOwner returns (bool) {
+    function generateTokens(address _owner, uint _amount ) onlyOwner public returns (bool) {
         return tokenContract.generateTokens(_owner, _amount);
     }
 
@@ -41,14 +41,14 @@ contract ProxyController is Owned, TokenController {
     /// @param _owner The address that will lose the tokens
     /// @param _amount The quantity of tokens to burn
     /// @return True if the tokens are burned correctly
-    function destroyTokens(address _owner, uint _amount ) onlyOwner returns (bool) {
+    function destroyTokens(address _owner, uint _amount ) onlyOwner public returns (bool) {
         return tokenContract.destroyTokens(_owner, _amount);
     }
 
     /// @notice  `onlyOwner`  can use by controller to extract mistakenly sent tokens to this contract.
     /// @param _token The address of the token contract that you want to recover
     ///  set to 0 in case you want to extract ether.
-    function claimTokens(address _token) onlyOwner {
+    function claimTokens(address _token) onlyOwner public {
         return tokenContract.claimTokens(_token);
     }
 
@@ -60,7 +60,7 @@ contract ProxyController is Owned, TokenController {
 
     /// @notice `onlyOwner` changes the setting to allow transfer tokens to other contracts
     /// @param _allow  allowing to transfer tokens to other contracts
-    function setTransfersToContractsAllowed(bool _allow) onlyOwner public{
+    function setTransfersToContractsAllowed(bool _allow) onlyOwner public {
         allowTransfersToContracts = _allow;
     }
 

@@ -2,6 +2,11 @@ module.exports = {
     ropsten: {
         url: 'http://node1.ph3.izx.io:8545',
         creator: '0xef34280050e8546d8e1d85ec75250149553fb396',
+        token: '0xA423267a405dC90C536ec78766d4F36FfDb30fdd'
+    },
+    ropsten_ico: {
+        url: 'http://node1.ph3.izx.io:8545',
+        creator: '0xef34280050e8546d8e1d85ec75250149553fb396',
         token: '0xB65AE3E2cb1051916c87f6ce7db55cB30f7108DC',
         vault: '0xAAeAA8810440b57f3d218bA04e467eBD706b69eE',
         tokensale: '0x804f92260895f3fe4693e80046a96d88f7c7e8b0'

@@ -90,6 +90,16 @@ game.
 Game requests the amount of tokens from GameController using amount_owner() method.
 
 
+## Deployed Addresses
+
+### Foundation Blockchain Network
+
+* IZX Token: [0x2ad180cbaffbc97237f572148fc1b283b68d8861](https://etherscan.io/token/0x2ad180cbaffbc97237f572148fc1b283b68d8861)
+
+### Ropsten Blockchain Network
+
+* IZX Drive Token: [0xA423267a405dC90C536ec78766d4F36FfDb30fdd](https://ropsten.etherscan.io/token/0xA423267a405dC90C536ec78766d4F36FfDb30fdd)
+
 ## Installation
 
 ```
@@ -205,7 +215,7 @@ Crowdsale contract deployment and management scripts are located in script direc
 They are called as node scripts:
 ```
 npm install
-node script/deploy_contract
+node script/deploy_tokensale
 ```
 
 Every script contains variable, defining the environment to run: 
@@ -218,17 +228,26 @@ Configuration in script/config.js contains all properties for selected environme
 On script run, it asks for credentials, and asks to enter word 'Yes!' before actual execution. After successfull run, it logs the hash of transaction,
 that should be looked up in ethereum explorer.
 
-Scripts are:
+Crowdsale-related Scripts are:
 
-*script/deploy_contract** - deploys the crowdsale contract with the specified token and 
+**node script/deploy_tokensale** - deploys the crowdsale contract with the specified token and 
   vault in the configuration
-*script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
-  controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly
-*script/set_rate** - modifies the exhange rate USD/ETH for crowdsale contract. First it reads the old value and queries for
-  the current rate from etherscan.io
-*script/distribute_tokens** - transfers tokens to the owners in the list
-*script/send_eth** - sends ether to an address
   
+**node script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
+  controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly
+
+**node script/set_rate** - modifies the exhange rate USD/ETH for crowdsale contract. First it reads the old value and queries for
+  the current rate from etherscan.io
+
+**node script/distribute_tokens** - transfers tokens to the owners in the list
+
+**node script/send_eth** - sends ether to an address
+  
+Game-related Scripts are:  
+
+**node script/deploy_izx_drive_token** - deploys token on Ropsten network ( used for free token games )
+
+
 
 ## Note on truffle console usage
 

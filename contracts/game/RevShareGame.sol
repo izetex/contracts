@@ -41,7 +41,6 @@ contract RevShareGame is Game {
                         )
         Game(_token, _controller, _prize_life_time) public {
 
-        require( (_dev_commission + _owner_commission + _issuer_commission) == 100 );
         require( _prize_price > 0 );
         require( _prize_tokens > 0 );
 

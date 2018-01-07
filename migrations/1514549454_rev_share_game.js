@@ -27,10 +27,10 @@ module.exports = function(deployer) {
                             token.address,
                             controller.address,
                             5, //_prize_life_time
-                            web3.toWei(0.1), // prize tokens
+                            web3.toWei(0.5), // prize tokens
                             web3.toWei(0.01), // prize_price
                             25,     // _dev_commission,
-                            70,     // _owner_commission,
+                            20,     // _owner_commission,
                             5       // _issuer_commission
             );
 

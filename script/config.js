@@ -2,7 +2,11 @@ module.exports = {
     ropsten: {
         url: 'http://node1.ph3.izx.io:8545',
         creator: '0xef34280050e8546d8e1d85ec75250149553fb396',
-        token: '0xA423267a405dC90C536ec78766d4F36FfDb30fdd'
+        token: '0xA423267a405dC90C536ec78766d4F36FfDb30fdd',
+        proxy: '0x9f8cd6841d1427cd7c438e109b7e671b4f14bb59',
+        controller: '0xe36e6af995670c744589c0e11f2c239b4b55caa9',
+        token_game: '0x08cCCA04dffA062D6526f9Eb08d158DBB54955e0',
+        rev_share_game: '0xadf36f8bae6f8e0b30e4a94f57caeee71126c445'
     },
     ropsten_ico: {
         url: 'http://node1.ph3.izx.io:8545',

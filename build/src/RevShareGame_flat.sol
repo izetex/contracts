@@ -359,9 +359,9 @@ contract RevShareGame is Game {
 
     uint256 public prize_price; // price of the single issuance of the prize in wei
     uint256 public prize_tokens; // amount of tokens in one prize
-    uint256 dev_commission;     // commission in percentage, payed to game owner (developer)
-    uint256 owner_commission;   // commission in percentage, payed to tokens holder
-    uint256 issuer_commission;  // commission in percentage, payed to issuer
+    uint256 public dev_commission;     // commission in percentage, payed to game owner (developer)
+    uint256 public owner_commission;   // commission in percentage, payed to tokens holder
+    uint256 public issuer_commission;  // commission in percentage, payed to issuer
 
     /// @notice RevShareGame constructor. Called by game owner ("developer")
     /// @param _token ERC20 token, used in game, not 0

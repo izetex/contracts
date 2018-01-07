@@ -252,6 +252,15 @@ Game-related Scripts are:
 
 **node script/deploy_izx_drive_token** - deploys token on Ropsten network ( used for free token games )
 
+**node script/deploy_proxy_controller** - deploys proxy controller, which is generally required to use with GameController
+
+**node script/deploy_game_controller** - deploys game controller
+
+**node script/change_proxied_controller** - sets game controller as proxied controller
+
+**node script/deploy_token_game** - deploys a token game
+
+**node script/deploy_rev_share_game** - deploys a rev share game
 
 
 ## Note on truffle console usage

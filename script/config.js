@@ -20,6 +20,6 @@ module.exports = {
         creator: '0xb2556a76da6e5b99e82fc156f8faad2778225161',
         token: '0x2ad180cbaffbc97237f572148fc1b283b68d8861',
         vault: '0xf4702b0918A8a89dfC38459Ce42198834818F26B',
-        tokensale: '0x97565BBA5A260A442aB5fbE365302562cCC1Fa5f'
+        tokensale: '0x28c0034afb0723c298ec0aec277c8f2418098f24'
     }
 }

@@ -17,6 +17,9 @@ function deploy_contract(connection, contract, gas, callback){
             data: contract.bytecode,
             gas: gas
         }, function (e, c){
+            if(e){
+                console.log(e);
+            }
             callback(c);
         });
 }

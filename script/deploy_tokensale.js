@@ -9,13 +9,13 @@ var connection = new Connection(mnemonics, environment);
 
 function deploy_contract(connection, tokensale, callback){
 
-    var _startFundingTime = new Date('Jan 03 2018 17:30:00 GMT+0300 (MSK)').getTime()/1000; /* var of type uint256 here */ ;
-    var _endFundingTime = new Date('Jan 10 2018 02:59:59 GMT+0300 (MSK)').getTime()/1000;/* var of type uint256 here */ ;
+    var _startFundingTime = new Date('Jan 09 2018 17:30:00 GMT+0300 (MSK)').getTime()/1000; /* var of type uint256 here */ ;
+    var _endFundingTime = new Date('Mar 31 2018 23:59:59 GMT+0300 (MSK)').getTime()/1000;/* var of type uint256 here */ ;
     var _tokenCap = '25000000000000000000000000';/* var of type uint256 here */ ;
     var _vaultAddress = connection.config.vault;/* var of type address here */ ;
     var _tokenAddress = connection.config.token;/* var of type address here */ ;
     var _transfersAllowed = false; /* var of type bool here */ ;
-    var _exchangeRate = 87635;/* var of type uint256 here */ ;
+    var _exchangeRate = 122067;/* var of type uint256 here */ ;
 
     var browser_izx_crowdsale_tokensaleall_sol_tokensaleContract = connection.web3.eth.contract(tokensale.abi);
 
@@ -68,4 +68,3 @@ connection.web3.eth.getBalance(connection.address, function(error,result){
 
     }
 );
-

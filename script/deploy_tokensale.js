@@ -34,6 +34,9 @@ function deploy_contract(connection, tokensale, callback){
             data: tokensale.bytecode,
             gas: tokensale.gas
         }, function (e, contract){
+            if(e){
+                console.log(e);
+            }
             callback(contract);
         })
 

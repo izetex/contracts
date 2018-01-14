@@ -4,13 +4,14 @@ const wallet = require('./contracts/wallet');
 
 const environment = 'foundation'; // ropsten/foundation, change to foundation to deploy to real
 var mnemonics = cli.question('Enter your mnemonics for '+environment+' account:');
-var connection = new Connection(mnemonics, environment);
+var connection = new Connection(mnemonics, environment, true);
 
 
 var deployed_wallet = connection.web3.eth.contract(wallet.abi).at(connection.config.vault);
 
 var receiver = cli.question('Enter money recipient:');
 var amount = cli.question('Enter ETH amount:');
+var gasprice = cli.question('Enter gas price in gwei:');
 
 var yesno = cli.question('Enter Yes! to continue in '+environment+ ' to '+deployed_wallet.address+' with these parameters: ');
 if(yesno!='Yes!'){
@@ -22,7 +23,9 @@ console.log('confirming now...');
 
 deployed_wallet.execute.sendTransaction(    receiver,
                                             connection.web3.toWei(amount, 'ether'),
-                                            null, {from: connection.address, gas: 290000},
+                                            null, {from: connection.address, 
+                                                    gas: 290000,
+                                                    gasPrice: connection.web3.toWei(gasprice, 'gwei')},
     function(error, result){
         console.log(error, result);
         if(result) {

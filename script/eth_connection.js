@@ -6,7 +6,7 @@ const HDKey = require('ethereumjs-wallet/hdkey');
 const BIP39 = require('bip39');
 const Config = require('./config');
 
-function Connection(mnemonics, environment) {
+function Connection(mnemonics, environment, accept_any_address) {
 
     if(!BIP39.validateMnemonic(mnemonics)) {
         throw('Check mnemonics, it is wrong: ' + mnemonics);
@@ -17,7 +17,7 @@ function Connection(mnemonics, environment) {
     var wallet = HDKey.fromMasterSeed(BIP39.mnemonicToSeed(mnemonics)).derivePath("m/44'/60'/0'/0/0").getWallet();
     this.address = wallet.getAddressString();
 
-    if(this.address.toUpperCase() != this.config.creator.toUpperCase()){
+    if(!accept_any_address && this.address.toUpperCase() != this.config.creator.toUpperCase()){
         throw('Check mnemonics, it has wrong derived address: ' + this.address + ', expected: ' + this.config.creator  );
     }
 

@@ -21,7 +21,7 @@ console.log('confirming now...');
 
 
 deployed_wallet.confirm.sendTransaction( hash, {from: connection.address,
-                                        gas: 60000,
+                                        gas: 100000,
                                         gasPrice: connection.web3.toWei(gasprice, 'gwei')
                                     },
     function(error, result){

@@ -20,14 +20,17 @@ deployed_tokensale.exchangeRate(function(error,result){
             request('https://api.coinmarketcap.com/v1/ticker/ethereum/', function (error, response, body) {
                 var ethusd = JSON.parse(body)[0]['price_usd'];
                 console.log( 'Current USD rate on Coinmarketcap '+ ethusd );
-
+                var gasprice = cli.question('Enter gas price in gwei:');
                 var yesno = cli.question('Enter Yes! to change rate in ' + environment+': ');
                 if(yesno!='Yes!'){
                     console.log('Not confirmed, stopping');
                     process.exit(1);
                 }
 
-                deployed_tokensale.setExchangeRate.sendTransaction( Math.round(ethusd*100.0), {from: connection.address, gas: 40000},
+                deployed_tokensale.setExchangeRate.sendTransaction( Math.round(ethusd*100.0), {
+                        from: connection.address,
+                        gas: 40000,
+                        gasPrice: connection.web3.toWei(gasprice, 'gwei')},
                     function(error, result){
                         console.log(error, result);
                         if(result) {

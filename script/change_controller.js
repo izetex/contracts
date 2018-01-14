@@ -39,7 +39,8 @@ deployed_token.controller(function(error,result){
                     console.log( 'Unexpected address '+ result.toUpperCase() );
                     process.exit(1);
                 }
-
+                
+                var gasprice = cli.question('Enter gas price in gwei:');
                 var yesno = cli.question('Enter Yes! to change token controller to '+new_controller+' calling '+using+ ' contract ('+ use_contract.address +
                     ') in '+environment+ ' with these parameters: ');
                 if(yesno!='Yes!'){
@@ -47,7 +48,7 @@ deployed_token.controller(function(error,result){
                     process.exit(1);
                 }
 
-                use_contract.changeController.sendTransaction(new_controller, {from: connection.address, gas: 40000},
+                use_contract.changeController.sendTransaction(new_controller, {from: connection.address, gas: 40000, gasPrice: connection.web3.toWei(gasprice, 'gwei')},
                     function(error, result){
                         console.log(error, result);
                         if(result) {

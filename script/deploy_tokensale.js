@@ -7,7 +7,7 @@ var mnemonics = cli.question('Enter your mnemonics for '+environment+' account:'
 var connection = new Connection(mnemonics, environment);
 
 
-function deploy_contract(connection, tokensale, callback){
+function deploy_contract(connection, tokensale, gasprice, callback){
 
     var _startFundingTime = new Date('Jan 09 2018 17:30:00 GMT+0300 (MSK)').getTime()/1000; /* var of type uint256 here */ ;
     var _endFundingTime = new Date('Mar 31 2018 23:59:59 GMT+0300 (MSK)').getTime()/1000;/* var of type uint256 here */ ;
@@ -32,7 +32,8 @@ function deploy_contract(connection, tokensale, callback){
         {
             from: connection.address,
             data: tokensale.bytecode,
-            gas: tokensale.gas
+            gas: tokensale.gas,
+            gasPrice: connection.web3.toWei(gasprice, 'gwei')
         }, function (e, contract){
             if(e){
                 console.log(e);
@@ -52,13 +53,15 @@ connection.web3.eth.getBalance(connection.address, function(error,result){
             console.log( "Creator balance is: "+connection.web3.fromWei(result.toNumber()) + 'ETH' );
             console.log( 'Vault address '+ connection.config.vault);
             console.log( 'Token address '+ connection.config.token );
+            var gasprice = cli.question('Enter gas price in gwei:');
+            
             var yesno = cli.question('Enter Yes! to continue in '+environment+ ' with these parameters: ');
             if(yesno!='Yes!'){
                 console.log('Not confirmed, stopping');
                 process.exit(1);
             }
             console.log('deploying now...');
-            deploy_contract(connection, tokensale, function(deployed){
+            deploy_contract(connection, tokensale, gasprice, function(deployed){
                 if(deployed) {
                     console.log('Contract transactionHash: ' + deployed.transactionHash);
                     connection.close();

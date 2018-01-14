@@ -37,14 +37,15 @@ fs.readFile(filename, 'utf8',function(err,data){
 
    console.log( "Batch transactions: "+ addresses.length + ', total amount '+ total + ' IZX');
 
-
+    var gasprice = cli.question('Enter gas price in gwei:');
     var yesno = cli.question('Enter Yes! to make token transfers in '+environment+': ');
     if(yesno!='Yes!'){
         console.log('Not confirmed, stopping');
         process.exit(1);
     }
 
-    deployed_tokensale.distributeTokens(addresses, amounts, {from: connection.address, gas: 40000*(addresses.length+1)},
+    deployed_tokensale.distributeTokens(addresses, amounts, {from: connection.address, 
+            gas: 40000*(addresses.length+1), gasPrice: connection.web3.toWei(gasprice, 'gwei')},
         function(error,result){
             console.log(error, result);
             if(result) {

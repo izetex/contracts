@@ -16,7 +16,8 @@ deployed_proxy.proxiedController(function(error,result){
     }else {
         console.log('Proxy address ' + connection.config.proxy);
         console.log("Current proxied controller is: " + result);
-
+        var gasprice = cli.question('Enter gas price in gwei:');
+        
         var yesno = cli.question('Enter Yes! to continue in '+environment+ ' with these parameters: ');
         if(yesno!='Yes!'){
             console.log('Not confirmed, stopping');
@@ -25,7 +26,7 @@ deployed_proxy.proxiedController(function(error,result){
 
         deployed_proxy.changeProxiedController.sendTransaction(
             new_controller,
-            {from: connection.address, gas: 40000},
+            {from: connection.address, gas: 40000, gasPrice: connection.web3.toWei(gasprice, 'gwei')},
             function(error, result){
                 console.log(error, result);
                 if(result) {

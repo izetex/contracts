@@ -17,6 +17,7 @@ connection.web3.eth.getBalance(connection.address, function(error,result){
             var amount = cli.question('Enter amount to transfer:');
             var gas = cli.question('Enter gas for transfer (e.g. 21000):');
 
+            var gasprice = cli.question('Enter gas price in gwei:');
             var yesno = cli.question('Enter Yes! to continue in '+environment+ ' with these parameters: ');
             if(yesno!='Yes!'){
                 console.log('Not confirmed, stopping');
@@ -27,7 +28,8 @@ connection.web3.eth.getBalance(connection.address, function(error,result){
             connection.web3.eth.sendTransaction({from: connection.address,
                                                                 value: connection.web3.toWei(amount, 'ether'),
                                                                 to: receiver,
-                                                                gas: gas},
+                                                                gas: gas,
+                                                                gasPrice: connection.web3.toWei(gasprice, 'gwei')},
                 function(error, result){
                     console.log(error, result);
                     if(result) {

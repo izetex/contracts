@@ -3,7 +3,7 @@ const Connection = require('./eth_connection');
 const proxy_controller = require('./contracts/proxy_controller');
 
 const environment = 'ropsten'; // ropsten/foundation, change to foundation to deploy to real
-var mnemonics = cli.question('Enter your mnemonics for '+environment+' account:');
+var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment+' account:');
 var new_controller = cli.question('New proxied Game controller address:');
 
 var connection = new Connection(mnemonics, environment);

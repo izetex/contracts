@@ -3,7 +3,7 @@ const Connection = require('./eth_connection');
 const izx_drive_token = require('./contracts/izx_drive_token');
 
 const environment = 'ropsten'; // IZX Drive deployed only in Ropsten
-var mnemonics = cli.question('Enter your mnemonics for '+environment+' account:');
+var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment+' account:');
 var connection = new Connection(mnemonics, environment);
 
 function deploy_contract(connection, contract, gas, gasprice, callback){

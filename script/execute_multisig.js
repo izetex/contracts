@@ -3,7 +3,7 @@ const Connection = require('./eth_connection');
 const wallet = require('./contracts/wallet');
 
 const environment = 'foundation'; // ropsten/foundation, change to foundation to deploy to real
-var mnemonics = cli.question('Enter your mnemonics for '+environment+' account:');
+var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment+' account:');
 var connection = new Connection(mnemonics, environment, true);
 
 

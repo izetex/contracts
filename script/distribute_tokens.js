@@ -8,7 +8,7 @@ const environment = 'foundation'; // ropsten/foundation, change to foundation to
 
 var filename = cli.question('Enter full path to CSV file:');
 
-var mnemonics = cli.question('Enter your mnemonics for '+environment + ': ');
+var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment + ': ');
 var connection = new Connection(mnemonics, environment);
 
 var deployed_tokensale = connection.web3.eth.contract(tokensale.abi).at(connection.config.tokensale);

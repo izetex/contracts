@@ -53,12 +53,13 @@ contract IZXDriveToken is ERC721Token, Ownable, PullPayment {
     if(amount>0){
         distribute_shares(prize, ownerOf(_tokenId));
     }
+    delete prizes[_tokenId];
 
     _burn(_tokenId);
   }
 
 
-  function distribute_shares(Prize storage prize, address token_owner) internal {
+  function distribute_shares(Prize storage prize, address token_owner) private {
 
     if(prize.game!=address(0) && prize.shares[prize.game]>0){
         asyncSend(prize.game, prize.shares[prize.game]);

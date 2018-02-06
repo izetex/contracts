@@ -130,6 +130,7 @@ contract Game is Owned, SafeMath {
     }
 
     /// @notice calculate hash using a seed. The same method used to claim a prize
+    /// This calculation can be done offline using sha256 hash function on client side
     /// @param _key to get the prize
     /// @return hash of the prize
     function key_hash256(uint256 _key) public view returns(uint256) {
@@ -151,7 +152,7 @@ contract Game is Owned, SafeMath {
     /// @notice issue prizes for specified hashes. Function is payable, and in non-free games the amount being payed
     /// defines the number of prizes.
     /// This method to be implemented in game contracts, based on this protocol
-    /// @param _hashes array of hashes to setup prizes
+    /// @param _hashes array of hashes of prizes
     function issue(uint256[] _hashes) payable public;
 
     /// @notice this method to be implemented in game contracts, based on this protocol

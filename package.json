@@ -8,6 +8,7 @@
     "readline-sync": "^1.4.7",
     "request": "^2.83.0",
     "web3": "^0.20.1",
-    "web3-provider-engine": "^13.2.8"
+    "web3-provider-engine": "^13.2.8",
+    "zeppelin-solidity": "^1.6.0"
   }
 }

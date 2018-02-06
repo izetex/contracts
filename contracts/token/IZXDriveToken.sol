@@ -22,61 +22,73 @@ contract IZXDriveToken is ERC721Token, Ownable, PullPayment {
         bytes extra;        // extra information, associated with prize, for example hash to IPFS
         mapping (address => uint256) shares; // distribution of the prize amount for beneficiars
 
-    }
-
-   mapping (uint256 => Prize)   public prizes;       // prizes by token ids
-
-    using SafeMath for uint256;
-
-   function IZXDriveToken() public {
    }
+
+  mapping (uint256 => Prize)   public prizes;       // prizes by token ids
+
+  using SafeMath for uint256;
+
+  function IZXDriveToken() public {
+  }
 
   /**
   * @dev Mint token function
   * @param _to The address that will own the minted token
   * @param _tokenId uint256 ID of the token to be minted by the msg.sender
   */
-  function mint(address _to, uint256 _tokenId) onlyOwner public  {
+  function issue_prize(address _to, uint256 _tokenId) onlyOwner public  {
+
+
     _mint(_to, _tokenId);
   }
-
 
   /**
   * @dev Burns a specific token
   * @param _tokenId uint256 ID of the token being burned by the msg.sender
   */
-  function burn(uint256 _tokenId) onlyOwner public {
+  function burn(uint256 _tokenId) onlyOwnerOf(_tokenId) public {
 
     Prize storage prize = prizes[_tokenId];
 
     uint256 amount = prize.amount;
     if(amount>0){
-        distribute_shares(prize, ownerOf(_tokenId));
+        distribute_share(prize, prize.game);
+        distribute_share(prize, prize.sponsor);
+        distribute_share(prize, prize.holder);
+        distribute_share(prize, ownerOf(_tokenId));
     }
     delete prizes[_tokenId];
 
     _burn(_tokenId);
   }
 
+  /**
+  * @dev Burns a specific token, which is already expired
+  * All funds go back to sponsor then
+  * @param _tokenId uint256 ID of the token being burned by the msg.sender
+  */
+  function burn_expired(uint256 _tokenId) onlyOwnerOf(_tokenId) public {
 
-  function distribute_shares(Prize storage prize, address token_owner) private {
+    Prize storage prize = prizes[_tokenId];
 
-    if(prize.game!=address(0) && prize.shares[prize.game]>0){
-        asyncSend(prize.game, prize.shares[prize.game]);
+    require(prize.expiration>0);
+    require(now>prize.expiration);
+
+    if(prize.sponsor!=address(0) && prize.amount>0){
+        asyncSend(prize.sponsor, prize.amount);
     }
 
-    if(prize.sponsor!=address(0) && prize.shares[prize.sponsor]>0){
-        asyncSend(prize.sponsor, prize.shares[prize.sponsor]);
-    }
+    delete prizes[_tokenId];
 
-    if(prize.holder!=address(0) && prize.shares[prize.holder]>0){
-        asyncSend(prize.holder, prize.shares[prize.holder]);
-    }
-
-    if(token_owner!=address(0) && prize.shares[token_owner]>0 ){
-        asyncSend(token_owner, prize.shares[token_owner]);
-    }
-
+    _burn(_tokenId);
   }
+
+
+  function distribute_share(Prize storage _prize, address _receiver) private {
+    if(_receiver!=address(0) && _prize.shares[_receiver]>0){
+        asyncSend(_receiver, _prize.shares[_receiver]);
+    }
+  }
+
 
 }

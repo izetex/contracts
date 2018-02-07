@@ -9,6 +9,7 @@ contract IZXDriveToken is ERC721Token, Ownable, PullPayment {
 
    struct Prize {
 
+// TODO - do we really need all these roles?
         address game;       // game address where the prize is issued
         address sponsor;    // creator of the prize. He setup the game rules and hash to guess
         address holder;     // holder of IZX token, granted to issue this prize
@@ -20,6 +21,7 @@ contract IZXDriveToken is ERC721Token, Ownable, PullPayment {
         uint256 expiration; // unix timestamp of expiration for the prize
         uint256 extra;      // extra information, associated with prize, for example hash to IPFS
 
+// TODO - may be convert to mapping?
         uint256 game_payout;    // payout to game in ETH after burning before expiration
         uint256 sponsor_payout; // payout to sponsor in ETH after burning before expiration
         uint256 holder_payout;  // payout to holder in ETH after burning before expiration
@@ -28,6 +30,7 @@ contract IZXDriveToken is ERC721Token, Ownable, PullPayment {
    }
 
   mapping (uint256 => Prize)   public prizes;       // prizes by token ids
+  uint256 last_tokenId = 1; // used to generate token IDs for prizes
 
   using SafeMath for uint256;
 
@@ -36,13 +39,32 @@ contract IZXDriveToken is ERC721Token, Ownable, PullPayment {
 
   /**
   * @dev Mint token function
-  * @param _to The address that will own the minted token
-  * @param _tokenId uint256 ID of the token to be minted by the msg.sender
   */
-  function issue_prize(address _to, uint256 _tokenId) onlyOwner public  {
+  function issue_prize(
+          address _game,      // game address where the prize is issued
+          address _sponsor,    // creator of the prize. He setup the game rules and hash to guess
+          address _holder,     // holder of IZX token, granted to issue this prize
+          address _winner,     // responsible for burning the prize before expiration
+
+          uint256 _tokens,     // amount of IZX tokens, reserved to issue the prize
+          uint256 _amount,     // total amount of ETH for this prize
+
+          uint256 _expiration, // unix timestamp of expiration for the prize
+          uint256 _extra,      // extra information, associated with prize, for example hash to IPFS
+
+          uint256 _game_payout,    // payout to game in ETH after burning before expiration
+          uint256 _sponsor_payout, // payout to sponsor in ETH after burning before expiration
+          uint256 _holder_payout,  // payout to holder in ETH after burning before expiration
+          uint256 _winner_payout  // payout to winner in ETH after burning before expiration
+      ) onlyOwner public payable returns(uint256) {
+
+    uint256 tokenId = last_tokenId;
+    _mint(_game, tokenId);
 
 
-    _mint(_to, _tokenId);
+
+    last_tokenId = last_tokenId.add(1);
+    return tokenId;
   }
 
   /**
@@ -52,7 +74,7 @@ contract IZXDriveToken is ERC721Token, Ownable, PullPayment {
   function burn(uint256 _tokenId) onlyOwnerOf(_tokenId) public {
 
     Prize storage prize = prizes[_tokenId];
-    require(prize.winner==msg.sender);
+    require(prize.winner==msg.sender); // TODO only winner may burn?
 
     uint256 amount = prize.amount;
     if(amount>0 && prize.expiration>now){

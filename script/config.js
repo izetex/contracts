@@ -16,7 +16,7 @@ module.exports = {
         tokensale: '0x804f92260895f3fe4693e80046a96d88f7c7e8b0'
     },
     foundation: {
-        url: 'http://info.ph3.izx.io:8545',
+        url: 'https://mainnet.infura.io/aaIrr36iBro3mIVCdWrg',
         creator: '0xb2556a76da6e5b99e82fc156f8faad2778225161',
         token: '0x2ad180cbaffbc97237f572148fc1b283b68d8861',
         vault: '0xf4702b0918A8a89dfC38459Ce42198834818F26B',

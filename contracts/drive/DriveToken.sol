@@ -10,14 +10,18 @@ contract DriveToken is ERC721Token, Ownable {
 
     using SafeMath for uint256;
 
-    function mint(address _to) onlyOwner public return(uint256) {
+    function mint(address _to) onlyOwner public returns(uint256) {
         _mint(_to, last_tokenId);
         last_tokenId = last_tokenId.add(1);
     }
 
     function burn(uint256 _tokenId) onlyOwner public {
-        // TODO
+
+        address owner = ownerOf(_tokenId);
+        require( owner != address(0) );
+
+        _burn(_tokenId);
     }
 
-
 }
+

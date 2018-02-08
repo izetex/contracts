@@ -1,6 +1,10 @@
 pragma solidity ^0.4.18;
 
 import "./TokenDriver.sol";
+import "./GameBase.sol";
+
+import "../token/IZXToken.sol";
+
 import 'zeppelin-solidity/contracts/payment/PullPayment.sol';
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
@@ -9,13 +13,13 @@ contract CampaignManager is TokenDriver, PullPayment {
     DriveToken  public    drive_token;
 
     struct Prize {
-        GameBase game,
-        address holder,
-        address master,
-        address winner,
+        GameBase game;
+        address holder;
+        address master;
+        address winner;
 
-        uint256 value,
-        uint256 expiration
+        uint256 value;
+        uint256 expiration;
     }
 
     uint256 constant public MASTER_PAYOUT_SHARE = 10;
@@ -23,14 +27,14 @@ contract CampaignManager is TokenDriver, PullPayment {
     uint256 constant public WINNER_PAYOUT_SHARE = 20;
     uint256 constant public HOLDER_PAYOUT_SHARE = 50;
 
-    uint256 constant public TOKEN_RESERVE_AMOUNT = 1 Ether;
+    uint256 constant public TOKEN_RESERVE_AMOUNT = 1 ether;
 
     mapping (uint256 => Prize) public prizes;
 
     using SafeMath for uint256;
 
 
-    function TokenDriver(IZXToken _izx_token) TokenDriver(_izx_token) public {
+    function CampaignManager(IZXToken _izx_token) TokenDriver(_izx_token) public {
         drive_token = new DriveToken();
     }
 
@@ -50,12 +54,12 @@ contract CampaignManager is TokenDriver, PullPayment {
 
         for(uint256 i=0;i<_hashes.length;i++){
 
-           tokenId = drive_token.mint(_game);
+           uint256 tokenId = drive_token.mint(_game);
 
            require( address(prizes[tokenId].game)==address(0) );
            prizes[tokenId] = Prize(_game, holder, msg.sender, address(0), prize_value, expiration);
 
-           _game.place_prize(_hashes[i], tokenId, extra[i]);
+           _game.place_prize(_hashes[i], tokenId, _extra[i]);
         }
 
         if(change>0){
@@ -66,9 +70,9 @@ contract CampaignManager is TokenDriver, PullPayment {
 
     function win_prize(uint256 _tokenId, address _winner) public {
 
-        Prize prize = prizes[_tokenId];
+        Prize storage prize = prizes[_tokenId];
 
-        require(msg.sender = prize.game);
+        require(msg.sender == address(prize.game));
         require(prize.winner==address(0));
 
         prize.winner = _winner;
@@ -78,7 +82,7 @@ contract CampaignManager is TokenDriver, PullPayment {
 
     function payout_prize(uint256 _tokenId)  public {
 
-        Prize prize = prizes[_tokenId];
+        Prize storage prize = prizes[_tokenId];
 
         require(prize.winner != address(0));
         require(prize.master == msg.sender);
@@ -96,7 +100,7 @@ contract CampaignManager is TokenDriver, PullPayment {
 
     function revoke_prize(uint256 _tokenId)  public {
 
-        Prize prize = prizes[_tokenId];
+        Prize storage prize = prizes[_tokenId];
         require(prize.expiration < now);
 
         drive_token.burn(_tokenId);
@@ -114,17 +118,17 @@ contract CampaignManager is TokenDriver, PullPayment {
         uint256 payout = _prize.value;
 
         uint256 v = payout.mul(GAME_PAYOUT_SHARE) / 100;
-        asyncSend(prize.game.vault(), v);
+        asyncSend(_prize.game.vault(), v);
         payout = payout.sub(v);
 
         v = payout.mul(WINNER_PAYOUT_SHARE) / 100;
-        asyncSend(prize.winner, v);
+        asyncSend(_prize.winner, v);
         payout = payout.sub(v);
 
         v = payout.mul(HOLDER_PAYOUT_SHARE) / 100;
-        asyncSend(prize.holder, v);
+        asyncSend(_prize.holder, v);
 
-        asyncSend(prize.master, payout.sub(v));
+        asyncSend(_prize.master, payout.sub(v));
 
     }
 

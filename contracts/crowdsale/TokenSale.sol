@@ -3,8 +3,8 @@ pragma solidity ^0.4.11;
 
 import "../token/ControlledToken.sol";
 import "../token/TokenController.sol";
-import "../util/Owned.sol";
-import '../util/SafeMath.sol';
+import "./Owned.sol";
+import './SafeMath.sol';
 
 
 contract TokenSale is TokenController, Owned, SafeMath {

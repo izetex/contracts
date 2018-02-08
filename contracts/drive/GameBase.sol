@@ -1,23 +1,23 @@
 pragma solidity ^0.4.18;
 
-import "./TokenDriver.sol";
+import "./CampaignManager.sol";
 import "./DriveToken.sol";
 
 contract GameBase {
 
-    TokenDriver public  token_driver;
-    DriveToken  public  token;
-    address     public  vault;
+    CampaignManager public  manager;
+    DriveToken      public  token;
+    address         public  vault;
 
     mapping (uint256 => uint256) public game_tokens;
     mapping (uint256 => uint256) public game_extra;
 
 
-    function GameBase(TokenDriver _driver, address _vault) public {
-        require(address(_driver) != address(0));
+    function GameBase(CampaignManager _manager, address _vault) public {
+        require(address(_manager) != address(0));
         require(_vault != address(0) );
-        token_driver = _driver;
-        token = _driver.drive_token();
+        manager = _manager;
+        token = _manager.drive_token();
         vault = _vault;
     }
 
@@ -38,12 +38,12 @@ contract GameBase {
         uint256 tokenId = game_tokens[hash];
 
         require(tokenId!=0); // TODO do we really need this?
-        require(token.ownerOf(_tokenId)==msg.sender);
+        require(token.ownerOf(tokenId)==msg.sender);
 
         delete(game_tokens[hash]);
         delete(game_extra[hash]);
 
-        token_driver.win_prize(tokenId, msg.sender);
+        manager.win_prize(tokenId, msg.sender);
 
     }
 

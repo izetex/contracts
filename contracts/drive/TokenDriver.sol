@@ -1,8 +1,10 @@
 pragma solidity ^0.4.18;
 
+import '../token/IZXToken.sol';
+
 contract TokenDriver  {
 
-    address    public  token;
+    IZXToken  public token;
 
     struct Approval {
         uint256 key_index;
@@ -13,13 +15,13 @@ contract TokenDriver  {
     address[] holders;
     mapping( address => Approval) approvals;
 
-    function TokenDriver(address _token) public {
+    function TokenDriver(IZXToken _token) public {
         token = _token;
     }
 
     function grant_tokens(uint256 _max_tokens, uint256 _min_value) public {
         require(token.balanceOf(msg.sender) >= _max_tokens);
-        Approval approval = approvals[msg.sender];
+        Approval storage approval = approvals[msg.sender];
 
         if(approval.key_index==0){
             uint next = holders.length++;
@@ -32,8 +34,8 @@ contract TokenDriver  {
 
     }
 
-    function reserve_tokens(uint256 _tokens, uint256 _value) internal return(address) {
-        holder = holder_approved(_tokens, _value);
+    function reserve_tokens(uint256 _tokens, uint256 _value) internal returns(address) {
+        address holder = holder_approved(_tokens, _value);
         token.transferFrom(holder, address(this), _tokens);
         return holder;
     }
@@ -42,13 +44,13 @@ contract TokenDriver  {
         token.transfer(_holder, _tokens);
     }
 
-    function holder_approved(uint256 _tokens, uint256 _value) private return(address){
+    function holder_approved(uint256 _tokens, uint256 _value) private returns(address){
 
         uint256 count = holders.length;
         uint256 i = (block.timestamp % count);
         for(uint j = 0; j < count; j++ ){
             address holder = holders[i];
-            Approval approval = approvals[holder];
+            Approval storage approval = approvals[holder];
             if(_tokens <= approval.tokens && _value > approval.min_value && token.balanceOf(holder)>=_tokens){
                approval.tokens = approval.tokens - _tokens;
                return holder;

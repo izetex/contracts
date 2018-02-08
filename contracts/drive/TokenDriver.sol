@@ -1,40 +1,27 @@
 pragma solidity ^0.4.18;
 
 import "../token/TokenController.sol";
-import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'zeppelin-solidity/contracts/payment/PullPayment.sol';
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
-contract TokenDriver is TokenController, Ownable, PullPayment {
+contract TokenDriver is TokenController {
 
-    using SafeMath for uint256;
+    using SafeMath for uint256; // TODO do we need it?
 
-    IZXToken    public    izx_token;
-    DriveToken  public    drive_token;
+    address    public  token;
 
-    struct Prize {
+    function TokenDriver(address _token) public {
+        token = _token;
+    }
+
+    function reserve_tokens(uint256 _tokens, uint256 _value) internal return(uint256) {
 
     }
 
-    function TokenDriver(IZXToken _izx_token, DriveToken _drive_token){
+    function release_tokens(address _holder, uint256 _tokens) internal {
 
     }
 
-    function issue_prize() payable public {
-
-    }
-
-    function approve_prize() onlyNotExpired(_tokenId), onlyMasterOf( _tokenId ) public {
-
-    }
-
-    function revoke_prize() onlyExpired( _tokenId ) public {
-
-    }
-
-    function burn_prize(uint256 _tokenId) onlyNotExpired(_tokenId), onlyOwnerOf( _tokenId ) public {
-
-    }
 
     function proxyPayment(address _owner) payable public returns(bool){
         return false;

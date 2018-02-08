@@ -10,7 +10,7 @@ contract DriveToken is ERC721Token, Ownable {
 
     }
 
-    function mint() onlyOwner {
+    function mint() onlyOwner public return(uint256) {
 
     }
 

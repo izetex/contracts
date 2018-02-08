@@ -1,5 +1,8 @@
 pragma solidity ^0.4.18;
 
+import "./TokenDriver.sol";
+import "./DriveToken.sol";
+
 contract GameBase {
 
     TokenDriver public  token_driver;

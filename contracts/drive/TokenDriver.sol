@@ -1,39 +1,66 @@
 pragma solidity ^0.4.18;
 
-import "../token/TokenController.sol";
-import 'zeppelin-solidity/contracts/payment/PullPayment.sol';
-import "zeppelin-solidity/contracts/math/SafeMath.sol";
-
-contract TokenDriver is TokenController {
-
-    using SafeMath for uint256; // TODO do we need it?
+contract TokenDriver  {
 
     address    public  token;
+
+    struct Approval {
+        uint256 key_index;
+        uint256 tokens;
+        uint256 min_value;
+    }
+
+    address[] holders;
+    mapping( address => Approval) approvals;
 
     function TokenDriver(address _token) public {
         token = _token;
     }
 
-    function reserve_tokens(uint256 _tokens, uint256 _value) internal return(uint256) {
+    function grant_tokens(uint256 _max_tokens, uint256 _min_value) public {
+        require(token.balanceOf(msg.sender) >= _max_tokens);
+        Approval approval = approvals[msg.sender];
 
+        if(approval.key_index==0){
+            uint next = holders.length++;
+            holders[next] = msg.sender;
+            approval.key_index = next + 1;
+        }
+        
+        approval.tokens = _max_tokens;
+        approval.min_value = _min_value;
+
+    }
+
+    function reserve_tokens(uint256 _tokens, uint256 _value) internal return(address) {
+        holder = holder_approved(_tokens, _value);
+        token.transferFrom(holder, address(this), _tokens);
+        return holder;
     }
 
     function release_tokens(address _holder, uint256 _tokens) internal {
-
+        token.transfer(_holder, _tokens);
     }
 
+    function holder_approved(uint256 _tokens, uint256 _value) private return(address){
 
-    function proxyPayment(address _owner) payable public returns(bool){
-        return false;
+        uint256 count = holders.length;
+        uint256 i = (block.timestamp % count);
+        for(uint j = 0; j < count; j++ ){
+            address holder = holders[i];
+            Approval approval = approvals[holder];
+            if(_tokens <= approval.tokens && _value > approval.min_value && token.balanceOf(holder)>=_tokens){
+               approval.tokens = approval.tokens - _tokens;
+               return holder;
+            }
+
+            i++;
+            if(i==count){
+                i=0;
+            }
+
+        }
+        revert();
     }
-
-    function onTransfer(address _from, address _to, uint _amount) public returns(bool) {
-
-    }
-
-    function onApprove(address _owner, address _spender, uint _amount) public returns(bool) {
-
-    }
-
 
 }

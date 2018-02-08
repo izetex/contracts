@@ -23,6 +23,8 @@ contract CampaignManager is TokenDriver, PullPayment {
     uint256 constant public WINNER_PAYOUT_SHARE = 20;
     uint256 constant public HOLDER_PAYOUT_SHARE = 50;
 
+    uint256 constant public TOKEN_RESERVE_AMOUNT = 1 Ether;
+
     mapping (uint256 => Prize) public prizes;
 
     using SafeMath for uint256;
@@ -40,7 +42,10 @@ contract CampaignManager is TokenDriver, PullPayment {
         uint256 prize_value = msg.value / _hashes.length;
         uint256 change = msg.value % _hashes.length;
 
-        address holder = reserve_tokens(_hashes.length, prize_value); // TODO! prize_value is not payout!
+        address holder = reserve_tokens(
+            TOKEN_RESERVE_AMOUNT.mul(_hashes.length),
+            HOLDER_PAYOUT_SHARE.mul(prize_value)/100);
+
         require(holder != address(0));
 
         for(uint256 i=0;i<_hashes.length;i++){
@@ -85,7 +90,7 @@ contract CampaignManager is TokenDriver, PullPayment {
             execute_payouts(prize);
         }
 
-        release_tokens(prize.holder, 1);
+        release_tokens(prize.holder, TOKEN_RESERVE_AMOUNT);
         delete prizes[_tokenId];
     }
 
@@ -100,7 +105,7 @@ contract CampaignManager is TokenDriver, PullPayment {
             asyncSend(prize.master, prize.value);
         }
 
-        release_tokens(prize.holder, 1);
+        release_tokens(prize.holder, TOKEN_RESERVE_AMOUNT);
 
     }
 

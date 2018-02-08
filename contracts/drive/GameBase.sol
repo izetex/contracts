@@ -1,49 +1,57 @@
 pragma solidity ^0.4.18;
 
-import "./CampaignManager.sol";
 import "./DriveToken.sol";
+import "./CampaignManager.sol";
 
 contract GameBase {
 
-    CampaignManager public  manager;
     DriveToken      public  token;
+    CampaignManager public manager;
     address         public  vault;
 
     mapping (uint256 => uint256) public game_tokens;
     mapping (uint256 => uint256) public game_extra;
 
+    modifier onlyCampaignManager() {
+        require(address(manager) == msg.sender);
+        _;
+    }
 
     function GameBase(CampaignManager _manager, address _vault) public {
-        require(address(_manager) != address(0));
+
         require(_vault != address(0) );
+        require(_manager != address(0) );
+
         manager = _manager;
-        token = _manager.drive_token();
+        token = manager.drive_token();
         vault = _vault;
     }
 
-
     function place_prize(uint256 _hash, uint256 _tokenId, uint256 _extra) public {
-        // require(token.ownerOf(_tokenId)==msg.sender); TODO this is required or not?
+
+        require(token.ownerOf(_tokenId)==msg.sender); // TODO this is required or not?!!!
         require(_hash!=0);
         require(game_tokens[_hash]==0);
 
-        token.takeOwnership(_tokenId);
         game_tokens[_hash]=_tokenId;
         game_extra[_hash]=_extra;
+    }
+
+    function remove_prize(uint256 _hash) onlyCampaignManager public {
+         delete(game_tokens[_hash]);
+         delete(game_extra[_hash]);
     }
 
     function claim_prize(uint256 _guess) public {
 
         uint256 hash = key_hash256(_guess);
         uint256 tokenId = game_tokens[hash];
+        require(tokenId!=0);
 
-        require(tokenId!=0); // TODO do we really need this?
-        require(token.ownerOf(tokenId)==msg.sender);
+        token.transfer(msg.sender, tokenId);
 
         delete(game_tokens[hash]);
         delete(game_extra[hash]);
-
-        manager.win_prize(tokenId, msg.sender);
 
     }
 

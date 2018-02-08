@@ -41,6 +41,8 @@ contract TokenDriver  {
     }
 
     function release_tokens(address _holder, uint256 _tokens) internal {
+        Approval storage approval = approvals[_holder];
+        approval.tokens = approval.tokens + _tokens;
         token.transfer(_holder, _tokens);
     }
 

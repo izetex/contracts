@@ -15,7 +15,7 @@ contract DriveToken is ERC721Token, Ownable {
     }
 
     function burn(uint256 _tokenId) onlyOwner public {
-
+        // TODO
     }
 
 

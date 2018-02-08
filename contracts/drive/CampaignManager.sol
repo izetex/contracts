@@ -1,12 +1,11 @@
 pragma solidity ^0.4.18;
 
-import "../token/TokenController.sol";
+import "./TokenDriver.sol";
 import 'zeppelin-solidity/contracts/payment/PullPayment.sol';
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract CampaignManager is TokenDriver, PullPayment {
 
-    using SafeMath for uint256; // TODO do we need it?
     DriveToken  public    drive_token;
 
     struct Prize {
@@ -16,9 +15,7 @@ contract CampaignManager is TokenDriver, PullPayment {
         address winner,
 
         uint256 value,
-        uint256 expiration,
-
-        uint256 extra // TODO: may be belongs to game?
+        uint256 expiration
     }
 
     uint256 constant public MASTER_PAYOUT_SHARE = 10;
@@ -27,6 +24,9 @@ contract CampaignManager is TokenDriver, PullPayment {
     uint256 constant public HOLDER_PAYOUT_SHARE = 50;
 
     mapping (uint256 => Prize) public prizes;
+
+    using SafeMath for uint256;
+
 
     function TokenDriver(IZXToken _izx_token) TokenDriver(_izx_token) public {
         drive_token = new DriveToken();
@@ -48,9 +48,9 @@ contract CampaignManager is TokenDriver, PullPayment {
            tokenId = drive_token.mint(_game);
 
            require( address(prizes[tokenId].game)==address(0) );
-           prizes[tokenId] = Prize(_game, holder, msg.sender, address(0), prize_value, expiration, extra[i]);
+           prizes[tokenId] = Prize(_game, holder, msg.sender, address(0), prize_value, expiration);
 
-           _game.place_prize(_hashes[i], tokenId);
+           _game.place_prize(_hashes[i], tokenId, extra[i]);
         }
 
         if(change>0){
@@ -108,19 +108,18 @@ contract CampaignManager is TokenDriver, PullPayment {
 
         uint256 payout = _prize.value;
 
-        uint256 v = (payout.mul(GAME_PAYOUT_SHARE)) / 100;
+        uint256 v = payout.mul(GAME_PAYOUT_SHARE) / 100;
         asyncSend(prize.game.vault(), v);
         payout = payout.sub(v);
 
-        v = (payout.mul(WINNER_PAYOUT_SHARE)) / 100;
+        v = payout.mul(WINNER_PAYOUT_SHARE) / 100;
         asyncSend(prize.winner, v);
         payout = payout.sub(v);
 
-        v = (payout.mul(HOLDER_PAYOUT_SHARE)) / 100;
+        v = payout.mul(HOLDER_PAYOUT_SHARE) / 100;
         asyncSend(prize.holder, v);
-        payout = payout.sub(v);
 
-        asyncSend(prize.master, payout);
+        asyncSend(prize.master, payout.sub(v));
 
     }
 

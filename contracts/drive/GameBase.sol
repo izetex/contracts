@@ -7,6 +7,8 @@ contract GameBase {
     address     public  vault;
 
     mapping (uint256 => uint256) public game_tokens;
+    mapping (uint256 => uint256) public game_extra;
+
 
     function GameBase(TokenDriver _driver, address _vault) public {
         require(address(_driver) != address(0));
@@ -17,13 +19,14 @@ contract GameBase {
     }
 
 
-    function place_prize(uint256 _hash, uint256 _tokenId) public {
+    function place_prize(uint256 _hash, uint256 _tokenId, uint256 _extra) public {
         // require(token.ownerOf(_tokenId)==msg.sender); TODO this is required or not?
         require(_hash!=0);
         require(game_tokens[_hash]==0);
 
         token.takeOwnership(_tokenId);
         game_tokens[_hash]=_tokenId;
+        game_extra[_hash]=_extra;
     }
 
     function claim_prize(uint256 _guess) public {
@@ -35,6 +38,8 @@ contract GameBase {
         require(token.ownerOf(_tokenId)==msg.sender);
 
         delete(game_tokens[hash]);
+        delete(game_extra[hash]);
+
         token_driver.win_prize(tokenId, msg.sender);
 
     }

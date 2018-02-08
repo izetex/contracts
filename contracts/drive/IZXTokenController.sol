@@ -41,10 +41,6 @@ contract IZXTokenController is Ownable, TokenController {
         return size>0;
     }
 
-    /////////////////
-    // TokenController interface
-    /////////////////
-
     /// @notice Do not allow to pay on contract
     function proxyPayment(address) payable public returns(bool) {
         return false;
@@ -56,8 +52,7 @@ contract IZXTokenController is Ownable, TokenController {
     }
 
     /// @notice Allow to approve to any account or driver smart contract
-    function onApprove(address, address _spender, uint) public
-        returns(bool)
+    function onApprove(address, address _spender, uint) public returns(bool)
     {
         return (_spender==address(driver)) || !isContract(_spender);
     }

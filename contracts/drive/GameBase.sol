@@ -10,7 +10,7 @@ contract GameBase {
     address         public  vault;
 
     mapping (uint256 => uint256) public game_tokens;
-    mapping (uint256 => uint256) public game_extra;
+    mapping (uint256 => uint256) public game_extra; // TODO may be it better belong to token?
 
     modifier onlyCampaignManager() {
         require(address(manager) == msg.sender);
@@ -18,7 +18,6 @@ contract GameBase {
     }
 
     function GameBase(CampaignManager _manager, address _vault) public {
-
         require(_vault != address(0) );
         require(_manager != address(0) );
 
@@ -29,17 +28,28 @@ contract GameBase {
 
     function place_prize(uint256 _hash, uint256 _tokenId, uint256 _extra) public {
 
-        require(token.ownerOf(_tokenId)==msg.sender); // TODO this is required or not?!!!
         require(_hash!=0);
         require(game_tokens[_hash]==0);
+
+        if(token.ownerOf(_tokenId)!=address(this)){
+            token.takeOwnership(_tokenId);
+        }
 
         game_tokens[_hash]=_tokenId;
         game_extra[_hash]=_extra;
     }
 
     function remove_prize(uint256 _hash) onlyCampaignManager public {
-         delete(game_tokens[_hash]);
-         delete(game_extra[_hash]);
+
+         uint256 tokenId = game_tokens[_hash];
+         if(tokenId!=0){
+
+            token.burn(tokenId);
+
+            delete(game_tokens[_hash]);
+            delete(game_extra[_hash]);
+
+         }
     }
 
     function claim_prize(uint256 _guess) public {

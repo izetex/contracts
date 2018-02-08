@@ -62,10 +62,9 @@ contract CampaignManager is TokenDriver, PullPayment {
         for(uint256 i=0;i<_hashes.length;i++){
 
            uint256 tokenId = drive_token.mint(_game);
-
            require( address(prizes[tokenId].game)==address(0) );
-           prizes[tokenId] = Prize(_game, holder, msg.sender, address(0), address(0), prize_value, expiration, _hashes[i]);
-
+           prizes[tokenId] = Prize(_game, holder, msg.sender, address(0), address(0),
+                                    prize_value, expiration, _hashes[i]);
            _game.place_prize(_hashes[i], tokenId, _extra[i]);
         }
 
@@ -83,9 +82,9 @@ contract CampaignManager is TokenDriver, PullPayment {
         require(prize.expiration < now);
         require(prize.master != address(0));
 
-        execute_payouts(prize);
+        payout(prize);
 
-        prize.game.remove_prize(prize.hash); // TODO!
+        prize.game.remove_prize(prize.hash);
 
         release_tokens(prize.holder, TOKEN_RESERVE_AMOUNT);
         delete prizes[_tokenId];
@@ -112,14 +111,14 @@ contract CampaignManager is TokenDriver, PullPayment {
         Prize storage prize = prizes[_tokenId];
 
         if( prize.master != address(0) ){
-            execute_payouts(prize);
+            payout(prize);
             release_tokens(prize.holder, TOKEN_RESERVE_AMOUNT);
             delete prizes[_tokenId];
         }
 
     }
 
-    function execute_payouts(Prize _prize) private {
+    function payout(Prize _prize) private {
 
         uint256 payout = _prize.value;
 

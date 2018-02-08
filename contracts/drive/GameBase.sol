@@ -4,13 +4,16 @@ contract GameBase {
 
     TokenDriver public  token_driver;
     DriveToken  public  token;
+    address     public  vault;
 
     mapping (uint256 => uint256) public game_tokens;
 
-    function GameBase(TokenDriver _driver) public {
-        require(address(_driver)!=address(0));
+    function GameBase(TokenDriver _driver, address _vault) public {
+        require(address(_driver) != address(0));
+        require(_vault != address(0) );
         token_driver = _driver;
         token = _driver.drive_token();
+        vault = _vault;
     }
 
 

@@ -14,12 +14,17 @@ contract CampaignManager is TokenDriver, PullPayment {
         address holder,
         address master,
         address winner,
-        address burner,
 
-        uint256 amount,
+        uint256 value,
+        uint256 expiration,
 
         uint256 extra // TODO: may be belongs to game?
     }
+
+    uint256 constant public MASTER_PAYOUT_SHARE = 10;
+    uint256 constant public GAME_PAYOUT_SHARE = 20;
+    uint256 constant public WINNER_PAYOUT_SHARE = 20;
+    uint256 constant public HOLDER_PAYOUT_SHARE = 50;
 
     mapping (uint256 => Prize) public prizes;
 
@@ -27,8 +32,11 @@ contract CampaignManager is TokenDriver, PullPayment {
         drive_token = new DriveToken();
     }
 
-    function issue_prizes(GameBase _game, uint256[] _hashes, uint256[] _extra) payable public {
+    function issue_prizes(GameBase _game, uint256 _lifetime, uint256[] _hashes, uint256[] _extra) payable public {
 
+        require(_lifetime>0);
+
+        uint256 expiration = now + _lifetime;
         uint256 prize_value = msg.value / _hashes.length;
         uint256 change = msg.value % _hashes.length;
 
@@ -36,10 +44,11 @@ contract CampaignManager is TokenDriver, PullPayment {
         require(holder != address(0));
 
         for(uint256 i=0;i<_hashes.length;i++){
-           tokenId = drive_token.mint();
+
+           tokenId = drive_token.mint(_game);
 
            require( address(prizes[tokenId].game)==address(0) );
-           prizes[tokenId] = Prize(_game, holder, msg.sender, address(0), address(0), prize_value, extra[i]);
+           prizes[tokenId] = Prize(_game, holder, msg.sender, address(0), prize_value, expiration, extra[i]);
 
            _game.place_prize(_hashes[i], tokenId);
         }
@@ -62,22 +71,56 @@ contract CampaignManager is TokenDriver, PullPayment {
     }
 
 
-    function approve_prize(uint256 _tokenId) onlyNotExpired(_tokenId), onlyMasterOf( _tokenId ) public {
+    function payout_prize(uint256 _tokenId)  public {
 
-        prize.burner = prize.winner;
+        Prize prize = prizes[_tokenId];
 
+        require(prize.winner != address(0));
+        require(prize.master == msg.sender);
+        require(prize.expiration >= now);
+
+        drive_token.burn(_tokenId);
+
+        if(prize.value>0){
+            execute_payouts(prize);
+        }
+
+        release_tokens(prize.holder, 1);
+        delete prizes[_tokenId];
     }
 
-    function revoke_prize() onlyExpired( _tokenId ) public {
+    function revoke_prize(uint256 _tokenId)  public {
 
+        Prize prize = prizes[_tokenId];
+        require(prize.expiration < now);
+
+        drive_token.burn(_tokenId);
+
+        if(prize.value>0){
+            asyncSend(prize.master, prize.value);
+        }
 
         release_tokens(prize.holder, 1);
 
     }
 
-    function burn_prize(uint256 _tokenId) onlyNotExpired(_tokenId), onlyOwnerOf( _tokenId ) public {
+    function execute_payouts(Prize _prize) private {
 
-        release_tokens(prize.holder, 1);
+        uint256 payout = _prize.value;
+
+        uint256 v = (payout.mul(GAME_PAYOUT_SHARE)) / 100;
+        asyncSend(prize.game.vault(), v);
+        payout = payout.sub(v);
+
+        v = (payout.mul(WINNER_PAYOUT_SHARE)) / 100;
+        asyncSend(prize.winner, v);
+        payout = payout.sub(v);
+
+        v = (payout.mul(HOLDER_PAYOUT_SHARE)) / 100;
+        asyncSend(prize.holder, v);
+        payout = payout.sub(v);
+
+        asyncSend(prize.master, payout);
 
     }
 

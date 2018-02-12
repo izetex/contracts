@@ -70,15 +70,15 @@ contract CampaignManager is TokenDriver, PullPayment {
 
         _erc721.takeOwnership(_tokenId);
 
-        Payout storage payout_conditions = game_payout[prize.game];
-        payout(prize, payout_conditions, winner);
+        Payout storage payout = game_payout[prize.game];
+        make_payouts(prize, payout, winner);
 
-        release_tokens(prize.holder, payout_conditions.token_reserve);
+        release_tokens(prize.holder, payout.token_reserve);
         delete prizes[_erc721][_tokenId];
 
     }
 
-    function payout(Prize _prize, Payout _payout, address _winner) private {
+    function make_payouts(Prize _prize, Payout _payout, address _winner) private {
         uint256 payout_amount = _prize.value_eth;
         if(payout_amount>0){
 

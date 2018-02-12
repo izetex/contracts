@@ -375,10 +375,10 @@
       {
         "attributes": {
           "contractDependencies": [
-            210,
             93,
+            210,
             544,
-            2303
+            2115
           ],
           "contractKind": "contract",
           "documentation": null,
@@ -388,7 +388,7 @@
             544,
             210,
             93,
-            2303
+            2115
           ],
           "name": "PreSale",
           "scope": 113
@@ -624,5 +624,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-08T15:03:24.524Z"
+  "updatedAt": "2018-02-12T13:07:15.842Z"
 }

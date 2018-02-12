@@ -1,46 +1,35 @@
 pragma solidity ^0.4.18;
 
 import "./DriveToken.sol";
+import "../drive/CampaignManager.sol";
 
 contract GuessGame {
 
     DriveToken      public  token;
+    CampaignManager public manager;
+    uint256         public constant PRIZE_LIFETIME = 72 hours;
 
     mapping (uint256 => uint256) public game_tokens;
-    mapping (uint256 => uint256) public game_extra; // TODO may be it better belong to token?
 
-
-    function GuessGame() public {
+    function GuessGame(CampaignManager _manager) public {
         token = new DriveToken();
+        manager = _manager;
+        manager.change_payouts( 0, 30, 20, 50, 0.5 ether );
     }
 
-    function place_prize(uint256 _hash, uint256 _tokenId, uint256 _extra) public {
+    function issue_prize(uint256 _hash, uint256 _tokenId, uint256 _info) public payable {
 
         require(_hash!=0);
         require(game_tokens[_hash]==0);
 
-        if(token.ownerOf(_tokenId)!=address(this)){
-            token.takeOwnership(_tokenId);
-        }
+        uint256 tokenId = token.mint(this);
+
+        manager.register_prize.value(msg.value)(token, msg.sender, this, tokenId, PRIZE_LIFETIME, _info);
 
         game_tokens[_hash]=_tokenId;
-        game_extra[_hash]=_extra;
     }
 
-    function remove_prize(uint256 _hash) public {
-
-         uint256 tokenId = game_tokens[_hash];
-         if(tokenId!=0){
-
-            token.burn(tokenId);
-
-            delete(game_tokens[_hash]);
-            delete(game_extra[_hash]);
-
-         }
-    }
-
-    function claim_prize(uint256 _guess) public {
+    function claim_win(uint256 _guess) public {
 
         uint256 hash = key_hash256(_guess);
         uint256 tokenId = game_tokens[hash];
@@ -49,7 +38,6 @@ contract GuessGame {
         token.transfer(msg.sender, tokenId);
 
         delete(game_tokens[hash]);
-        delete(game_extra[hash]);
 
     }
 

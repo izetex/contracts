@@ -36,7 +36,8 @@ contract CampaignManager is TokenDriver, PullPayment {
     function CampaignManager(IZXToken _izx_token) TokenDriver(_izx_token) public {
     }
 
-    function register_prize(ERC721 _erc721, address _game, uint256 _tokenId, uint256 _lifetime, uint256 _info_hash) payable public {
+    function register_prize(ERC721 _erc721, address _master, address _game, uint256 _tokenId,
+                                            uint256 _lifetime, uint256 _info_hash) payable public {
 
         require(_lifetime>0);
         require(_erc721!=address(0));
@@ -52,15 +53,15 @@ contract CampaignManager is TokenDriver, PullPayment {
         address holder = reserve_tokens( payout.token_reserve, payout.holder_payout.mul(msg.value)/100);
         require(holder != address(0));
 
-        prizes[_erc721][_tokenId] = Prize(msg.sender, _game, holder, msg.value, now + _lifetime, _info_hash );
+        prizes[_erc721][_tokenId] = Prize(_master, _game, holder, msg.value, now + _lifetime, _info_hash );
 
     }
 
-    function claim_prize(ERC721 _erc721, uint256 _tokenId) public {
+    function give_prize(ERC721 _erc721, uint256 _tokenId) public {
 
         Prize storage prize = prizes[_erc721][_tokenId];
 
-        require(prize.master != address(0));
+        require(prize.master == msg.sender);
         require(prize.expires_at > now);
 
         address winner = _erc721.ownerOf(_tokenId);

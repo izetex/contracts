@@ -1,29 +1,17 @@
 pragma solidity ^0.4.18;
 
 import "./DriveToken.sol";
-import "./CampaignManager.sol";
 
-contract GameBase {
+contract GuessGame {
 
     DriveToken      public  token;
-    CampaignManager public manager;
-    address         public  vault;
 
     mapping (uint256 => uint256) public game_tokens;
     mapping (uint256 => uint256) public game_extra; // TODO may be it better belong to token?
 
-    modifier onlyCampaignManager() {
-        require(address(manager) == msg.sender);
-        _;
-    }
 
-    function GameBase(CampaignManager _manager, address _vault) public {
-        require(_vault != address(0) );
-        require(_manager != address(0) );
-
-        manager = _manager;
-        token = manager.drive_token();
-        vault = _vault;
+    function GuessGame() public {
+        token = new DriveToken();
     }
 
     function place_prize(uint256 _hash, uint256 _tokenId, uint256 _extra) public {
@@ -39,7 +27,7 @@ contract GameBase {
         game_extra[_hash]=_extra;
     }
 
-    function remove_prize(uint256 _hash) onlyCampaignManager public {
+    function remove_prize(uint256 _hash) public {
 
          uint256 tokenId = game_tokens[_hash];
          if(tokenId!=0){

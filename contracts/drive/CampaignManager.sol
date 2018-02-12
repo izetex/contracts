@@ -33,8 +33,6 @@ contract CampaignManager is TokenDriver, PullPayment {
     mapping (address => mapping (uint256 => Prize)) public prizes;
     mapping (address => Payout) public game_payout;
 
-    using SafeMath for uint256; // TODO: need it? optimize it?
-
     function CampaignManager(IZXToken _izx_token) TokenDriver(_izx_token) public {
     }
 
@@ -83,14 +81,14 @@ contract CampaignManager is TokenDriver, PullPayment {
         if(payout_amount>0){
 
              if(_prize.expires_at > now){
-                uint256 game_amount = payout_amount.mul(_payout.game_payout) / 100;
-                uint256 winner_amount = payout_amount.mul(_payout.winner_payout) / 100;
-                uint256 holder_amount = payout_amount.mul(_payout.holder_payout) / 100;
+                uint256 game_amount = (payout_amount *_payout.game_payout) / 100;
+                uint256 winner_amount = (payout_amount * _payout.winner_payout) / 100;
+                uint256 holder_amount = (payout_amount * _payout.holder_payout) / 100;
 
                 asyncSend(_prize.game, game_amount);
                 asyncSend(_winner, winner_amount);
                 asyncSend(_prize.holder, holder_amount);
-                asyncSend(_prize.master, payout_amount.sub(game_amount).sub(winner_amount).sub(holder_amount));
+                asyncSend(_prize.master, payout_amount - game_amount - winner_amount - holder_amount);
 
              }else{
                 asyncSend(_prize.master, payout_amount);

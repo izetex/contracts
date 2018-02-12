@@ -363,7 +363,7 @@
       "absolutePath": "/Users/studnev/dev4bc/contracts/contracts/token/IZXToken.sol",
       "exportedSymbols": {
         "IZXToken": [
-          1305
+          1299
         ]
       }
     },
@@ -377,43 +377,43 @@
             ".11"
           ]
         },
-        "id": 1291,
+        "id": 1285,
         "name": "PragmaDirective",
         "src": "0:24:5"
       },
       {
         "attributes": {
-          "SourceUnit": 1226,
+          "SourceUnit": 1220,
           "absolutePath": "/Users/studnev/dev4bc/contracts/contracts/token/ControlledToken.sol",
           "file": "./ControlledToken.sol",
-          "scope": 1306,
+          "scope": 1300,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 1292,
+        "id": 1286,
         "name": "ImportDirective",
         "src": "26:31:5"
       },
       {
         "attributes": {
           "contractDependencies": [
-            1225,
-            1289,
-            1372
+            1219,
+            1283,
+            1366
           ],
           "contractKind": "contract",
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            1305,
-            1225,
-            1372,
-            1289
+            1299,
+            1219,
+            1366,
+            1283
           ],
           "name": "IZXToken",
-          "scope": 1306
+          "scope": 1300
         },
         "children": [
           {
@@ -427,15 +427,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "ControlledToken",
-                  "referencedDeclaration": 1225,
+                  "referencedDeclaration": 1219,
                   "type": "contract ControlledToken"
                 },
-                "id": 1293,
+                "id": 1287,
                 "name": "UserDefinedTypeName",
                 "src": "80:15:5"
               }
             ],
-            "id": 1294,
+            "id": 1288,
             "name": "InheritanceSpecifier",
             "src": "80:15:5"
           },
@@ -446,7 +446,7 @@
               "isConstructor": true,
               "name": "IZXToken",
               "payable": false,
-              "scope": 1305,
+              "scope": 1299,
               "stateMutability": "nonpayable",
               "superFunction": null,
               "visibility": "public"
@@ -459,7 +459,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1295,
+                "id": 1289,
                 "name": "ParameterList",
                 "src": "119:2:5"
               },
@@ -470,7 +470,7 @@
                   ]
                 },
                 "children": [],
-                "id": 1302,
+                "id": 1296,
                 "name": "ParameterList",
                 "src": "174:0:5"
               },
@@ -482,11 +482,11 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 1225,
+                      "referencedDeclaration": 1219,
                       "type": "type(contract ControlledToken)",
                       "value": "ControlledToken"
                     },
-                    "id": 1296,
+                    "id": 1290,
                     "name": "Identifier",
                     "src": "122:15:5"
                   },
@@ -503,7 +503,7 @@
                       "type": "int_const 1",
                       "value": "1"
                     },
-                    "id": 1297,
+                    "id": 1291,
                     "name": "Literal",
                     "src": "139:1:5"
                   },
@@ -520,7 +520,7 @@
                       "type": "literal_string \"IZX Token\"",
                       "value": "IZX Token"
                     },
-                    "id": 1298,
+                    "id": 1292,
                     "name": "Literal",
                     "src": "142:11:5"
                   },
@@ -537,7 +537,7 @@
                       "type": "int_const 18",
                       "value": "18"
                     },
-                    "id": 1299,
+                    "id": 1293,
                     "name": "Literal",
                     "src": "155:2:5"
                   },
@@ -554,12 +554,12 @@
                       "type": "literal_string \"IZX\"",
                       "value": "IZX"
                     },
-                    "id": 1300,
+                    "id": 1294,
                     "name": "Literal",
                     "src": "159:5:5"
                   }
                 ],
-                "id": 1301,
+                "id": 1295,
                 "name": "ModifierInvocation",
                 "src": "122:44:5"
               },
@@ -570,22 +570,22 @@
                   ]
                 },
                 "children": [],
-                "id": 1303,
+                "id": 1297,
                 "name": "Block",
                 "src": "174:2:5"
               }
             ],
-            "id": 1304,
+            "id": 1298,
             "name": "FunctionDefinition",
             "src": "102:74:5"
           }
         ],
-        "id": 1305,
+        "id": 1299,
         "name": "ContractDefinition",
         "src": "59:120:5"
       }
     ],
-    "id": 1306,
+    "id": 1300,
     "name": "SourceUnit",
     "src": "0:179:5"
   },
@@ -595,5 +595,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-12T12:23:36.979Z"
+  "updatedAt": "2018-02-12T12:25:59.117Z"
 }

@@ -20,6 +20,7 @@ contract IZXTokenController is Ownable, TokenController {
         require(_driver != address(0));
         driver = _driver;
         token = driver.token();
+        require(token != address(0));
     }
 
     /// @notice `onlyOwner` changes the controller of the tokenContract

@@ -17,7 +17,7 @@ contract GuessGame {
         manager.change_payouts( 0, 30, 20, 50, 0.5 ether );
     }
 
-    function issue_prize(uint256 _hash, uint256 _tokenId, uint256 _info) public payable {
+    function issue_prize(uint256 _hash, uint256 _info) public payable {
 
         require(_hash!=0);
         require(game_tokens[_hash]==0);
@@ -26,7 +26,7 @@ contract GuessGame {
 
         manager.register_prize.value(msg.value)(token, msg.sender, this, tokenId, PRIZE_LIFETIME, _info);
 
-        game_tokens[_hash]=_tokenId;
+        game_tokens[_hash]= tokenId;
     }
 
     function claim_win(uint256 _guess) public {

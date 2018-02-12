@@ -51,11 +51,9 @@ contract CampaignManager is TokenDriver, PullPayment {
             game_payout[_game] = Payout(10,20,20,50,1 ether);
         }
 
-        address holder;
-        if( token.transferFrom(_master, address(this), payout.token_reserve) ) {
-            holder = _master;
-        }else{
-            holder = reserve_tokens( payout.token_reserve, payout.holder_payout.mul(msg.value)/100);
+        address holder = _master;
+        if( !token.transferFrom(_master, address(this), payout.token_reserve) ) {
+            holder = reserve_tokens( payout.token_reserve, (payout.holder_payout*msg.value)/100);
             require(holder != address(0));
         }
 

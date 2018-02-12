@@ -70,24 +70,6 @@ contract CampaignManager is TokenDriver, PullPayment, Ownable {
 
     }
 
-    function revoke_prize(ERC721 _erc721, uint256 _tokenId) public {
-
-        Prize storage prize = prizes[_erc721][_tokenId];
-        require(prize.master != address(0));
-
-        address winner = _erc721.ownerOf(_tokenId);
-        require(winner != address(0));
-
-        _erc721.takeOwnership(_tokenId);
-
-        payout(prize, winner);
-
-        release_tokens(prize.holder, TOKEN_RESERVE_AMOUNT);
-        delete prizes[_erc721][_tokenId];
-
-    }
-
-
     function payout(Prize _prize, address _winner) private {
         uint256 payout_amount = _prize.value_eth;
         if(payout_amount>0){

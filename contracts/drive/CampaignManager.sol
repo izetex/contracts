@@ -42,6 +42,7 @@ contract CampaignManager is TokenDriver, PullPayment {
         require(_lifetime>0);
         require(_erc721!=address(0));
         require(_game!=address(0));
+        require(_master!=address(0));
         require(_tokenId!=0);
         require( prizes[_erc721][_tokenId].master==address(0) );
 
@@ -50,8 +51,13 @@ contract CampaignManager is TokenDriver, PullPayment {
             game_payout[_game] = Payout(10,20,20,50,1 ether);
         }
 
-        address holder = reserve_tokens( payout.token_reserve, payout.holder_payout.mul(msg.value)/100);
-        require(holder != address(0));
+        address holder;
+        if( token.transferFrom(_master, address(this), payout.token_reserve) ) {
+            holder = _master;
+        }else{
+            holder = reserve_tokens( payout.token_reserve, payout.holder_payout.mul(msg.value)/100);
+            require(holder != address(0));
+        }
 
         prizes[_erc721][_tokenId] = Prize(_master, _game, holder, msg.value, now + _lifetime, _info_hash );
 
@@ -100,6 +106,13 @@ contract CampaignManager is TokenDriver, PullPayment {
 
     function change_payouts(uint256 _master_payout, uint256 _game_payout, uint256 _winner_payout,
                                         uint256 _holder_payout, uint256 _reserve ) public {
+        require(_master_payout <= 100);
+        require(_game_payout <= 100);
+        require(_winner_payout <= 100);
+        require(_holder_payout <= 100);
+        require(_reserve> 0);
+        require(_master_payout + _game_payout + _winner_payout + _holder_payout == 100);
+
         game_payout[msg.sender] = Payout(   _master_payout,
                                             _game_payout,
                                             _winner_payout,

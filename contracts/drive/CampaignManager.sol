@@ -31,7 +31,7 @@ contract CampaignManager is TokenDriver, PullPayment {
 
 
     mapping (address => mapping (uint256 => Prize)) public prizes;
-    mapping (address => Payout) public game_payout;
+    mapping (address => Payout) public game_payouts;
 
     function CampaignManager(IZXToken _izx_token) TokenDriver(_izx_token) public {
     }
@@ -46,9 +46,9 @@ contract CampaignManager is TokenDriver, PullPayment {
         require(_tokenId!=0);
         require( prizes[_erc721][_tokenId].master==address(0) );
 
-        Payout storage payout = game_payout[_game];
+        Payout storage payout = game_payouts[_game];
         if(payout.token_reserve==0){
-            game_payout[_game] = Payout(10,20,20,50,1 ether);
+            game_payouts[_game] = Payout(10,20,20,50,1 ether);
         }
 
         address holder = _master;
@@ -73,7 +73,7 @@ contract CampaignManager is TokenDriver, PullPayment {
 
         _erc721.takeOwnership(_tokenId);
 
-        Payout storage payout = game_payout[prize.game];
+        Payout storage payout = game_payouts[prize.game];
         make_payouts(prize, payout, winner);
 
         release_tokens(prize.holder, payout.token_reserve);
@@ -102,7 +102,7 @@ contract CampaignManager is TokenDriver, PullPayment {
          }
     }
 
-    function change_payouts(uint256 _master_payout, uint256 _game_payout, uint256 _winner_payout,
+    function set_game_payout(uint256 _master_payout, uint256 _game_payout, uint256 _winner_payout,
                                         uint256 _holder_payout, uint256 _reserve ) public {
         require(_master_payout <= 100);
         require(_game_payout <= 100);
@@ -111,7 +111,7 @@ contract CampaignManager is TokenDriver, PullPayment {
         require(_reserve> 0);
         require(_master_payout + _game_payout + _winner_payout + _holder_payout == 100);
 
-        game_payout[msg.sender] = Payout(   _master_payout,
+        game_payouts[msg.sender] = Payout(   _master_payout,
                                             _game_payout,
                                             _winner_payout,
                                             _holder_payout,

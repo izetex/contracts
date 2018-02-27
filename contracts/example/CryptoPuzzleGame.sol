@@ -6,6 +6,9 @@ import "../drive/CampaignManager.sol";
 /**
  * @title CryptoPuzzleGame is the game of solving a puzzle using cryptographic hash.
  *
+ * @notice WARNING! THIS GAME SHOULD NOT BE USED IN GAMES WITH ANY MONETARY REWARD,
+ * AS IT IS SUBJECT FOR RACE CONDITIONS ATTACK.
+ *
  * @dev The game demonstrates how any blockchain game, based on ERC721, can be integrated with the
  * monetization and reward system, based on IZX token.
  * The rules of the game are the following: game master invents a secret number and calculates a hash from it.

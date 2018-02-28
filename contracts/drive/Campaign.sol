@@ -21,7 +21,7 @@ contract Campaign is Ownable {
     uint    public      winner_payout_pct;
     uint    public      holder_payout_pct;
 
-    mapping (address => uint)   public      tokens_reserved;
+    mapping (address => uint)   public      token_holders;
     mapping (uint => address)   public      prize_winners;
 
     function Campaign(address _game, address _sponsor){

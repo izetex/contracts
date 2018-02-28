@@ -63,7 +63,7 @@ contract CryptoPuzzleGame {
 
         uint256 tokenId = token.mint(this);
 
-        manager.register_prize.value(msg.value)(token, msg.sender, this, tokenId, PRIZE_LIFETIME, _info);
+        manager.register_prize.value(msg.value)(token, tokenId, msg.sender, this, PRIZE_LIFETIME, _info);
 
         puzzles[_hash]= tokenId;
 

@@ -6,43 +6,53 @@ import 'zeppelin-solidity/contracts/token/ERC721/ERC721.sol';
 
 contract Campaign is Ownable {
 
-    address public      game;
-    ERC721  public      token;
-    address public      sponsor;
+    address     public  sponsor;
+    address     public  game;
+    address     public  game_token;
+    address     public  izx_token;
 
-    uint    public      price;
-    uint    public      finish_at;
+    uint256     public  sponsor_token_amount;
+    uint256     public  holder_token_amount;
 
-    uint    public      max_tokens;
-    uint    public      tokens_total;
+    struct Prize {
 
-    uint    public      sponsor_payout_pct;
-    uint    public      game_payout_pct;
-    uint    public      winner_payout_pct;
-    uint    public      holder_payout_pct;
+        address token_holder;
+        uint256 holder_amount;
+        address winner;
 
-    mapping (address => uint)   public      token_holders;
-    mapping (uint => address)   public      prize_winners;
-
-    function Campaign(address _game, address _sponsor){
     }
 
-    function tokensApproved() onlyOwner {
+    mapping(uint256 => Prize)   public  prizes;
+    mapping(address => uint256) public  token_holder_balance;
+    address[]                   public  token_holders;
+    uint256                     public  next_index;
+
+
+    function Campaign(address _sponsor, address _game, address _game_token, address _izx_token) public {
+        sponsor = _sponsor;
+        game = _game;
+        game_token = _game_token;
+        izx_token = _izx_token;
     }
 
-    function tokensTransfered() onlyOwner {
+    function acceptSponsorTokens(uint256 _token_amount) public onlyOwner {
+        sponsor_token_amount += _token_amount;
     }
 
-
-    function issuePrize(uint _tokenId) onlyGame {
-        transfer token
-        tokens_reserved[] =
+    function acceptHolderTokens(address _token_holder, uint256 _token_amount) public onlyOwner {
+        holder_token_amount += _token_amount;
+        token_holder_balance[_token_holder] += _token_amount;
+        uint next = token_holders.length++;
+        token_holders[next] = _token_holder;
     }
 
-    function payoutPrize(uint _tokenId) onlySponsor {
+    function registerPrize(uint256 _tokenId) public onlyGame {
+
+        prizes[_tokenId] = Prize(token_holder, holder_amount, address(0));
     }
 
-    function finalize() onlyOwner onlyAfterFinish {
+    function rewardPrize(uint256 _tokenId) public {
+
     }
 
 }

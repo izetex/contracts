@@ -3,7 +3,7 @@ pragma solidity ^0.4.18;
 import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 import "../token/TokenController.sol";
 import "../token/IZXToken.sol";
-import "./CampaignManager.sol";
+import "./Campaign.sol";
 
 
 contract CampaignManager is Ownable, TokenController {
@@ -15,14 +15,15 @@ contract CampaignManager is Ownable, TokenController {
     * @dev Create the controller for token manager.
     * @param _manager The token manager, which is eligible to receive IZX tokens
     */
-    function CampaignManager( CampaignManager _manager ) public {
-        require(_manager != address(0));
-        manager = _manager;
-        token = manager.token();
-        require(token != address(0));
+    function CampaignManager( IZXToken _token ) public {
+        require(_token != address(0));
+        token = _token;
     }
 
-    function createCampaign() public payable returns(Campaign){
+    function createCampaign(address _game, address _game_token) public returns address{
+
+
+
     }
 
     /**

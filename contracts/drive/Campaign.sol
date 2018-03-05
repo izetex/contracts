@@ -35,15 +35,16 @@ contract Campaign is Ownable {
         izx_token = _izx_token;
     }
 
-    function acceptSponsorTokens(uint256 _token_amount) public onlyOwner {
-        sponsor_token_amount += _token_amount;
-    }
 
-    function acceptHolderTokens(address _token_holder, uint256 _token_amount) public onlyOwner {
-        holder_token_amount += _token_amount;
-        token_holder_balance[_token_holder] += _token_amount;
-        uint next = token_holders.length++;
-        token_holders[next] = _token_holder;
+    function acceptTokens(address _sender, uint256 _token_amount) public onlyOwner {
+        if(_sender==sponsor){
+            sponsor_token_amount += _token_amount;
+        }else{
+            holder_token_amount += _token_amount;
+            token_holder_balance[_sender] += _token_amount;
+            uint next = token_holders.length++;
+            token_holders[next] = _sender;
+        }
     }
 
     function registerPrize(uint256 _tokenId) public onlyGame {

@@ -163,12 +163,15 @@ contract Campaign is Ownable {
 
     function withdraw() public ifCompleted {
 
-        uint256 amount;
+        uint256 amount = reserved_balance[msg.sender];
+        reserved_balance[msg.sender] = 0;
 
         if(msg.sender == sponsor){
-           amount = reserved_balance[sponsor] + sponsor_token_amount;
+           amount += sponsor_token_amount;
+           sponsor_token_amount = 0;
         }else{
-           amount = reserved_balance[msg.sender] + token_holder_balance[msg.sender];
+           amount += token_holder_balance[msg.sender];
+           token_holder_balance[msg.sender] = 0;
         }
 
         if(amount>0){

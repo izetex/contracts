@@ -8,11 +8,10 @@ import '../token/ERC20.sol';
 contract TokenMarket is Ownable {
 
     struct Deal {
-        address initialTokenOwner;
-
+        address dealOwner;
+        uint    balance;
         mapping(address => uint256) contributions;
     }
-
 
     ERC721                          public  asset_token;
     ERC20                           public  unit_token;
@@ -27,17 +26,14 @@ contract TokenMarket is Ownable {
     }
 
     function createDeal(uint _tokenId){
-        deals[_tokenId] = Deal(  asset_token.ownerOf(_tokenId) );
+        address dealOwner = asset_token.ownerOf(_tokenId);
+        deals[_tokenId] = Deal( dealOwner, 0 );
     }
 
-    function contribute(uint _tokenId){
-
-        require(balances[msg.sender] > 0);
-        Deal storage deal = deals[_tokenId];
-        require(deal.initialTokenOwner != address(0));
+    function contribute(uint _tokenId) public {
 
         uint256 amount = balances[msg.sender];
-        deal.contributions[msg.sender] += amount;
+        register_contribution( msg.sender, amount,  _tokenId);
         balances[msg.sender] = 0;
 
         Contributed(msg.sender, asset_token, _tokenId, amount);
@@ -52,18 +48,24 @@ contract TokenMarket is Ownable {
 
     }
 
-    /* --- called from controller ( owner ) --- */
-    function depositedFrom(address _sender, uint _amount) onlyOwner {
+    // ----- functions called from controller ( owner ) ----- //
+
+    function depositedFrom(address _sender, uint _amount) onlyOwner external {
         balances[_sender] += _amount;
     }
 
-    function contributedFrom(address _sender, uint _amount, uint _tokenId) onlyOwner{
-        Deal storage deal = deals[_tokenId];
-        require(deal.initialTokenOwner != address(0));
-        deal.contributions[_sender] += _amount;
+    function contributedFrom(address _sender, uint _amount, uint _tokenId) onlyOwner external {
+        register_contribution( _sender,  _amount,  _tokenId);
         Contributed(_sender, asset_token, _tokenId, _amount);
     }
 
+    function register_contribution(address _sender, uint _amount, uint _tokenId) private {
+        require(_amount>0);
+        Deal storage deal = deals[_tokenId];
+        require(deal.dealOwner != address(0));
 
+        deal.contributions[_sender] += _amount;
+        deal.balance += _amount;
+    }
 
 }

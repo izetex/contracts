@@ -10,6 +10,8 @@ contract TokenMarket is Ownable {
     struct Deal {
         address dealOwner;
         uint    balance;
+        bool    active;
+
         mapping(address => uint256) contributions;
     }
 
@@ -20,6 +22,7 @@ contract TokenMarket is Ownable {
     mapping(address => uint256)     public  balances;
 
     event Contributed( address indexed contributor, address indexed token, uint256 indexed tokenId, uint256 value);
+    event DealCreated( address indexed owner, address indexed token, uint256 indexed tokenId);
 
     function TokenMarket(){
 
@@ -27,11 +30,12 @@ contract TokenMarket is Ownable {
 
     function createDeal(uint _tokenId){
         address dealOwner = asset_token.ownerOf(_tokenId);
-        deals[_tokenId] = Deal( dealOwner, 0 );
+        deals[_tokenId] = Deal( dealOwner, 0, true );
+
+        DealCreated( dealOwner, asset_token, _tokenId);
     }
 
     function contribute(uint _tokenId) public {
-
         uint256 amount = balances[msg.sender];
         register_contribution( msg.sender, amount,  _tokenId);
         balances[msg.sender] = 0;
@@ -40,7 +44,10 @@ contract TokenMarket is Ownable {
     }
 
 
-    function closeDeal(){
+    function closeDeal(uint _tokenId) public {
+        Deal storage deal = deals[_tokenId];
+        require(deal.active);
+        require(deal.dealOwner == msg.sender );
 
     }
 
@@ -62,7 +69,7 @@ contract TokenMarket is Ownable {
     function register_contribution(address _sender, uint _amount, uint _tokenId) private {
         require(_amount>0);
         Deal storage deal = deals[_tokenId];
-        require(deal.dealOwner != address(0));
+        require(deal.active);
 
         deal.contributions[_sender] += _amount;
         deal.balance += _amount;

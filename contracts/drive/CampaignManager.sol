@@ -1,82 +1,56 @@
 pragma solidity ^0.4.18;
 
-import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
-import 'zeppelin-solidity/contracts/token/ERC721/ERC721.sol';
-import "../token/TokenController.sol";
-import "../token/IZXToken.sol";
-import "./Campaign.sol";
+import './ControlledTokenTrade.sol';
 
+contract CampaignManager is ControlledTokenTrade {
 
-contract CampaignManager is Ownable, TokenController {
+    uint    public  token_price;
+    uint    public  winner_reward;
+    uint    public  max_lifetime;
 
-    IZXToken                 public  token;
-    mapping(address => bool) public  campaigns;
+    function CampaignManager(   ERC721 _asset_token,
+                                ERC20 _unit_token,
+                                uint _token_price,
+                                uint _winner_reward,
+                                uint _max_lifetime)
+                ControlledTokenTrade(_asset_token, _unit_token) public {
 
-    /**
-    * @dev Create the controller for token manager.
-    * @param _token IZX token
-    */
-    function CampaignManager( IZXToken _token ) public {
-        require(_token != address(0));
-        token = _token;
+         require(_token_price>0);
+         require(_winner_reward>0);
+         require(_winner_reward<=_token_price);
+         require(_max_lifetime>0);
+
+         token_price = _token_price;
+         max_lifetime = _max_lifetime;
+         winner_reward = _winner_reward;
     }
 
-    function createCampaign(address _game, ERC721 _game_token, uint256 _finish_at) public returns(address){
-        address cmp = new Campaign(msg.sender, _game, _game_token, token, _finish_at);
-        campaigns[cmp] = true;
-        return cmp;
+    function createDeal(uint _tokenId, uint _expiration) public {
+        require( _expiration <= now + max_lifetime);
+        super.createDeal( _tokenId,  _expiration);
+
+        require(unit_token.transferFrom(msg.sender, this, token_price) );
+        make_contribution( msg.sender, token_price,  _tokenId);
+        Contributed(msg.sender, asset_token, _tokenId, token_price);
+
     }
 
-    /**
-    * @dev As only controller can change the token controller, this method is required
-    * for ability to modify the controller later
-    * @param _newController The new controller for the token
-    */
-    function changeTokenController(address _newController) onlyOwner public {
-        token.changeController(_newController);
-    }
+    function calculate_payout(Deal storage _deal, address _sender) internal view returns(uint256) {
 
-
-    /**
-    * @notice Do not accept payments on token
-    */
-    function proxyPayment(address) payable public returns(bool) {
-        return false;
-    }
-
-    /**
-    * @notice Allow to transfer to any account or manager smart contract
-    */
-    function onTransfer(address _sender, address _to, uint _token_amount) public returns(bool) {
-        if(campaigns[_to]){
-            Campaign cmp = Campaign(_to);
-            cmp.acceptTokens(_sender,_token_amount);
-            return true;
-        }else{
-            return !isContract(_to);
+        if(_sender==_deal.dealer){
+            return 0;
         }
-    }
 
-    /**
-    * @notice  Allow to approve to any account or manager smart contract
-    */
-    function onApprove(address, address, uint) public returns(bool)
-    {
-        return true;
-    }
-
-
-    /**
-    * @dev Utility function checking that address is a smart contract
-    * @param _addr The address to check
-    */
-    function isContract(address _addr) constant internal returns(bool) {
-        uint size;
-        if (_addr == 0) return false;
-        assembly {
-            size := extcodesize(_addr)
+        uint amount = _deal.contributions[_sender];
+        if(amount>0){
+            amount = amount.add( amount.mul( token_price.sub(winner_reward) ) / _deal.deposited_amount.sub(token_price));
         }
-        return size>0;
+
+        if(_sender==_deal.winner){
+            amount = amount.add(winner_reward);
+        }
+
+        return amount;
     }
 
 }

@@ -6,7 +6,7 @@ import 'zeppelin-solidity/contracts/token/ERC20/ERC20.sol';
 import 'zeppelin-solidity/contracts/math/SafeMath.sol';
 import './TokenTrade.sol';
 
-contract ControllerTokenTrade is TokenTrade, Ownable {
+contract ControlledTokenTrade is TokenTrade, Ownable {
 
     struct Deal {
         address dealer;
@@ -27,15 +27,11 @@ contract ControllerTokenTrade is TokenTrade, Ownable {
 
     mapping(uint256 => Deal)        public  deals;
 
-    event Contributed( address indexed contributor, address indexed token, uint256 indexed tokenId, uint256 value);
-    event DealCreated( address indexed creator, address indexed token, uint256 indexed tokenId);
-    event DealClosed( address indexed closed_by, address indexed token, uint256 indexed tokenId);
-    event DealClaimed( address indexed closed_by, address indexed token, uint256 indexed tokenId);
-
     using SafeMath for uint256;
 
-    function TokenTrade(){
-
+    function ControlledTokenTrade(ERC721 _asset_token, ERC20 _unit_token) public {
+        asset_token = _asset_token;
+        unit_token = _unit_token;
     }
 
     // ----- functions called by dealer ----- //
@@ -47,7 +43,7 @@ contract ControllerTokenTrade is TokenTrade, Ownable {
 
         deals[_tokenId] = Deal( dealer, address(0), true, 0, 0, _expiration );
 
-        DealCreated( dealer, asset_token, _tokenId);
+        CreatedDeal( dealer, asset_token, _tokenId);
     }
 
     function closeDeal(uint _tokenId) public {
@@ -58,14 +54,14 @@ contract ControllerTokenTrade is TokenTrade, Ownable {
         require(deal.dealer == msg.sender );
 
         deal.active = false;
-        DealClosed( msg.sender, asset_token, _tokenId);
+        ClosedDeal( msg.sender, asset_token, _tokenId);
     }
 
-    // ----- functions called by contributors ----- //
+    // ----- functions called by contributor (anybody) ----- //
 
     function contribute(uint _tokenId, uint256 _amount) public {
         require(unit_token.transferFrom(msg.sender, this, _amount) );
-        register_contribution( msg.sender, _amount,  _tokenId);
+        make_contribution( msg.sender, _amount,  _tokenId);
         Contributed(msg.sender, asset_token, _tokenId, _amount);
     }
 
@@ -77,9 +73,10 @@ contract ControllerTokenTrade is TokenTrade, Ownable {
         require(deal.active);
         require(now <= deal.expiration);
 
+        asset_token.takeOwnership(_tokenId);
         deal.winner = token_owner;
 
-        DealClaimed( token_owner, asset_token, _tokenId);
+        ClaimedDeal( token_owner, asset_token, _tokenId);
     }
 
     function withdraw(uint _tokenId) public{
@@ -109,13 +106,23 @@ contract ControllerTokenTrade is TokenTrade, Ownable {
 
 
     function contributedFrom(address _sender, uint _amount, uint _tokenId) onlyOwner external {
-        register_contribution( _sender,  _amount,  _tokenId);
+        make_contribution( _sender,  _amount,  _tokenId);
         Contributed(_sender, asset_token, _tokenId, _amount);
+    }
+
+    // TODO this is unsecure
+    function transferUnit(address _to, uint _amount) onlyOwner external {
+        require(unit_token.transfer(_to, _amount));
+    }
+
+    // TODO this is unsecure
+    function transferAsset(address _to, uint _tokenId) onlyOwner external {
+        asset_token.transfer(_to, _tokenId);
     }
 
     // ----- internally used functions  ----- //
 
-    function register_contribution(address _sender, uint _amount, uint _tokenId) private {
+    function make_contribution(address _sender, uint _amount, uint _tokenId) internal {
 
         Deal storage deal = deals[_tokenId];
         require(deal.active);
@@ -126,7 +133,7 @@ contract ControllerTokenTrade is TokenTrade, Ownable {
         deal.deposited_amount += _amount;
     }
 
-    function calculate_payout(Deal storage _deal, address _sender) internal returns(uint256) {
+    function calculate_payout(Deal storage _deal, address _sender) internal view returns(uint256) {
         return _deal.contributions[_sender];
     }
 

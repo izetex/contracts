@@ -11,4 +11,9 @@ contract TokenTrade  {
     function claim(uint _tokenId) public;
     function withdraw(uint _tokenId) public;
 
+    event Contributed( address indexed contributor, address indexed token, uint256 indexed tokenId, uint256 value);
+    event CreatedDeal( address indexed creator, address indexed token, uint256 indexed tokenId);
+    event ClosedDeal( address indexed closed_by, address indexed token, uint256 indexed tokenId);
+    event ClaimedDeal( address indexed closed_by, address indexed token, uint256 indexed tokenId);
+
 }

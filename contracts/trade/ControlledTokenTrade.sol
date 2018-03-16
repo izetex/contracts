@@ -67,26 +67,9 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
     }
 
     function withdraw(uint _tokenId) public{
-
         Deal storage deal = deals[_tokenId];
-
-        uint amount = 0;
-        if(deal.success){
-            amount = calculate_payout(deal, msg.sender);
-        }else if(now > deal.expiration){
-            amount = deal.contributions[msg.sender];
-        }
-
-        amount = amount.sub(deal.payouts[msg.sender]);
-        require(amount > 0);
-
-        deal.payouts[msg.sender] += amount;
-        deal.credited_amount += amount;
-        unit_token.transfer(msg.sender, amount);
-
-        if(deal.credited_amount==deal.deposited_amount){
-            delete deals[_tokenId];
-        }
+        make_payment(deal, msg.sender);
+        purge_deal(deal, _tokenId);
     }
 
     // ----- functions called from controller ( owner ) ----- //
@@ -122,6 +105,30 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
 
     function calculate_payout(Deal storage _deal, address _sender) internal view returns(uint256) {
         return _deal.contributions[_sender];
+    }
+
+    function make_payment(Deal storage _deal, address _receiver) internal {
+
+        uint amount = 0;
+        if(_deal.success){
+            amount = calculate_payout(_deal, _receiver);
+        }else if(now > _deal.expiration){
+            amount = _deal.contributions[_receiver];
+        }
+
+        require(amount > _deal.payouts[_receiver]);
+        amount -= _deal.payouts[_receiver];
+
+        _deal.payouts[_receiver] += amount;
+        _deal.credited_amount += amount;
+        unit_token.transfer(_receiver, amount);
+
+    }
+
+    function purge_deal(Deal storage _deal, uint _tokenId) internal {
+        if(_deal.credited_amount==_deal.deposited_amount){
+            delete deals[_tokenId];
+        }
     }
 
 }

@@ -33,7 +33,6 @@ contract TokenAuction is ControlledTokenTrade {
         require( deal.active );
         require( now > deal.expiration );
 
-
         if(deal.winner != address(0)){
             deal.success = true;
             asset_token.transfer(deal.winner, _tokenId);
@@ -51,6 +50,7 @@ contract TokenAuction is ControlledTokenTrade {
         if( deal.active ){
            closeDeal(_tokenId);
         }
+
         super.withdraw(_tokenId);
 
     }

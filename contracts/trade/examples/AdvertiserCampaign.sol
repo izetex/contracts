@@ -43,7 +43,7 @@ contract AdvertiserCampaign is ControlledTokenTrade {
         require(deal.active);
         require(now <= deal.expiration);
 
-        asset_token.takeOwnership(_tokenId);
+        asset_token.takeOwnership(_tokenId); // TODO ?
         deal.winner = token_owner;
     }
 

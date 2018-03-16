@@ -30,8 +30,16 @@ contract TokenAuction is ControlledTokenTrade {
     function closeDeal(uint _tokenId) public {
         Deal storage deal = deals[_tokenId];
 
-        require( _deal.winner != address(0) );
-        require( now > _deal.expiration );
+        require( deal.active );
+        require( now > deal.expiration );
+
+
+        if(deal.winner != address(0)){
+            deal.success = true;
+            asset_token.transfer(deal.winner, _tokenId);
+        }else{
+            asset_token.transfer(deal.dealer, _tokenId);
+        }
 
         deal.active = false;
         ClosedDeal( msg.sender, asset_token, _tokenId);
@@ -40,13 +48,11 @@ contract TokenAuction is ControlledTokenTrade {
     function withdraw(uint _tokenId) public{
 
         Deal storage deal = deals[_tokenId];
-        require( now > _deal.expiration );
-
-        if( deal.active && deal.winner != address(0) ){
-            closeDeal(_tokenId);
+        if( deal.active ){
+           closeDeal(_tokenId);
         }
-
         super.withdraw(_tokenId);
+
     }
 
     // ----- internally used functions  ----- //
@@ -60,7 +66,7 @@ contract TokenAuction is ControlledTokenTrade {
 
     function calculate_payout(Deal storage _deal, address _sender) internal view returns(uint256) {
         if(_sender==_deal.dealer){
-            return _deal.contributions[deal.winner];
+            return _deal.contributions[_deal.winner];
         }else if(_sender!=_deal.winner){
             return _deal.contributions[_sender];
         }

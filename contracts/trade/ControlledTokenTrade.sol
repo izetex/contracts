@@ -13,6 +13,7 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
         address winner;
 
         bool    active;
+        bool    success;
         uint    expiration;
 
         uint    deposited_amount;
@@ -41,7 +42,7 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
         require( deals[_tokenId].dealer == address(0));
         require( _expiration > now );
 
-        deals[_tokenId] = Deal( dealer, address(0), true, 0, 0, _expiration );
+        deals[_tokenId] = Deal( dealer, address(0), true, false, 0, 0, _expiration );
 
         CreatedDeal( dealer, asset_token, _tokenId);
     }
@@ -70,7 +71,7 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
         Deal storage deal = deals[_tokenId];
 
         uint amount = 0;
-        if(!deal.active){
+        if(deal.success){
             amount = calculate_payout(deal, msg.sender);
         }else if(now > deal.expiration){
             amount = deal.contributions[msg.sender];

@@ -50,7 +50,10 @@ contract AdvertiserCampaign is ControlledTokenTrade {
     function closeDeal(uint _tokenId) public {
         Deal storage deal = deals[_tokenId];
         require(deal.winner != address(0));
+
         super.closeDeal(_tokenId);
+
+        deal.success = true;
     }
 
     // ----- internally used functions  ----- //

@@ -59,7 +59,7 @@ contract TokenAuction is ControlledTokenTrade {
 
     function make_contribution(address _sender, uint _amount, uint _tokenId) internal {
         Deal storage deal = deals[_tokenId];
-        require(deal.winner == address(0) || deal.contributions[deal.winner] < _amount );
+        require( _amount > deal.contributions[deal.winner] );
         deal.winner = _sender;
         super.make_contribution(_sender, _amount, _tokenId);
     }

@@ -104,7 +104,7 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
 
     // ----- functions called from controller ( owner ) ----- //
 
-
+    // TODO check ability to track incoming transactions securely
     function contributedFrom(address _sender, uint _amount, uint _tokenId) onlyOwner external {
         make_contribution( _sender,  _amount,  _tokenId);
         Contributed(_sender, asset_token, _tokenId, _amount);

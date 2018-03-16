@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
 import "./PuzzleToken.sol";
-import "../drive/CampaignManager.sol";
+import "../trade/examples/CampaignManager.sol";
 
 /**
  * @title CryptoPuzzleGame is the game of solving a puzzle using cryptographic hash.
@@ -43,7 +43,7 @@ contract CryptoPuzzleGame {
     function CryptoPuzzleGame(CampaignManager _manager) public {
         token = new PuzzleToken();
         manager = _manager;
-        manager.set_game_payout( 0, 30, 20, 50, 0.3 ether );
+        //manager.set_game_payout( 0, 30, 20, 50, 0.3 ether );
     }
 
 
@@ -63,7 +63,7 @@ contract CryptoPuzzleGame {
 
         uint256 tokenId = token.mint(this);
 
-        manager.register_prize.value(msg.value)(token, tokenId, msg.sender, this, PRIZE_LIFETIME, _info);
+    //    manager.register_prize.value(msg.value)(token, tokenId, msg.sender, this, PRIZE_LIFETIME, _info);
 
         puzzles[_hash]= tokenId;
 

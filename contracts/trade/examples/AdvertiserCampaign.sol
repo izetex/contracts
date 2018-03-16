@@ -1,14 +1,14 @@
 pragma solidity ^0.4.18;
 
-import './ControlledTokenTrade.sol';
+import '../ControlledTokenTrade.sol';
 
-contract CampaignManager is ControlledTokenTrade {
+contract AdvertiserCampaign is ControlledTokenTrade {
 
     uint    public  token_price;
     uint    public  winner_reward;
     uint    public  max_lifetime;
 
-    function CampaignManager(   ERC721 _asset_token,
+    function AdvertiserCampaign(   ERC721 _asset_token,
                                 ERC20 _unit_token,
                                 uint _token_price,
                                 uint _winner_reward,
@@ -35,6 +35,11 @@ contract CampaignManager is ControlledTokenTrade {
 
     }
 
+    function closeDeal(uint _tokenId) public {
+        Deal storage deal = deals[_tokenId];
+        require(deal.winner != address(0));
+        super.closeDeal(_tokenId);
+    }
     function calculate_payout(Deal storage _deal, address _sender) internal view returns(uint256) {
 
         if(_sender==_deal.dealer){

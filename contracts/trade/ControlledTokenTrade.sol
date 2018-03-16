@@ -65,20 +65,6 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
         Contributed(msg.sender, asset_token, _tokenId, _amount);
     }
 
-    function claim(uint _tokenId) public {
-        address token_owner = asset_token.ownerOf(_tokenId);
-        require(token_owner==msg.sender);
-
-        Deal storage deal = deals[_tokenId];
-        require(deal.active);
-        require(now <= deal.expiration);
-
-        asset_token.takeOwnership(_tokenId);
-        deal.winner = token_owner;
-
-        ClaimedDeal( token_owner, asset_token, _tokenId);
-    }
-
     function withdraw(uint _tokenId) public{
 
         Deal storage deal = deals[_tokenId];

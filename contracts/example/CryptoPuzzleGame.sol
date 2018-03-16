@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
 import "./PuzzleToken.sol";
-import "../trade/examples/CampaignManager.sol";
+import "../trade/examples/AdvertiserCampaign.sol";
 
 /**
  * @title CryptoPuzzleGame is the game of solving a puzzle using cryptographic hash.
@@ -30,7 +30,7 @@ import "../trade/examples/CampaignManager.sol";
 contract CryptoPuzzleGame {
 
     PuzzleToken         public  token;
-    CampaignManager     public  manager;
+    AdvertiserCampaign     public  manager;
     uint256             public  constant PRIZE_LIFETIME = 72 hours;
 
     mapping (uint256 => uint256) public puzzles;
@@ -40,7 +40,7 @@ contract CryptoPuzzleGame {
     * It sets the parameters for payout for this game as well.
     * @param _manager The campaign manager, which will arrange pay reward for prizes of this game
     */
-    function CryptoPuzzleGame(CampaignManager _manager) public {
+    function CryptoPuzzleGame(AdvertiserCampaign _manager) public {
         token = new PuzzleToken();
         manager = _manager;
         //manager.set_game_payout( 0, 30, 20, 50, 0.3 ether );

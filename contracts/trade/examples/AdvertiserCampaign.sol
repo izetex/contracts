@@ -32,7 +32,19 @@ contract AdvertiserCampaign is ControlledTokenTrade {
         require(unit_token.transferFrom(msg.sender, this, token_price) );
         make_contribution( msg.sender, token_price,  _tokenId);
         Contributed(msg.sender, asset_token, _tokenId, token_price);
+    }
 
+
+    function claim(uint _tokenId) public {
+        address token_owner = asset_token.ownerOf(_tokenId);
+        require(token_owner==msg.sender);
+
+        Deal storage deal = deals[_tokenId];
+        require(deal.active);
+        require(now <= deal.expiration);
+
+        asset_token.takeOwnership(_tokenId);
+        deal.winner = token_owner;
     }
 
     function closeDeal(uint _tokenId) public {
@@ -40,6 +52,9 @@ contract AdvertiserCampaign is ControlledTokenTrade {
         require(deal.winner != address(0));
         super.closeDeal(_tokenId);
     }
+
+    // ----- internally used functions  ----- //
+
     function calculate_payout(Deal storage _deal, address _sender) internal view returns(uint256) {
 
         if(_sender==_deal.dealer){

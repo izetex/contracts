@@ -237,6 +237,10 @@ Crowdsale-related Scripts are:
 
 **node script/deploy_tokensale** - deploys the crowdsale contract with the specified token and 
   vault in the configuration
+
+**node script/deploy_tokensale_split** - deploys the crowdsale contract with the specified token ( after split on 1/100th ) and 
+  vault in the configuration
+
   
 **node script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
   controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly

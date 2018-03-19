@@ -79,7 +79,7 @@ contract TokenSaleAfterSplit is TokenController, Owned, SafeMath {
             (tokenContract.controller() != 0) &&
             (msg.value != 0) );
 
-        uint256 tokensAmount = mul(msg.value, exchangeRate) / 10000;
+        uint256 tokensAmount = mul(msg.value, exchangeRate);
 
         require( totalTokenCount + tokensAmount <= tokenCap );
 

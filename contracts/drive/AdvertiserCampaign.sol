@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import '../ControlledTokenTrade.sol';
+import './ControlledTokenTrade.sol';
 
 contract AdvertiserCampaign is ControlledTokenTrade {
 
@@ -43,7 +43,7 @@ contract AdvertiserCampaign is ControlledTokenTrade {
         require(deal.active);
         require(now <= deal.expiration);
 
-        asset_token.takeOwnership(_tokenId); // TODO ?
+        asset_token.takeOwnership(_tokenId); // TODO do we need to burn it or what?
         deal.winner = token_owner;
     }
 

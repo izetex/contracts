@@ -1,7 +1,7 @@
 pragma solidity ^0.4.18;
 
 import "./PuzzleToken.sol";
-import "../trade/examples/AdvertiserCampaign.sol";
+import "../drive/AdvertiserCampaign.sol";
 
 /**
  * @title CryptoPuzzleGame is the game of solving a puzzle using cryptographic hash.

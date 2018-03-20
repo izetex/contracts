@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import '../ControlledTokenTrade.sol';
+import './ControlledTokenTrade.sol';
 
 contract TokenAuction is ControlledTokenTrade {
 
@@ -67,7 +67,9 @@ contract TokenAuction is ControlledTokenTrade {
     function calculate_payout(Deal storage _deal, address _sender) internal view returns(uint256) {
         if(_sender==_deal.dealer){
             return _deal.contributions[_deal.winner];
-        }else if(_sender!=_deal.winner){
+        }else if(_sender==_deal.winner){
+            return 0;
+        }else{
             return _deal.contributions[_sender];
         }
     }

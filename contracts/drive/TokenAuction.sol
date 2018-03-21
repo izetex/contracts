@@ -1,15 +1,15 @@
 pragma solidity ^0.4.18;
 
-import './ControlledTokenTrade.sol';
+import './BaseTokenTrade.sol';
 
-contract TokenAuction is ControlledTokenTrade {
+contract TokenAuction is BaseTokenTrade {
 
     uint    public  token_price;
 
     function TokenAuction(  ERC721 _asset_token,
                                 ERC20 _unit_token,
                                 uint _token_price)
-                ControlledTokenTrade(_asset_token, _unit_token) public {
+                BaseTokenTrade(_asset_token, _unit_token) public {
 
          require(_token_price>0);
          token_price = _token_price;

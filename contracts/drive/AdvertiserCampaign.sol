@@ -1,8 +1,8 @@
 pragma solidity ^0.4.18;
 
-import './ControlledTokenTrade.sol';
+import './BaseTokenTrade.sol';
 
-contract AdvertiserCampaign is ControlledTokenTrade {
+contract AdvertiserCampaign is BaseTokenTrade {
 
     uint    public  token_price;
     uint    public  winner_reward;
@@ -13,7 +13,7 @@ contract AdvertiserCampaign is ControlledTokenTrade {
                                 uint _token_price,
                                 uint _winner_reward,
                                 uint _max_lifetime)
-                ControlledTokenTrade(_asset_token, _unit_token) public {
+                BaseTokenTrade(_asset_token, _unit_token) public {
 
          require(_token_price>0);
          require(_winner_reward>0);

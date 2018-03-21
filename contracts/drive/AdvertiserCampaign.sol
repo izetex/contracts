@@ -53,12 +53,12 @@ contract AdvertiserCampaign is BaseTokenTrade {
 
         if(deal.expiration >= now){
             super.closeDeal(_tokenId);
+            deal.success = true;
             asset_token.transfer(deal.dealer, _tokenId);
         }else{
             asset_token.transfer(deal.winner, _tokenId);
         }
 
-        deal.success = true;
     }
 
     // ----- internally used functions  ----- //

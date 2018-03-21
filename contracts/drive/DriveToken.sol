@@ -13,8 +13,8 @@ import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
  */
 contract DriveToken is ERC721Token, Ownable {
 
-    string public name = 'Puzzle Win';
-    string public symbol = 'PUZZLE';
+    string public name = 'IZX Drive';
+    string public symbol = 'DRIVE';
 
     uint256 last_tokenId = 1; // used to generate token IDs for prizes
 

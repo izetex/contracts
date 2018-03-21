@@ -72,8 +72,8 @@ contract ControlledTokenTrade is Controlled, TokenTrade {
     function withdrawBalance() public{
         uint256 amount = balances[msg.sender];
         require(amount>0);
-        unit_token.transfer(msg.sender, amount);
         balances[msg.sender] = 0;
+        unit_token.transfer(msg.sender, amount);
     }
 
     function withdraw(uint _tokenId) public{
@@ -126,7 +126,6 @@ contract ControlledTokenTrade is Controlled, TokenTrade {
         _deal.payouts[_receiver] += amount;
         _deal.credited_amount += amount;
         unit_token.transfer(_receiver, amount);
-
     }
 
     function purge_deal(Deal storage _deal, uint _tokenId) internal {

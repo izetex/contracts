@@ -43,7 +43,7 @@ contract AdvertiserCampaign is ControlledTokenTrade {
         require(deal.active);
         require(now <= deal.expiration);
 
-        asset_token.takeOwnership(_tokenId); // TODO do we need to burn it or what?
+        asset_token.takeOwnership(_tokenId);
         deal.winner = token_owner;
     }
 
@@ -51,7 +51,12 @@ contract AdvertiserCampaign is ControlledTokenTrade {
         Deal storage deal = deals[_tokenId];
         require(deal.winner != address(0));
 
-        super.closeDeal(_tokenId);
+        if(deal.expiration >= now){
+            super.closeDeal(_tokenId);
+            asset_token.transfer(deal.dealer, _tokenId);
+        }else{
+            asset_token.transfer(deal.winner, _tokenId);
+        }
 
         deal.success = true;
     }

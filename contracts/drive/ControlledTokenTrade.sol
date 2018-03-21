@@ -68,7 +68,7 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
 
     function withdraw(uint _tokenId) public{
         Deal storage deal = deals[_tokenId];
-        make_payment(deal, msg.sender);
+        do_payout(deal, msg.sender);
         purge_deal(deal, _tokenId);
     }
 
@@ -80,15 +80,6 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
         Contributed(_sender, asset_token, _tokenId, _amount);
     }
 
-    // TODO this is unsecure
-    function transferUnit(address _to, uint _amount) onlyOwner external {
-        require(unit_token.transfer(_to, _amount));
-    }
-
-    // TODO this is unsecure
-    function transferAsset(address _to, uint _tokenId) onlyOwner external {
-        asset_token.transfer(_to, _tokenId);
-    }
 
     // ----- internally used functions  ----- //
 
@@ -107,7 +98,7 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
         return _deal.contributions[_sender];
     }
 
-    function make_payment(Deal storage _deal, address _receiver) internal {
+    function do_payout(Deal storage _deal, address _receiver) internal {
 
         uint amount = 0;
         if(_deal.success){

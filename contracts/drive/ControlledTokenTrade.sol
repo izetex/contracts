@@ -1,12 +1,12 @@
 pragma solidity ^0.4.18;
 
-import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 import 'zeppelin-solidity/contracts/token/ERC721/ERC721.sol';
 import 'zeppelin-solidity/contracts/token/ERC20/ERC20.sol';
 import 'zeppelin-solidity/contracts/math/SafeMath.sol';
+import '../token/TokenController.sol';
 import './TokenTrade.sol';
 
-contract ControlledTokenTrade is TokenTrade, Ownable {
+contract ControlledTokenTrade is Controlled, TokenTrade {
 
     struct Deal {
         address dealer;
@@ -27,10 +27,12 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
     ERC20                           public  unit_token;
 
     mapping(uint256 => Deal)        public  deals;
+    mapping(address => uint256)     public  balances;
 
     using SafeMath for uint256;
 
     function ControlledTokenTrade(ERC721 _asset_token, ERC20 _unit_token) public {
+        controller = msg.sender;
         asset_token = _asset_token;
         unit_token = _unit_token;
     }
@@ -61,9 +63,17 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
     // ----- functions called by contributor (anybody) ----- //
 
     function contribute(uint _tokenId, uint256 _amount) public {
-        require(unit_token.transferFrom(msg.sender, this, _amount) );
-        make_contribution( msg.sender, _amount,  _tokenId);
+        require(balances[msg.sender] >= _amount);
+        balances[msg.sender] = balances[msg.sender] - _amount;
+        make_contribution( msg.sender, _amount, _tokenId);
         Contributed(msg.sender, asset_token, _tokenId, _amount);
+    }
+
+    function withdrawBalance() public{
+        uint256 amount = balances[msg.sender];
+        require(amount>0);
+        unit_token.transfer(msg.sender, amount);
+        balances[msg.sender] = 0;
     }
 
     function withdraw(uint _tokenId) public{
@@ -72,10 +82,13 @@ contract ControlledTokenTrade is TokenTrade, Ownable {
         purge_deal(deal, _tokenId);
     }
 
-    // ----- functions called from controller ( owner ) ----- //
+    // ----- functions called from controller ----- //
 
-    // TODO check ability to track incoming transactions securely
-    function contributedFrom(address _sender, uint _amount, uint _tokenId) onlyOwner external {
+    function onTransfer(address _sender, uint _amount) onlyController external {
+        balances[_sender] = balances[_sender].add(_amount);
+    }
+
+    function onTransferWithId(address _sender, uint _amount, uint _tokenId) onlyController external {
         make_contribution( _sender,  _amount,  _tokenId);
         Contributed(_sender, asset_token, _tokenId, _amount);
     }

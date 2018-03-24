@@ -3,7 +3,7 @@ pragma solidity ^0.4.18;
 contract TokenTrade  {
 
     // ----- functions called by dealer ----- //
-    function createDeal(uint _tokenId, uint _expiration) public;
+    function createDeal(uint _tokenId, uint _expires_at) public;
     function closeDeal(uint _tokenId) public;
 
     // ----- functions called by contributors ----- //

@@ -1,8 +1,8 @@
 pragma solidity ^0.4.18;
 
-import './BaseTokenTrade.sol';
+import './ERC721TokenTrade.sol';
 
-contract AdvertiserCampaign is BaseTokenTrade {
+contract AdvertiserCampaign is ERC721TokenTrade {
 
     uint    public  token_price;
     uint    public  winner_reward;
@@ -13,7 +13,7 @@ contract AdvertiserCampaign is BaseTokenTrade {
                                 uint _token_price,
                                 uint _winner_reward,
                                 uint _max_lifetime)
-                BaseTokenTrade(_asset_token, _unit_token) public {
+                ERC721TokenTrade(_asset_token, _unit_token) public {
 
          require(_token_price>0);
          require(_winner_reward>0);
@@ -25,9 +25,9 @@ contract AdvertiserCampaign is BaseTokenTrade {
          winner_reward = _winner_reward;
     }
 
-    function createDeal(uint _tokenId, uint _expiration) public {
-        require( _expiration <= now + max_lifetime);
-        super.createDeal( _tokenId,  _expiration);
+    function createDeal(uint _tokenId, uint _expires_at) public {
+        require( _expires_at <= now + max_lifetime);
+        super.createDeal( _tokenId,  _expires_at);
 
         require(unit_token.transferFrom(msg.sender, this, token_price) );
         make_contribution( msg.sender, token_price,  _tokenId);
@@ -40,8 +40,8 @@ contract AdvertiserCampaign is BaseTokenTrade {
         require(token_owner==msg.sender);
 
         Deal storage deal = deals[_tokenId];
-        require(deal.active);
-        require(now <= deal.expiration);
+        require(deal.completed);
+        require(now <= deal.expires_at);
 
         asset_token.takeOwnership(_tokenId);
         deal.winner = token_owner;
@@ -51,9 +51,9 @@ contract AdvertiserCampaign is BaseTokenTrade {
         Deal storage deal = deals[_tokenId];
         require(deal.winner != address(0));
 
-        if(deal.expiration >= now){
+        if(deal.expires_at >= now){
             super.closeDeal(_tokenId);
-            deal.success = true;
+            deal.succeeded = true;
             asset_token.transfer(deal.dealer, _tokenId);
         }else{
             asset_token.transfer(deal.winner, _tokenId);
@@ -69,7 +69,7 @@ contract AdvertiserCampaign is BaseTokenTrade {
             return 0;
         }
 
-        uint amount = _deal.contributions[_sender];
+        uint amount = _deal.deposits[_sender];
         if(amount>0){
             amount = amount.add( amount.mul( token_price.sub(winner_reward) ) / _deal.deposited_amount.sub(token_price));
         }

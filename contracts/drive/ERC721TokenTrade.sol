@@ -11,7 +11,7 @@ contract ERC721TokenTrade is TokenTrade {
         address dealer;
         address winner;
 
-        bool    completed;
+        bool    active;
         bool    succeeded;
         uint    expires_at;
 
@@ -41,7 +41,7 @@ contract ERC721TokenTrade is TokenTrade {
         require( deals[_tokenId].dealer == address(0));
         require( _expires_at > now );
 
-        deals[_tokenId] = Deal( dealer, address(0), false, false, 0, 0, _expires_at );
+        deals[_tokenId] = Deal( dealer, address(0), true, false, 0, 0, _expires_at );
 
         CreatedDeal( dealer, asset_token, _tokenId);
     }
@@ -49,39 +49,43 @@ contract ERC721TokenTrade is TokenTrade {
     function closeDeal(uint _tokenId) public {
         Deal storage deal = deals[_tokenId];
 
-        require(!deal.completed);
+        require(deal.active);
         require(deal.expires_at >= now );
         require(deal.dealer == msg.sender );
 
-        deal.completed = true;
+        deal.active = false;
         ClosedDeal( msg.sender, asset_token, _tokenId);
     }
 
     // ----- functions called by contributor (anybody) ----- //
 
-    function contribute(uint _tokenId, uint256 _amount) public {
-        require(unit_token.transferFrom(msg.sender, this, _amount));
-        make_contribution( msg.sender, _amount, _tokenId);
-        Contributed(msg.sender, asset_token, _tokenId, _amount);
+    function deposit(uint _tokenId, uint256 _amount) public {
+        make_deposit( msg.sender, _amount, _tokenId);
     }
 
     function withdraw(uint _tokenId) public{
         Deal storage deal = deals[_tokenId];
         do_payout(deal, msg.sender);
-        purge_deal(deal, _tokenId);
+        if(deal.credited_amount==deal.deposited_amount){
+            delete deals[_tokenId];
+        }
     }
 
     // ----- internally used functions  ----- //
 
-    function make_contribution(address _sender, uint _amount, uint _tokenId) internal {
+    function make_deposit(address _sender, uint _amount, uint _tokenId) internal {
+
+        require(unit_token.transferFrom(_sender, this, _amount));
 
         Deal storage deal = deals[_tokenId];
-        require(!deal.completed);
+        require(deal.active);
         require(now <= deal.expires_at);
         require(_amount>0);
 
         deal.deposits[_sender] += _amount;
         deal.deposited_amount += _amount;
+
+        Deposited(_sender, asset_token, _tokenId, _amount);
     }
 
     function calculate_payout(Deal storage _deal, address _sender) internal view returns(uint256) {
@@ -105,10 +109,5 @@ contract ERC721TokenTrade is TokenTrade {
         unit_token.transfer(_receiver, amount);
     }
 
-    function purge_deal(Deal storage _deal, uint _tokenId) internal {
-        if(_deal.credited_amount==_deal.deposited_amount){
-            delete deals[_tokenId];
-        }
-    }
 
 }

@@ -27,13 +27,14 @@ contract TokenAuction is ERC721TokenTrade {
 
     }
 
+
     function closeDeal(uint _tokenId) public {
         Deal storage deal = deals[_tokenId];
 
-        require( !deal.completed );
+        require( deal.active );
         require( now > deal.expires_at );
 
-        deal.completed = true;
+        deal.active = false;
 
         if(deal.winner != address(0)){
             deal.succeeded = true;
@@ -45,10 +46,19 @@ contract TokenAuction is ERC721TokenTrade {
         ClosedDeal( msg.sender, asset_token, _tokenId);
     }
 
+    function deposit(uint _tokenId, uint256 _amount) public {
+
+        Deal storage deal = deals[_tokenId];
+        require( _amount > deal.deposits[deal.winner] );
+        deal.winner = msg.sender;
+
+        make_deposit( msg.sender, _amount, _tokenId);
+    }
+
     function withdraw(uint _tokenId) public{
 
         Deal storage deal = deals[_tokenId];
-        if( !deal.completed ){
+        if( deal.active ){
            closeDeal(_tokenId);
         }
 
@@ -56,14 +66,10 @@ contract TokenAuction is ERC721TokenTrade {
 
     }
 
+
+
     // ----- internally used functions  ----- //
 
-    function make_contribution(address _sender, uint _amount, uint _tokenId) internal {
-        Deal storage deal = deals[_tokenId];
-        require( _amount > deal.deposits[deal.winner] );
-        deal.winner = _sender;
-        super.make_contribution(_sender, _amount, _tokenId);
-    }
 
     function calculate_payout(Deal storage _deal, address _sender) internal view returns(uint256) {
         if(_sender==_deal.dealer){

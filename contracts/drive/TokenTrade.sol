@@ -7,10 +7,10 @@ contract TokenTrade  {
     function closeDeal(uint _tokenId) public;
 
     // ----- functions called by contributors ----- //
-    function contribute(uint _tokenId, uint256 _amount) public;
+    function deposit(uint _tokenId, uint256 _amount) public;
     function withdraw(uint _tokenId) public;
 
-    event Contributed( address indexed contributor, address indexed token, uint256 indexed tokenId, uint256 value);
+    event Deposited( address indexed contributor, address indexed token, uint256 indexed tokenId, uint256 value);
     event CreatedDeal( address indexed creator, address indexed token, uint256 indexed tokenId);
     event ClosedDeal( address indexed closed_by, address indexed token, uint256 indexed tokenId);
 

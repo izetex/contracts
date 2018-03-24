@@ -28,10 +28,7 @@ contract AdvertiserCampaign is ERC721TokenTrade {
     function createDeal(uint _tokenId, uint _expires_at) public {
         require( _expires_at <= now + max_lifetime);
         super.createDeal( _tokenId,  _expires_at);
-
-        require(unit_token.transferFrom(msg.sender, this, token_price) );
-        make_contribution( msg.sender, token_price,  _tokenId);
-        Contributed(msg.sender, asset_token, _tokenId, token_price);
+        make_deposit(msg.sender, token_price, _tokenId);
     }
 
 
@@ -40,7 +37,7 @@ contract AdvertiserCampaign is ERC721TokenTrade {
         require(token_owner==msg.sender);
 
         Deal storage deal = deals[_tokenId];
-        require(deal.completed);
+        require(!deal.active);
         require(now <= deal.expires_at);
 
         asset_token.takeOwnership(_tokenId);

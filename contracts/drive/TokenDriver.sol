@@ -9,6 +9,9 @@ import './Campaign.sol';
 
 contract TokenDriver is TokenController {
 
+    event NewAuction( address indexed token, address indexed creator);
+    event NewCampaign( address indexed token, address indexed creator);
+
     IZXToken public token;
 
     function TokenDriver( IZXToken _token ) public {
@@ -17,11 +20,11 @@ contract TokenDriver is TokenController {
     }
 
     function createAuction(ERC721 _token) external returns(Auction){
-        return new Auction(_token);
+        return new Auction(msg.sender, _token);
     }
 
     function createCampaign(ERC721 _token, uint _lifetime, uint _token_price) external returns(Campaign){
-        return new Campaign(_token, _lifetime, _token_price);
+        return new Campaign(msg.sender, _token, _lifetime, _token_price);
     }
 
     /// @notice Called when `_owner` sends ether to the Token contract

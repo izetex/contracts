@@ -1,8 +1,28 @@
 pragma solidity ^0.4.18;
 
-import './TokenController.sol';
+import 'zeppelin-solidity/contracts/token/ERC721/ERC721.sol';
 
-contract SafeTokenController is TokenController {
+import '../token/TokenController.sol';
+import '../token/IZXToken.sol';
+import './Auction.sol';
+import './Campaign.sol';
+
+contract TokenDriver is TokenController {
+
+    IZXToken public token;
+
+    function TokenDriver( IZXToken _token ) public {
+        require( address(_token) != address(0));
+        token = _token;
+    }
+
+    function createAuction(ERC721 _token) external returns(Auction){
+        return new Auction(_token);
+    }
+
+    function createCampaign(ERC721 _token, uint _lifetime, uint _token_price) external returns(Campaign){
+        return new Campaign(_token, _lifetime, _token_price);
+    }
 
     /// @notice Called when `_owner` sends ether to the Token contract
     function proxyPayment(address) payable public returns(bool){

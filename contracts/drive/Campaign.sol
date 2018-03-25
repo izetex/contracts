@@ -17,11 +17,11 @@ contract Campaign {
     TokenDriver public  driver;
     ERC721      public  erc721token;
     IZXToken    public  izx;
-    address     public  owner;
+    address     public  host;
     uint        public  lifetime;
     uint        public  token_price;
     uint        public  winner_payout;
-    uint        public  owner_payout;
+    uint        public  host_payout;
     
     mapping(uint256 => Prize) public prizes;
 
@@ -39,26 +39,26 @@ contract Campaign {
         _;
     }
 
-    function Campaign(  address _owner, 
+    function Campaign(  address _host, 
                         ERC721 _token, 
                         uint _lifetime, 
                         uint _token_price,
-                        uint _owner_share) public {
+                        uint _host_share) public {
 
         require(address(_token) != address(0));
         require(_lifetime > 0);
         require(_token_price > 0);
-        require(_owner_share <= 100);
+        require(_host_share <= 100);
         
         driver = TokenDriver(msg.sender);
         izx = driver.token();
         erc721token = _token;
-        owner = _owner;
+        host = _host;
         lifetime = _lifetime;
         token_price = _token_price;
 
-        owner_payout = _owner_share.mul(token_price) / 100;
-        winner_payout = _token_price.sub(owner_payout);
+        host_payout = _host_share.mul(token_price) / 100;
+        winner_payout = _token_price.sub(host_payout);
     }
 
 
@@ -96,8 +96,8 @@ contract Campaign {
             require(izx.transferFrom(this, winner, winner_payout));
         }
 
-        if(owner_payout>0){
-            require(izx.transferFrom(this, winner, owner_payout));
+        if(host_payout>0){
+            require(izx.transferFrom(this, winner, host_payout));
         }
 
         delete prizes[_tokenId];

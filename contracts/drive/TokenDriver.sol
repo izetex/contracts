@@ -19,12 +19,12 @@ contract TokenDriver is TokenController {
         token = _token;
     }
 
-    function createAuction(ERC721 _token, uint _owner_share) external returns(Auction){
-        return new Auction(msg.sender, _token, _owner_share);
+    function createAuction(ERC721 _token, uint _host_share) external returns(Auction){
+        return new Auction(msg.sender, _token, _host_share);
     }
 
-    function createCampaign(ERC721 _token, uint _lifetime, uint _token_price, uint _owner_share) external returns(Campaign){
-        return new Campaign(msg.sender, _token, _lifetime, _token_price, _owner_share);
+    function createCampaign(ERC721 _token, uint _lifetime, uint _token_price, uint _host_share) external returns(Campaign){
+        return new Campaign(msg.sender, _token, _lifetime, _token_price, _host_share);
     }
 
     /// @notice Called when `_owner` sends ether to the Token contract

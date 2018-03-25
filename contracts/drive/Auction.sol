@@ -70,14 +70,14 @@ contract Auction  {
         if( item.winner == address(0)){
             erc721token.takeOwnership(_tokenId);
         }else{
-            require(transferFrom(this, item.winner, item.amount));
+            require(izx.transferFrom(this, item.winner, item.amount));
         }
 
         if( _amount >= item.sale_price ){
-            require(transferFrom(msg.sender, this, item.sale_price));
+            require(izx.transferFrom(msg.sender, this, item.sale_price));
             close(_tokenId, item.owner, msg.sender, item.sale_price);
         }else{
-            require(transferFrom(msg.sender, this, _amount));
+            require(izx.transferFrom(msg.sender, this, _amount));
             item.winner = msg.sender;
             item.amount = _amount;
         }

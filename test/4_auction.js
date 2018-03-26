@@ -182,5 +182,67 @@ contract('Auction', function(accounts) {
     });
 
 
+    it("should allow to withdraw ERC721 after finish", function() {
+        var balance1;
+        return erc721.approve(auction.address, tokenId2, {from: accounts[5]}).then(function(result) {
+            return auction.sell( tokenId2, web3.toWei(0), web3.toWei(1000.5), 4, {from: accounts[5]});
+        }).then(function(result) {
+            var log = result.logs[0];
 
+            assert.equal("Sale", log.event);
+            assert.equal(accounts[5], log.args.owner);
+            assert.equal(erc721.address, log.args.token);
+            assert.equal(tokenId2, log.args.tokenId.toNumber());
+
+            return izx.balanceOf(accounts[1]);
+        }).then(function(result) {
+            balance1 = result.toNumber();
+            return izx.approve(auction.address, web3.toWei(0.1), {from: accounts[1]});
+        }).then(function(result) {
+            return auction.bid( tokenId2, web3.toWei(0.1), {from: accounts[1]} );
+        }).then(function(result) {
+            var log = result.logs[0];
+
+            assert.equal("Bid", log.event);
+            assert.equal(accounts[1], log.args.bidder);
+            assert.equal(erc721.address, log.args.token);
+            assert.equal(tokenId2, log.args.tokenId.toNumber());
+            assert.equal(web3.toWei(0.1), log.args.amount.toNumber());
+
+            return izx.balanceOf(accounts[1]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), balance1 - web3.toWei(0.1));
+            return izx.balanceOf(auction.address);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), web3.toWei(0.1));
+            return erc721.ownerOf(tokenId2);
+        }).then(function(result) {
+            assert.equal(result, auction.address);
+            return auction.withdraw( tokenId2, {from: accounts[1]} );
+        }).then( function(){
+            assert.fail("Can not make withdraw before finish!");
+        }).catch(function(error) {
+            return delay(6000);
+        }).then(function(result) {
+            return auction.withdraw( tokenId2, {from: accounts[1]} );
+        }).then(function(result) {
+
+            var log = result.logs[0];
+
+            assert.equal("Sold", log.event);
+            assert.equal(accounts[1], log.args.winner);
+            assert.equal(erc721.address, log.args.token);
+            assert.equal(tokenId2, log.args.tokenId.toNumber());
+            assert.equal(web3.toWei(0.1), log.args.amount.toNumber());
+
+
+            return izx.balanceOf(accounts[1]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), balance1 - web3.toWei(0.1));
+            return erc721.ownerOf(tokenId2);
+        }).then(function(result) {
+            assert.equal(result, accounts[1]);
+
+        });
+    });
 });

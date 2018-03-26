@@ -33,7 +33,7 @@ contract DriveToken is ERC721Token, Ownable {
     * @dev mint a token ang give it to address
     * @param _to The address to transfer the new minted token
     * @param _data The data, associated with the token. It can be a data itself, or hash for lookup in
-    * a decentralized storage, like IFS
+    * a decentralized storage, like IPFS
     * @return minted token ID
     */
     function mint(address _to, bytes _data) onlyOwner public returns(uint256) {

@@ -7,7 +7,7 @@ import '../token/IZXToken.sol';
 import './TokenDriver.sol';
 
 /**
- * @title Campaign
+ * @title Campaign contract
  *
  * @dev Campaign is a contract between advertiser, host (which typically is the game owner) and game players.
  *
@@ -64,7 +64,7 @@ contract Campaign {
     /**
     * @dev create a new advertising contract for ERC721 token
     *
-    * @param _host The initiator of the capaign creation. Typically it is a game owner or promoter
+    * @param _host The initiator of the campaign creation. Typically it is a game owner or promoter
     * @param _token The address of ERC721 token, traded in new campaign
     * @param _lifetime The time period in seconds, allowed to convert the prize
     * after it is claimed by ERC721 token owner. I this time expires, and prize is not converted to IZX tokens,

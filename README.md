@@ -45,8 +45,13 @@ Sources are located in [DriveToken.sol](contracts/drive/DriveToken.sol).
 ### Ropsten Blockchain Network
 
 * IZX Token: [0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056](https://ropsten.etherscan.io/token/0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056)
-* DRIVE Token: [0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1](https://ropsten.etherscan.io/address/0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1)
 * TokenDriver: [0xf74138625c846d913c6673f8283db4c6a7825538](https://ropsten.etherscan.io/address/0xf74138625c846d913c6673f8283db4c6a7825538)
+
+Example token and contracts:
+
+* DRIVE Token: 
+* Auction for DRIVE Token: [0x686d003bb33726bfb0f810a144f5dc9f7f132716](https://ropsten.etherscan.io/address/0x686d003bb33726bfb0f810a144f5dc9f7f132716)        
+* Campaign for DRIVE Token: [0xf860ec4072c079c59b21d625f5f76319bf896b96](https://ropsten.etherscan.io/address/0xf860ec4072c079c59b21d625f5f76319bf896b96)          
         
 
 ## Installation
@@ -198,6 +203,9 @@ that should be looked up in ethereum explorer.
 **node script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
   controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly
 
+**node script/create_auction** - create auction for ERC721 token
+
+**node script/create_campaign** - create campaign for ERC721 token
 
 ## Note on truffle console usage
 

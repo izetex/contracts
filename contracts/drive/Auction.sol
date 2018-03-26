@@ -106,18 +106,18 @@ contract Auction  {
     * @param _tokenId ERC721 token ID to be sold in auction.
     * @param _start_price Minimum bid amount in IZX. Note, that IZX has 18 decimals.
     * @param _sale_price Bid amount for immedeate sale close. Note, that IZX has 18 decimals.
-    * @param _finish_at Time, when auction round is finished. After this take, call withdraw method
+    * @param _duration duration in seconds, after which auction round is finished. After this, call withdraw method
     * to get tokens.
     *
     * @notice Caller must be an owner of the ERC721 token ID and Caller must approve the token to this contract.
     */
-    function sell( uint _tokenId, uint _start_price, uint _sale_price, uint _finish_at) public {
+    function sell( uint _tokenId, uint _start_price, uint _sale_price, uint _duration) public {
         require( msg.sender == erc721token.ownerOf(_tokenId) );
         require( _sale_price >= _start_price );
-        require( _finish_at > now );
-        require( items[_tokenId].finish_at < now );
+        require( _duration > 0 );
+        require( items[_tokenId].owner == address(0) );
 
-        items[_tokenId] = Item(msg.sender, address(0), _finish_at, _start_price, _sale_price, 0);
+        items[_tokenId] = Item(msg.sender, address(0), now.add(_duration), _start_price, _sale_price, 0);
 
         Sale( erc721token, msg.sender, _tokenId);
     }
@@ -139,7 +139,7 @@ contract Auction  {
         if( item.winner == address(0)){
             erc721token.takeOwnership(_tokenId);
         }else{
-            require(izx.transferFrom(this, item.winner, item.amount));
+            require(izx.transfer(item.winner, item.amount));
         }
 
         if( _amount >= item.sale_price ){

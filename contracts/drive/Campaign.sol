@@ -126,15 +126,16 @@ contract Campaign {
     */
     function reclaim(uint _tokenId) public {
         Prize storage prize = prizes[_tokenId];
-        require(prize.winner == msg.sender || now > prize.expires_at);
+        require( (prize.winner == msg.sender) || (now > prize.expires_at) );
         address advertiser = prize.advertiser;
+        address winner = prize.winner;
 
         erc721token.transfer(prize.winner, _tokenId);
-        require(izx.transferFrom(this, advertiser, token_price));
+        require(izx.transfer(advertiser, token_price));
 
         delete prizes[_tokenId];
 
-        Reclaimed( erc721token, msg.sender, advertiser, _tokenId);
+        Reclaimed( erc721token, winner, advertiser, _tokenId);
     }
 
     /**
@@ -155,11 +156,11 @@ contract Campaign {
         erc721token.transfer(prize.advertiser, _tokenId);
         
         if(winner_payout>0){
-            require(izx.transferFrom(this, winner, winner_payout));
+            require(izx.transfer(winner, winner_payout));
         }
 
         if(host_payout>0){
-            require(izx.transferFrom(this, winner, host_payout));
+            require(izx.transfer(host, host_payout));
         }
 
         delete prizes[_tokenId];

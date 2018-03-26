@@ -5,7 +5,7 @@ var DriveToken = artifacts.require("DriveToken");
 
 contract('TokenDriver', function(accounts) {
 
-    it('IZX token should be sold to users', function() {
+    it('should use IZX token, sold to users', function() {
         var token;
         return IZXToken.deployed().then(function (instance) {
             token = instance;

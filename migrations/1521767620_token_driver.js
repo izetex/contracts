@@ -21,8 +21,6 @@ module.exports = function(deployer, network, accounts) {
         return TokenDriver.deployed();
     }).then(function(instance) {
         driver = instance;
-        return sale.changeController(driver.address);
-    }).then(function() {
         return token.controller();
     }).then(function(controller) {
         console.log("Token Driver " + driver.address + " for IZX token: "+token.address+

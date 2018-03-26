@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "truffle": "^4.0.4",
     "bip39": "^2.3.1",
     "ethereumjs-wallet": "^0.6.0",
     "readline-sync": "^1.4.7",
@@ -10,5 +11,16 @@
     "web3": "^0.20.1",
     "web3-provider-engine": "^13.2.8",
     "zeppelin-solidity": "^1.6.0"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/izetex/contracts.git"
+  },
+  "author": "Aleksey Studnev",
+  "license": "MIT",
+  "homepage": "https://izx.io"
 }

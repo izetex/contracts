@@ -98,12 +98,10 @@ Game requests the amount of tokens from GameController using amount_owner() meth
 
 ### Ropsten Blockchain Network
 
-* IZX Drive Token: [0xA423267a405dC90C536ec78766d4F36FfDb30fdd](https://ropsten.etherscan.io/token/0xA423267a405dC90C536ec78766d4F36FfDb30fdd)
-* GameController: [0xe36e6af995670c744589c0e11f2c239b4b55caa9](https://ropsten.etherscan.io/address/0xe36e6af995670c744589c0e11f2c239b4b55caa9)
-* TokenGame: [0x08cCCA04dffA062D6526f9Eb08d158DBB54955e0](https://ropsten.etherscan.io/address/0x08cCCA04dffA062D6526f9Eb08d158DBB54955e0)
-* RevShareGame: [0xadf36f8bae6f8e0b30e4a94f57caeee71126c445](https://ropsten.etherscan.io/address/0xadf36f8bae6f8e0b30e4a94f57caeee71126c445)
+* IZX Token: [0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056](https://ropsten.etherscan.io/token/0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056)
+* DRIVE Token: [0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1](https://ropsten.etherscan.io/address/0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1)
+* TokenDriver: [0xf74138625c846d913c6673f8283db4c6a7825538](https://ropsten.etherscan.io/address/0xf74138625c846d913c6673f8283db4c6a7825538)
         
-
 
 ## Installation
 
@@ -233,7 +231,8 @@ Configuration in script/config.js contains all properties for selected environme
 On script run, it asks for credentials, and asks to enter word 'Yes!' before actual execution. After successfull run, it logs the hash of transaction,
 that should be looked up in ethereum explorer.
 
-Crowdsale-related Scripts are:
+### Production ( Ethereum Foundation network) deployment scripts
+
 
 **node script/deploy_tokensale** - deploys the crowdsale contract with the specified token and 
   vault in the configuration
@@ -251,20 +250,24 @@ Crowdsale-related Scripts are:
 **node script/distribute_tokens** - transfers tokens to the owners in the list
 
 **node script/send_eth** - sends ether to an address
+
+**node script/execute_multisig** - initiate transaction in multisig wallet
+
+**node script/confirm_multisig** - confirm transaction in multisig wallet using hash
+
   
-Game-related Scripts are:  
+### Test ( Ethereum Ropsten Test Network) deployment scripts
 
-**node script/deploy_izx_drive_token** - deploys token on Ropsten network ( used for free token games )
+**node script/deploy_izx_token** - deploys IZX token
 
-**node script/deploy_proxy_controller** - deploys proxy controller, which is generally required to use with GameController
+**node script/generate_tokens** - generate tokens and assign to token creator
 
-**node script/deploy_game_controller** - deploys game controller
+**node script/deploy_drive_token** - deploys DRIVE ERC721 token
 
-**node script/change_proxied_controller** - sets game controller as proxied controller
+**node script/deploy_token_driver** - deploys IZX Token driver
 
-**node script/deploy_token_game** - deploys a token game
-
-**node script/deploy_rev_share_game** - deploys a rev share game
+**node script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
+  controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly
 
 
 ## Note on truffle console usage

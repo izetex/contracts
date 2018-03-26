@@ -4,7 +4,7 @@ const token = require('./contracts/token');
 const tokensale = require('./contracts/tokensale');
 const owned = require('./contracts/owned');
 
-const environment = 'foundation'; // ropsten/foundation, change to foundation to deploy to real
+const environment = 'ropsten'; // ropsten/foundation, change to foundation to deploy to real
 var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment+' account:');
 var connection = new Connection(mnemonics, environment);
 
@@ -24,7 +24,7 @@ deployed_token.controller(function(error,result){
             connection.web3.eth.contract(owned.abi).at(new_controller).owner(function(error, owner){
                 console.log( 'New controller address '+ new_controller + ' have owner: '+owner.toUpperCase());
 
-                if(owner.toUpperCase()!=connection.config.creator.toUpperCase()){
+                if(owner.toUpperCase()!='0X' && owner.toUpperCase()!=connection.config.creator.toUpperCase()){
                     console.log( 'Unexpected address '+ owner.toUpperCase() );
                     process.exit(1);
                 }

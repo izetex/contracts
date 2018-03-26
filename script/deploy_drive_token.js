@@ -1,24 +1,16 @@
 const cli = require('readline-sync');
 const Connection = require('./eth_connection');
-const rev_share_game = require('./contracts/rev_share_game');
+const drive_token = require('./contracts/drive_token');
 
-const environment = 'ropsten'; // ropsten/foundation, change to foundation to deploy to real
+const environment = 'ropsten';
 var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment+' account:');
-var connection = new Connection(mnemonics, environment);
+var connection = new Connection(mnemonics, environment, true);
 
 function deploy_contract(connection, contract, gas, gasprice, callback){
 
     var contract_class = connection.web3.eth.contract(contract.abi);
     contract_class.new(
-        connection.config.token,
-        connection.config.controller,
-        7*24*3600, // 7 days lifetime
-        connection.web3.toWei(1), // prize tokens
-        connection.web3.toWei(0.01), // prize_price
-        33,     // _dev_commission,
-        33,     // _owner_commission,
-        0,       // _issuer_commission
-    {
+        {
             from: connection.address,
             data: contract.bytecode,
             gas: gas,
@@ -45,7 +37,7 @@ connection.web3.eth.getBalance(connection.address, function(error,result){
                 process.exit(1);
             }
             console.log('deploying now...');
-            deploy_contract(connection, rev_share_game, 1500000, gasprice, function(deployed){
+            deploy_contract(connection, drive_token, 1500000, gasprice, function(deployed){
                 if(deployed) {
                     console.log('Contract transactionHash: ' + deployed.transactionHash);
                     connection.close();

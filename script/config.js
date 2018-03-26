@@ -2,11 +2,10 @@ module.exports = {
     ropsten: {
         url: 'https://ropsten.infura.io/aaIrr36iBro3mIVCdWrg ',
         creator: '0xef34280050e8546d8e1d85ec75250149553fb396',
-        token: '0xA423267a405dC90C536ec78766d4F36FfDb30fdd',
-        proxy: '0x9f8cd6841d1427cd7c438e109b7e671b4f14bb59',
-        controller: '0xe36e6af995670c744589c0e11f2c239b4b55caa9',
-        token_game: '0x08cCCA04dffA062D6526f9Eb08d158DBB54955e0',
-        rev_share_game: '0xadf36f8bae6f8e0b30e4a94f57caeee71126c445'
+        token: '0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056',
+        game: '0xfb2fb88292b86f25ba70876a8392fa6fb64f45b7',
+        drive_token: '0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1',
+        token_driver: '0xf74138625c846d913c6673f8283db4c6a7825538'
     },
     ropsten_ico: {
         url: 'https://ropsten.infura.io/aaIrr36iBro3mIVCdWrg ',
@@ -20,6 +19,6 @@ module.exports = {
         creator: '0xb2556a76da6e5b99e82fc156f8faad2778225161',
         token: '0x2ad180cbaffbc97237f572148fc1b283b68d8861',
         vault: '0xf4702b0918A8a89dfC38459Ce42198834818F26B',
-        tokensale: '0x28c0034afb0723c298ec0aec277c8f2418098f24'
+        tokensale: '0x37e3efe76ee6cec50559bc07565eaf36ddc05467'
     }
 }

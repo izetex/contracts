@@ -1,8 +1,8 @@
 const cli = require('readline-sync');
 const Connection = require('./eth_connection');
-const token_game = require('./contracts/token_game');
+const izx_token = require('./contracts/izx_token');
 
-const environment = 'ropsten'; // ropsten/foundation, change to foundation to deploy to real
+const environment = 'ropsten'; // IZX Drive deployed only in Ropsten
 var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment+' account:');
 var connection = new Connection(mnemonics, environment);
 
@@ -10,10 +10,6 @@ function deploy_contract(connection, contract, gas, gasprice, callback){
 
     var contract_class = connection.web3.eth.contract(contract.abi);
     contract_class.new(
-        connection.config.token,
-        connection.config.controller,
-        7*24*3600, // 7 days lifetime
-        connection.web3.toWei(1), // prize tokens
         {
             from: connection.address,
             data: contract.bytecode,
@@ -41,7 +37,7 @@ connection.web3.eth.getBalance(connection.address, function(error,result){
                 process.exit(1);
             }
             console.log('deploying now...');
-            deploy_contract(connection, token_game, 1500000, gasprice, function(deployed){
+            deploy_contract(connection, izx_token, 1500000, gasprice, function(deployed){
                 if(deployed) {
                     console.log('Contract transactionHash: ' + deployed.transactionHash);
                     connection.close();

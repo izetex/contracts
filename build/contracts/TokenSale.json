@@ -388,7 +388,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 2004,
+          "SourceUnit": 2055,
           "absolutePath": "/Users/studnev/dev4bc/contracts/contracts/token/ControlledToken.sol",
           "file": "../token/ControlledToken.sol",
           "scope": 545,
@@ -403,7 +403,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 2151,
+          "SourceUnit": 2202,
           "absolutePath": "/Users/studnev/dev4bc/contracts/contracts/token/TokenController.sol",
           "file": "../token/TokenController.sol",
           "scope": 545,
@@ -449,9 +449,9 @@
       {
         "attributes": {
           "contractDependencies": [
-            93,
             210,
-            2115
+            93,
+            2166
           ],
           "contractKind": "contract",
           "documentation": null,
@@ -460,7 +460,7 @@
             544,
             210,
             93,
-            2115
+            2166
           ],
           "name": "TokenSale",
           "scope": 545
@@ -477,7 +477,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "TokenController",
-                  "referencedDeclaration": 2115,
+                  "referencedDeclaration": 2166,
                   "type": "contract TokenController"
                 },
                 "id": 217,
@@ -681,7 +681,7 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "ControlledToken",
-                  "referencedDeclaration": 2003,
+                  "referencedDeclaration": 2054,
                   "type": "contract ControlledToken"
                 },
                 "id": 233,
@@ -1043,7 +1043,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4112,
+                              "referencedDeclaration": 4076,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1127,7 +1127,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 4111,
+                                              "referencedDeclaration": 4075,
                                               "type": "uint256",
                                               "value": "now"
                                             },
@@ -1502,7 +1502,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 2003,
+                                  "referencedDeclaration": 2054,
                                   "type": "type(contract ControlledToken)",
                                   "value": "ControlledToken"
                                 },
@@ -1737,7 +1737,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4101,
+                                  "referencedDeclaration": 4065,
                                   "type": "block",
                                   "value": "block"
                                 },
@@ -1864,7 +1864,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4109,
+                                  "referencedDeclaration": 4073,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -1987,7 +1987,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4112,
+                              "referencedDeclaration": 4076,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -2072,7 +2072,7 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 4111,
+                                                  "referencedDeclaration": 4075,
                                                   "type": "uint256",
                                                   "value": "now"
                                                 },
@@ -2136,7 +2136,7 @@
                                                   "overloadedDeclarations": [
                                                     null
                                                   ],
-                                                  "referencedDeclaration": 4111,
+                                                  "referencedDeclaration": 4075,
                                                   "type": "uint256",
                                                   "value": "now"
                                                 },
@@ -2227,7 +2227,7 @@
                                                   "isPure": false,
                                                   "lValueRequested": false,
                                                   "member_name": "controller",
-                                                  "referencedDeclaration": 2128,
+                                                  "referencedDeclaration": 2179,
                                                   "type": "function () view external returns (address)"
                                                 },
                                                 "children": [
@@ -2331,7 +2331,7 @@
                                               "overloadedDeclarations": [
                                                 null
                                               ],
-                                              "referencedDeclaration": 4109,
+                                              "referencedDeclaration": 4073,
                                               "type": "msg",
                                               "value": "msg"
                                             },
@@ -2490,7 +2490,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4109,
+                                      "referencedDeclaration": 4073,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -2577,7 +2577,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4112,
+                              "referencedDeclaration": 4076,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -2722,7 +2722,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4109,
+                                  "referencedDeclaration": 4073,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -2773,7 +2773,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4112,
+                              "referencedDeclaration": 4076,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -2946,7 +2946,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 4109,
+                                          "referencedDeclaration": 4073,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -3007,7 +3007,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4112,
+                              "referencedDeclaration": 4076,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3047,7 +3047,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "generateTokens",
-                                  "referencedDeclaration": 1843,
+                                  "referencedDeclaration": 1894,
                                   "type": "function (address,uint256) external returns (bool)"
                                 },
                                 "children": [
@@ -3344,7 +3344,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 4112,
+                              "referencedDeclaration": 4076,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -3634,7 +3634,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 4112,
+                                      "referencedDeclaration": 4076,
                                       "type": "function (bool) pure",
                                       "value": "require"
                                     },
@@ -3674,7 +3674,7 @@
                                           "isPure": false,
                                           "lValueRequested": false,
                                           "member_name": "generateTokens",
-                                          "referencedDeclaration": 1843,
+                                          "referencedDeclaration": 1894,
                                           "type": "function (address,uint256) external returns (bool)"
                                         },
                                         "children": [
@@ -4291,7 +4291,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4101,
+                                  "referencedDeclaration": 4065,
                                   "type": "block",
                                   "value": "block"
                                 },
@@ -4439,7 +4439,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "changeController",
-                              "referencedDeclaration": 2149,
+                              "referencedDeclaration": 2200,
                               "type": "function (address) external"
                             },
                             "children": [
@@ -4508,7 +4508,7 @@
               "payable": true,
               "scope": 544,
               "stateMutability": "payable",
-              "superFunction": 2092,
+              "superFunction": 2143,
               "visibility": "public"
             },
             "children": [
@@ -4689,7 +4689,7 @@
               "payable": false,
               "scope": 544,
               "stateMutability": "nonpayable",
-              "superFunction": 2103,
+              "superFunction": 2154,
               "visibility": "public"
             },
             "children": [
@@ -4859,7 +4859,7 @@
               "payable": false,
               "scope": 544,
               "stateMutability": "nonpayable",
-              "superFunction": 2114,
+              "superFunction": 2165,
               "visibility": "public"
             },
             "children": [
@@ -5031,7 +5031,23 @@
     "name": "solc",
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "1522044582602": {
+      "events": {},
+      "links": {},
+      "address": "0xe6ec804a9ba87e07500ca5f6329104c6df35ea71"
+    },
+    "1522044763438": {
+      "events": {},
+      "links": {},
+      "address": "0xd96ce87c183c81ea8d9b51a9accb262a4de14019"
+    },
+    "1522044929575": {
+      "events": {},
+      "links": {},
+      "address": "0xbd15500d2d20477ffdf8c771e78f4db2b47b79d7"
+    }
+  },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-12T13:07:15.842Z"
+  "updatedAt": "2018-03-26T06:15:35.461Z"
 }

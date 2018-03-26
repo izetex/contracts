@@ -1,93 +1,39 @@
-# IZX Smart Contracts and Game Protocol
+# IZX Smart Contracts
 
 The project contains:
 
-1) IZX Game Protocol
-2) IZX Crowdsale and Token Smart Contracts
+1) IZX Crowdsale and Token Smart Contracts
+2) IZX Smart Contracts for Games
 3) Supporting scripts
 
-## IZX Game Protocol
+## IZX Crowdsale and Token Smart Contracts
 
-**IZX Game protocol** is a set of Ethereum Smart contracts to implement games on IZX token.
-The protocol is mainly based on IZX White paper (published on [izx.io](https://izx.io)) web site.
-
-The protocol consists of the following Smart contracts:
-
-1) **Game** smart contract is the base abstract contract, defining basic rules
-of the game. The game developer can sub-class from this contract to implement the new rules
-or make a new game with IZX token.
-2) **TokenGame** smart contract is an example of the game, where players 
-exchange tokens without any value. Winner gets 1 token, initially owned by token
-holder.
-3) **RevShareGame** smart contract is another example of the game, which is close
-to what is described in IZX White Paper. It distribues Ether, initially payed by
-issuer (e.g. Advertiser) to initiate the game. Ether value is distributed between
-game owner (developer), issuer, winner and token holder. All tokens, used in the game,
-are ultimately returned to initial token holder.
-4) **GameController** is the TokenController, which controls which token holder and in which extent
-can participate in the game. This is conformant to IZX White Paper, which defines the rules and limitation
-for token holders.
-
-### Game Smart Contract
-
-Sources are located in [Game.sol](contracts/game/Game.sol).
-
-Game is a contract to perform the game by guessing seed to hash.
-
-Rules of the game are:
-
-1) Game issuer places number of prizes, identified by hashes. The seed to calculate that hashes are known
-only to issuer and  kept in secret
-2) Issuer gives the winner of the game the secret seed. Winner claims the prize and gets a reward
-
-The reward can be distributed in arbitrary way, depending on the sub-classed contract for a real game.
-Look TokenGame and RevShareGame for real examples. The contract can be extended by overriding methods
-issue and payout, which defines how to calculate the prize value and pay reward to winner, issuer,
-game owner and others.
-
-The prize is issued using a token reservation. The token controls the amount pf prize to be issued.
-Token owners first allow the game to transfer certain amount of tokens, the GameController contract is responsibe for this.
-
-The prize can be set to be expired at some moment in the future. When expired, tokens will be returned to token owners,
-and money returned to issuer.
-
-Money are pulled from the contract using the withdraw() method.
+### IZXToken Smart Contract
  
-### TokenGame Smart Contract
+Sources are located in [IZXToken.sol](contracts/token/IZXToken.sol).
+
+### TokenSale Smart Contract
  
-Sources are located in [TokenGame.sol](contracts/game/TokenGame.sol).
+Sources are located in [TokenSaleAfterSplit.sol](contracts/crowdsale/TokenSaleAfterSplit.sol).
 
-TokenGame is a contract to perform the game using just tokens ( no ether required). In the TokenGame, issuing prizes do not require Ether to pay.
-Winner of the game receives 1 token, initially owned by token holder.
+## IZX Smart Contracts for Games
 
+### Campaign Smart Contract
+ 
+Sources are located in [Campaign.sol](contracts/game/Campaign.sol).
 
-### RevShareGame
-
-Sources are located in [RevShareGame.sol](contracts/game/RevShareGame.sol).
-
-RevShareGame is a contract to perform the game with Ether payout to winner, game owner, issuer and token holder
-in persentages. In the RevShareGame, issuing prizes happens on fixed prize price,
-setup by game developer.
+### Auction Smart Contract
+ 
+Sources are located in [Auction.sol](contracts/game/Auction.sol).
 
 
-### GameController
+### TokenDriver smart contract
 
-Sources are located in [GameController.sol](contracts/game/GameController.sol).
+Sources are located in [TokenDriver.sol](contracts/drive/TokenDriver.sol).
 
-GameController is a TokenController contract to calculate the amount of tokens,
-  which can be used in the game.
+### DriveToken smart contract
 
-The contract ensures, that the game can use the amount of tokens, allowed by
-token holders. Note, that token holder may allow more tokens, that it holds, to more than one game.
-
-After the tokens are used in prize, they are transfered to the game, and token holder apparently
-may not use them before the prize is claimed or expired.
-
-Contract also ensures the rotation of token holders, so that the last used token holder is placed
-to the end of the queue. It guarantees that all token holders have the same chance to participate in the
-game.
-
-Game requests the amount of tokens from GameController using amount_owner() method.
+Sources are located in [DriveToken.sol](contracts/drive/DriveToken.sol).
 
 
 ## Deployed Addresses
@@ -139,7 +85,7 @@ Using network 'development'.
   Contract: IZXToken
     ✓ should have 18 digits
     ✓ should have 1 supply
-    ✓ should have IZX symbol (41ms)
+    ✓ should have IZX symbol (49ms)
 
   Contract: Wallet
     ✓ should have 5 owners
@@ -149,66 +95,49 @@ Using network 'development'.
     ✓ should have set exchange rate
     ✓ should have set wallet
     ✓ should have set token
-    ✓ should set controller for token (60ms)
-    ✓ should transfer tokens by ETH transfer (1894ms)
-    ✓ should change ETH rate (2277ms)
-    ✓ should distribute tokens (318ms)
-    ✓ should disable transfer tokens (238ms)
-    ✓ should enable transfer tokens (269ms)
+    ✓ should set controller for token
+    ✓ should transfer tokens by ETH transfer (614ms)
+    ✓ should change ETH rate (709ms)
+    ✓ should distribute tokens (204ms)
+    ✓ should disable transfer tokens (127ms)
+    ✓ should enable transfer tokens (138ms)
     ✓ should change controller
-    ✓ should protect to change controller (172ms)
-    ✓ should protect distribute tokens (94ms)
+    ✓ should protect to change controller (86ms)
+    ✓ should protect distribute tokens (62ms)
 
-  Contract: GameToken
-    ✓ should have 18 digits
-    ✓ should have 0 supply
-    ✓ should have symbol (49ms)
-    ✓ should have controller
+  Contract: TokenDriver
+    ✓ should use IZX token, sold to users (233ms)
+    ✓ should control IZX token (46ms)
+    ✓ should allow transfer tokens from owner to owner (94ms)
+    ✓ should allow approve tokens from owner to owner (187ms)
+    ✓ should not allow transfer tokens to contract
+    ✓ should not allow approve tokens to contract (38ms)
+    ✓ should allow create auction and allow/transfer tokens (154ms)
+    ✓ should allow create campaign and allow/transfer tokens (149ms)
 
-  Contract: ProxyController
-    ✓ should generate tokens to players (141ms)
-    ✓ should allow transfer tokens from player to player (137ms)
-    ✓ should allow approve tokens from player to player (175ms)
-    ✓ should not allow transfer tokens to contract (238ms)
+  Contract: Campaign
+    ✓ should use IZX token, owned by users (635ms)
+    ✓ should use ERC721 DRIVE token, owned by users (91ms)
+    ✓ should be created by token driver (95ms)
+    ✓ should use IZX & DRIVE tokens (65ms)
+    ✓ should calculate payouts (79ms)
+    ✓ should accept approval from advertiser (50ms)
+    ✓ should convert player (360ms)
+    ✓ should be reclaimed by player (304ms)
+    ✓ should be reclaimed after expiration (7372ms)
 
-  Contract: GameController
-    ✓ should accept tokens approval for prizes (306ms)
-    ✓ should update tokens approval for prizes (132ms)
-    ✓ should allow generate tokens to players throw proxy (130ms)
-    ✓ should find amount_owner (126ms)
-    ✓ should limit amount_owner by balance (47ms)
+  Contract: Auction
+    ✓ should use IZX token, owned by users (559ms)
+    ✓ should use ERC721 DRIVE token, owned by users (85ms)
+    ✓ should be created by token driver (89ms)
+    ✓ should use IZX & DRIVE tokens
+    ✓ should have host_share
+    ✓ should sell ERC721 for sale price (695ms)
+    ✓ should allow to withdraw ERC721 after finish (6437ms)
 
-  Contract: RevShareGame
-    ✓ should have initial balances of tokens for players (298ms)
-    ✓ should allow issuer to issue prize (236ms)
-    ✓ should give issuer change
-    ✓ should allow change withdrawal by issuer (315ms)
-    ✓ should allow zero withdrawal (308ms)
-    ✓ should require ether for issuer to issue prize (56ms)
-    ✓ should allow to claim the prize by winner (126ms)
-    ✓ should return tokens to owner
-    ✓ should distribute the prize fund between owner, issuer, game developer (54ms)
-    ✓ should allow to withdraw (165ms)
-    ✓ should not allow claim same prize second time (56ms)
-    ✓ should allow owner to issue many prizes limited by value (234ms)
-    ✓ should allow issuer to revoke by hash at any time (114ms)
-    ✓ should return money to  issuer on revoke  (55ms)
-    ✓ should revoke the prize after expiration (6160ms)
-    ✓ should return money to  issuer on revoke  (59ms)
-    ✓ should allow to revoke by hash (160ms)
-    ✓ should return money to  issuer on revoke  (57ms)
 
-  Contract: TokenGame
-    ✓ should have initial balances of tokens for players (331ms)
-    ✓ should allow owner to issue prize (218ms)
-    ✓ should give the prize to winner (143ms)
-    ✓ should not allow claim same prize second time (62ms)
-    ✓ should allow owner to issue many prizes (226ms)
-    ✓ should allow issuer to revoke by hash at any time (153ms)
-    ✓ should revoke the prize after expiration (6161ms)
-    ✓ should allow to revoke by hash (145ms)
+  41 passing (21s)
 
-  56 passing (20s)
 
 ```
 

@@ -294,10 +294,13 @@ pip3 install git+https://github.com/dostu/solidity-flattener.git
 Then execute:
 
 ```
-solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/IZXDriveToken_flat.sol contracts/token/IZXDriveToken.sol
-solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/TokenGame_flat.sol contracts/game/TokenGame.sol
-solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/RevShareGame_flat.sol contracts/game/RevShareGame.sol
-solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/GameController_flat.sol contracts/game/GameController.sol
-solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/ProxyController_flat.sol contracts/token/ProxyController.sol
+solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/IZXToken_flat.sol contracts/token/IZXToken.sol
+solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/TokenSaleAfterSplit_flat.sol contracts/crowdsale/TokenSaleAfterSplit.sol
+
+solidity_flattener --solc-paths="zeppelin-solidity/=$(pwd)/node_modules/zeppelin-solidity/" --allow-paths "$(pwd)/contracts" --output build/src/DriveToken_flat.sol contracts/drive/DriveToken.sol
+solidity_flattener --solc-paths="zeppelin-solidity/=$(pwd)/node_modules/zeppelin-solidity/" --allow-paths "$(pwd)/contracts" --output build/src/TokenDriver_flat.sol contracts/drive/TokenDriver.sol
+solidity_flattener --solc-paths="zeppelin-solidity/=$(pwd)/node_modules/zeppelin-solidity/" --allow-paths "$(pwd)/contracts" --output build/src/Auction_flat.sol contracts/drive/Auction.sol
+solidity_flattener --solc-paths="zeppelin-solidity/=$(pwd)/node_modules/zeppelin-solidity/" --allow-paths "$(pwd)/contracts" --output build/src/Campaign_flat.sol contracts/drive/Campaign.sol
+
 
 ```

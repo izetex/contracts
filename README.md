@@ -42,7 +42,7 @@ Sources are located in [TokenSaleAfterSplit.sol](contracts/crowdsale/TokenSaleAf
 ## IZX Smart Contracts for Games
 
 **IZX token** is the cryptocurrency for **games, game players and advertisers**. IZX builds the
-closed ecosystem with a single currency for promoting advertiser products and servicers for 
+closed ecosystem with a single currency for promoting advertiser products and services for 
 players of online and mobile games. 
 
 **Advertisers** use IZX for targeting and acquiring new customers from online and 
@@ -58,7 +58,7 @@ This forms the closed IZX eco-system, with the demand coming from advertisers, a
 initial token holders, and eventually games and game players.
 
 IZX smart contracts are forming the pure **decentralized organisation (DAO)**, with no central control
-or ability any other person or organisation to change the rules or influence the execution of it in any way.
+or ability any person or organisation to change the rules or influence the execution of it in any way.
  
 Smart contracts are developed from ideas,
 described in [IZX White Paper](https://github.com/izetex/documents/raw/master/IZX_WHITEPAPER_EN.pdf). 

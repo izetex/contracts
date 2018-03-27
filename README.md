@@ -75,7 +75,9 @@ from the original protocol specification:
   the Auction smart contract.
   3) **ERC-721 token** is used as an interface to any game, participating in IZX ecosystem. IZX smart 
   contracts require, that the game must use ERC-721 compliant token as the game artifact, or it needs to 
-  integrate it. Example of token, which IZX will use in own geo-AR game on iOS/Android is [DriveToken.sol](contracts/drive/DriveToken.sol).
+  integrate it. And actually this is the **ONLY** requirement, which makes the integration a zero effort
+  for most crypto games.
+  Example of token, which IZX will use in own geo-AR game on iOS/Android is [DriveToken.sol](contracts/drive/DriveToken.sol).
   This change is caused by the following feature of ERC-721 tokens:
      * they are becoming more and more **popular in crypto games**. CryptoKitties and similar games popularity
      grown significantly since the IZX was first introduced.

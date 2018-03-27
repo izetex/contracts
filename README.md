@@ -58,7 +58,7 @@ This forms the closed IZX eco-system, with the demand coming from advertisers, a
 initial token holders, and eventually games and game players.
 
 IZX smart contracts are forming the pure **decentralized organisation (DAO)**, with no central control
-or ability any person or organisation to change the rules or influence the execution of it in any way.
+or ability any person or organisation to change the rules or influence the execution in any way.
  
 Smart contracts are developed from ideas,
 described in [IZX White Paper](https://github.com/izetex/documents/raw/master/IZX_WHITEPAPER_EN.pdf). 
@@ -336,7 +336,7 @@ that should be looked up in ethereum explorer.
 
 Example token and contracts:
 
-* DRIVE Token: 
+* DRIVE Token: [0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1](https://ropsten.etherscan.io/address/0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1)
 * Auction for DRIVE Token: [0x686d003bb33726bfb0f810a144f5dc9f7f132716](https://ropsten.etherscan.io/address/0x686d003bb33726bfb0f810a144f5dc9f7f132716)        
 * Campaign for DRIVE Token: [0xf860ec4072c079c59b21d625f5f76319bf896b96](https://ropsten.etherscan.io/address/0xf860ec4072c079c59b21d625f5f76319bf896b96)          
    

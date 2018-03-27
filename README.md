@@ -170,6 +170,69 @@ with the hash stored in the data.
 Sources are located in [DriveToken.sol](contracts/drive/DriveToken.sol).
 
 
+
+### Production ( Ethereum Foundation network) deployment scripts
+
+
+**node script/deploy_tokensale** - deploys the crowdsale contract with the specified token and 
+  vault in the configuration
+
+**node script/deploy_tokensale_split** - deploys the crowdsale contract with the specified token ( after split on 1/100th ) and 
+  vault in the configuration
+
+  
+**node script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
+  controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly
+
+**node script/set_rate** - modifies the exhange rate USD/ETH for crowdsale contract. First it reads the old value and queries for
+  the current rate from etherscan.io
+
+**node script/distribute_tokens** - transfers tokens to the owners in the list
+
+**node script/send_eth** - sends ether to an address
+
+**node script/execute_multisig** - initiate transaction in multisig wallet
+
+**node script/confirm_multisig** - confirm transaction in multisig wallet using hash
+
+  
+### Test ( Ethereum Ropsten Test Network) deployment scripts
+
+**node script/deploy_izx_token** - deploys IZX token
+
+**node script/generate_tokens** - generate tokens and assign to token creator
+
+**node script/deploy_drive_token** - deploys DRIVE ERC721 token
+
+**node script/deploy_token_driver** - deploys IZX Token driver
+
+**node script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
+  controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly
+
+**node script/create_auction** - create auction for ERC721 token
+
+**node script/create_campaign** - create campaign for ERC721 token
+
+## Deployed Addresses
+
+### Foundation Blockchain Network
+
+* IZX Token: [0x2ad180cbaffbc97237f572148fc1b283b68d8861](https://etherscan.io/token/0x2ad180cbaffbc97237f572148fc1b283b68d8861)
+
+### Ropsten Blockchain Network
+
+* IZX Token: [0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056](https://ropsten.etherscan.io/token/0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056)
+* TokenDriver: [0xf74138625c846d913c6673f8283db4c6a7825538](https://ropsten.etherscan.io/address/0xf74138625c846d913c6673f8283db4c6a7825538)
+
+Example token and contracts:
+
+* DRIVE Token: [0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1](https://ropsten.etherscan.io/address/0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1)
+* Auction for DRIVE Token: [0x686d003bb33726bfb0f810a144f5dc9f7f132716](https://ropsten.etherscan.io/address/0x686d003bb33726bfb0f810a144f5dc9f7f132716)        
+* Campaign for DRIVE Token: [0xf860ec4072c079c59b21d625f5f76319bf896b96](https://ropsten.etherscan.io/address/0xf860ec4072c079c59b21d625f5f76319bf896b96)          
+   
+
+# Notes for Developers
+
 ## Installation
 
 ```
@@ -281,65 +344,6 @@ Configuration in script/config.js contains all properties for selected environme
 On script run, it asks for credentials, and asks to enter word 'Yes!' before actual execution. After successfull run, it logs the hash of transaction,
 that should be looked up in ethereum explorer.
 
-### Production ( Ethereum Foundation network) deployment scripts
-
-
-**node script/deploy_tokensale** - deploys the crowdsale contract with the specified token and 
-  vault in the configuration
-
-**node script/deploy_tokensale_split** - deploys the crowdsale contract with the specified token ( after split on 1/100th ) and 
-  vault in the configuration
-
-  
-**node script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
-  controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly
-
-**node script/set_rate** - modifies the exhange rate USD/ETH for crowdsale contract. First it reads the old value and queries for
-  the current rate from etherscan.io
-
-**node script/distribute_tokens** - transfers tokens to the owners in the list
-
-**node script/send_eth** - sends ether to an address
-
-**node script/execute_multisig** - initiate transaction in multisig wallet
-
-**node script/confirm_multisig** - confirm transaction in multisig wallet using hash
-
-  
-### Test ( Ethereum Ropsten Test Network) deployment scripts
-
-**node script/deploy_izx_token** - deploys IZX token
-
-**node script/generate_tokens** - generate tokens and assign to token creator
-
-**node script/deploy_drive_token** - deploys DRIVE ERC721 token
-
-**node script/deploy_token_driver** - deploys IZX Token driver
-
-**node script/change_controller** - changes the controller for the token. If token alredy has a crowdsale defined as a 
-  controller, it uses the method in crowdsale contract. Otherwise, it calls the token method directly
-
-**node script/create_auction** - create auction for ERC721 token
-
-**node script/create_campaign** - create campaign for ERC721 token
-
-## Deployed Addresses
-
-### Foundation Blockchain Network
-
-* IZX Token: [0x2ad180cbaffbc97237f572148fc1b283b68d8861](https://etherscan.io/token/0x2ad180cbaffbc97237f572148fc1b283b68d8861)
-
-### Ropsten Blockchain Network
-
-* IZX Token: [0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056](https://ropsten.etherscan.io/token/0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056)
-* TokenDriver: [0xf74138625c846d913c6673f8283db4c6a7825538](https://ropsten.etherscan.io/address/0xf74138625c846d913c6673f8283db4c6a7825538)
-
-Example token and contracts:
-
-* DRIVE Token: [0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1](https://ropsten.etherscan.io/address/0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1)
-* Auction for DRIVE Token: [0x686d003bb33726bfb0f810a144f5dc9f7f132716](https://ropsten.etherscan.io/address/0x686d003bb33726bfb0f810a144f5dc9f7f132716)        
-* Campaign for DRIVE Token: [0xf860ec4072c079c59b21d625f5f76319bf896b96](https://ropsten.etherscan.io/address/0xf860ec4072c079c59b21d625f5f76319bf896b96)          
-   
    
 ## Note on truffle console usage
 

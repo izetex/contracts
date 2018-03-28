@@ -4,8 +4,9 @@ pragma solidity ^0.4.18;
 contract ControlledByVote {
 
     address     candidate;
-    bool        voted;
+    uint        finishes_at;
 
+    mapping(address => uint) amounts;
 
     modifier onlyVotedFor(address _vote_for) {
         require(candidate == _vote_for);
@@ -14,8 +15,12 @@ contract ControlledByVote {
     }
 
 
+    function newCandidate(address _new_candidate) public {
 
+    }
 
+    function withdraw() public {
 
+    }
 
 }

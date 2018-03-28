@@ -6,6 +6,7 @@ import '../token/TokenController.sol';
 import '../token/IZXToken.sol';
 import './Auction.sol';
 import './Campaign.sol';
+import './ControlledByVote.sol';
 
 /**
  * @title TokenDriver
@@ -23,7 +24,7 @@ import './Campaign.sol';
  *
  * @author Aleksey Studnev <studnev@izx.io>
  */
-contract TokenDriver is TokenController {
+contract TokenDriver is TokenController, ControlledByVote {
 
     event NewAuction( address indexed token, address indexed auction);
     event NewCampaign( address indexed token, address indexed campaign);
@@ -99,4 +100,7 @@ contract TokenDriver is TokenController {
         return size>0;
     }
 
+    function changeController(TokenController _newController) onlyVotedFor(_newController) public {
+        token.changeController(_newController);
+    }
 }

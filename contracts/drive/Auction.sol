@@ -3,7 +3,7 @@ pragma solidity ^0.4.18;
 import 'zeppelin-solidity/contracts/token/ERC721/ERC721.sol';
 import 'zeppelin-solidity/contracts/math/SafeMath.sol';
 
-import '../token/IZXToken.sol';
+import '../token/ERC20.sol';
 import './TokenDriver.sol';
 
 /**
@@ -70,7 +70,7 @@ contract Auction  {
 
     TokenDriver public  driver;
     ERC721      public  erc721token;
-    IZXToken    public  izx;
+    ERC20       public  izx;
     address     public  host;
     uint        public  host_share;
 

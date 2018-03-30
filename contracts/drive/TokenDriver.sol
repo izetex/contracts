@@ -3,7 +3,7 @@ pragma solidity ^0.4.18;
 import 'zeppelin-solidity/contracts/token/ERC721/ERC721.sol';
 
 import '../token/TokenController.sol';
-import '../token/IZXToken.sol';
+import '../token/ControlledToken.sol';
 import './Auction.sol';
 import './Campaign.sol';
 import './ControlledByVote.sol';
@@ -28,15 +28,15 @@ contract TokenDriver is TokenController, ControlledByVote {
 
     event NewAuction( address indexed token, address indexed auction);
     event NewCampaign( address indexed token, address indexed campaign);
-
-    IZXToken public token;
+    event NewTokenDriver( address indexed token, address indexed new_driver);
 
     mapping(address => bool) public allowed_contracts;
+    mapping(address => uint) public deposits;
 
-    function TokenDriver( IZXToken _token ) public {
-        require( address(_token) != address(0));
-        token = _token;
-    }
+    using SafeMath for uint256;
+
+    function TokenDriver( ERC20 _token, uint _min_voting_duration, uint _max_voting_duration ) public
+                ControlledByVote(_token, _min_voting_duration, _max_voting_duration) {}
 
     /**
     * @dev creates a new auction contract for ERC721 token
@@ -77,15 +77,22 @@ contract TokenDriver is TokenController, ControlledByVote {
 
     /// @notice Notifies the controller about a token transfer allowing the
     ///  controller to react if desired
+    /// @param _from The origin of the transfer
     /// @param _to The destination of the transfer
+    /// @param _amount The amount of the transfer
     /// @return False if the controller does not authorize the transfer
-    function onTransfer(address, address _to, uint) public returns(bool){
-        return !isContract(_to) || allowed_contracts[_to];
+    function onTransfer(address _from, address _to, uint _amount) public returns(bool){
+        if(_to==address(this)){
+            deposits[_from] = deposits[_from].add(_amount);
+            return true;
+        }else{
+            return !isContract(_to) || allowed_contracts[_to];
+        }
     }
 
     /// @notice Notifies the controller about an approval allowing the
     function onApprove(address, address _spender, uint) public returns(bool){
-        return !isContract(_spender) || allowed_contracts[_spender];
+        return !isContract(_spender) || allowed_contracts[_spender] || _spender==address(this);
     }
 
     /// @dev Internal function to determine if an address is a contract
@@ -100,7 +107,16 @@ contract TokenDriver is TokenController, ControlledByVote {
         return size>0;
     }
 
-    function changeController(TokenController _newController) onlyVotedFor(_newController) public {
-        token.changeController(_newController);
+
+    function withdraw() public {
+        uint amount = deposits[msg.sender];
+        require(amount > 0);
+        deposits[msg.sender] = 0;
+        token.transfer(msg.sender, amount);
+    }
+
+    function changeController(ControlledByVote _newController) onlyVotedFor(_newController) public {
+        ControlledToken(token).changeController(_newController);
+        NewTokenDriver( token, address(_newController));
     }
 }

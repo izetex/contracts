@@ -18,9 +18,10 @@ import './ControlledByVote.sol';
  * Token transfer and approval is allowed for all non-contract ( wallet ) addresses,
  * as well as auctions / campaigns, created in this driver.
  *
- * @notice Once setup as a controller for the token, this contract can not be changed.
- * After that, the protocol will work completely in decentralized way, with nobody
- * having control over it.
+ * @notice Once setup as a controller for the token, this contract can be changed only
+ * by voting procedure, look ControlledByVote contract for details.
+ * The protocol works completely in decentralized way, with nobody
+ * having full control over it.
  *
  * @author Aleksey Studnev <studnev@izx.io>
  */
@@ -43,6 +44,9 @@ contract TokenDriver is TokenController, ControlledByVote {
         _;
     }
 
+    /**
+    * @dev Throws if called by any account other than the token or its controller.
+    */
     modifier onlyTokenOrController() {
         require(msg.sender == address(token) || msg.sender == address(ControlledToken(token).controller() ) );
         _;
@@ -95,14 +99,9 @@ contract TokenDriver is TokenController, ControlledByVote {
     /// @param _amount The amount of the transfer
     /// @return False if the controller does not authorize the transfer
     function onTransfer(address _from, address _to, uint _amount) public onlyToken returns(bool){
-
-        if(votingInProgress()){
-            if( _to==address(this) || _to==address(candidate) ){
-                TokenDriver(_to).register_deposit(_from, _amount);
-                return true;
-            }else{
-                return false;
-            }
+        if(  (_to==address(this) || _to==address(candidate)) && votingInProgress()){
+           TokenDriver(_to).register_deposit(_from, _amount);
+           return true;
         }else{
            return !isContract(_to) || allowed_contracts[_to];
         }

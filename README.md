@@ -271,7 +271,7 @@ Using network 'development'.
   Contract: IZXToken
     ✓ should have 18 digits
     ✓ should have 1 supply
-    ✓ should have IZX symbol (49ms)
+    ✓ should have IZX symbol (52ms)
 
   Contract: Wallet
     ✓ should have 5 owners
@@ -282,47 +282,51 @@ Using network 'development'.
     ✓ should have set wallet
     ✓ should have set token
     ✓ should set controller for token
-    ✓ should transfer tokens by ETH transfer (614ms)
-    ✓ should change ETH rate (709ms)
-    ✓ should distribute tokens (204ms)
-    ✓ should disable transfer tokens (127ms)
-    ✓ should enable transfer tokens (138ms)
+    ✓ should transfer tokens by ETH transfer (629ms)
+    ✓ should change ETH rate (750ms)
+    ✓ should distribute tokens (242ms)
+    ✓ should disable transfer tokens (140ms)
+    ✓ should enable transfer tokens (135ms)
     ✓ should change controller
-    ✓ should protect to change controller (86ms)
-    ✓ should protect distribute tokens (62ms)
+    ✓ should protect to change controller (98ms)
+    ✓ should protect distribute tokens (64ms)
 
   Contract: TokenDriver
-    ✓ should use IZX token, sold to users (233ms)
-    ✓ should control IZX token (46ms)
-    ✓ should allow transfer tokens from owner to owner (94ms)
+    ✓ should use IZX token, sold to users (223ms)
+    ✓ should control IZX token (51ms)
+    ✓ should allow transfer tokens from owner to owner (119ms)
     ✓ should allow approve tokens from owner to owner (187ms)
     ✓ should not allow transfer tokens to contract
     ✓ should not allow approve tokens to contract (38ms)
-    ✓ should allow create auction and allow/transfer tokens (154ms)
-    ✓ should allow create campaign and allow/transfer tokens (149ms)
+    ✓ should allow create auction and allow/transfer tokens (167ms)
+    ✓ should allow create campaign and allow/transfer tokens (178ms)
+    ✓ should not allow change without voting for new driver (80ms)
+    ✓ should allow voting for new driver (8398ms)
+    ✓ should switch controller to new driver after voting (8465ms)
 
   Contract: Campaign
-    ✓ should use IZX token, owned by users (635ms)
-    ✓ should use ERC721 DRIVE token, owned by users (91ms)
-    ✓ should be created by token driver (95ms)
-    ✓ should use IZX & DRIVE tokens (65ms)
-    ✓ should calculate payouts (79ms)
-    ✓ should accept approval from advertiser (50ms)
-    ✓ should convert player (360ms)
-    ✓ should be reclaimed by player (304ms)
-    ✓ should be reclaimed after expiration (7372ms)
+    ✓ should use IZX token, owned by users (596ms)
+    ✓ should use ERC721 DRIVE token, owned by users (101ms)
+    ✓ should be created by token driver (105ms)
+    ✓ should use IZX & DRIVE tokens
+    ✓ should calculate payouts (71ms)
+    ✓ should accept approval from advertiser (73ms)
+    ✓ should convert player (416ms)
+    ✓ should be reclaimed by player (300ms)
+    ✓ should be reclaimed after expiration (7382ms)
 
   Contract: Auction
-    ✓ should use IZX token, owned by users (559ms)
-    ✓ should use ERC721 DRIVE token, owned by users (85ms)
+    ✓ should use IZX token, owned by users (562ms)
+    ✓ should use ERC721 DRIVE token, owned by users (88ms)
     ✓ should be created by token driver (89ms)
     ✓ should use IZX & DRIVE tokens
     ✓ should have host_share
-    ✓ should sell ERC721 for sale price (695ms)
-    ✓ should allow to withdraw ERC721 after finish (6437ms)
+    ✓ should sell ERC721 for sale price (705ms)
+    ✓ should allow to withdraw ERC721 after finish (6443ms)
 
 
-  41 passing (21s)
+  44 passing (38s)
+
 
 
 ```

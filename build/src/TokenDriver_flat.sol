@@ -525,14 +525,9 @@ contract TokenDriver is TokenController, ControlledByVote {
     /// @param _amount The amount of the transfer
     /// @return False if the controller does not authorize the transfer
     function onTransfer(address _from, address _to, uint _amount) public onlyToken returns(bool){
-
-        if(votingInProgress()){
-            if( _to==address(this) || _to==address(candidate) ){
-                TokenDriver(_to).register_deposit(_from, _amount);
-                return true;
-            }else{
-                return false;
-            }
+        if(  (_to==address(this) || _to==address(candidate)) && votingInProgress()){
+           TokenDriver(_to).register_deposit(_from, _amount);
+           return true;
         }else{
            return !isContract(_to) || allowed_contracts[_to];
         }

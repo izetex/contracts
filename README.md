@@ -223,8 +223,8 @@ Sources are located in [DriveToken.sol](contracts/drive/DriveToken.sol).
 
 ### Ropsten Blockchain Network
 
-* IZX Token: [0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056](https://ropsten.etherscan.io/token/0xe3cbcb526d8bb2fd709ac2d56878a52840ae7056)
-* TokenDriver: [0xf74138625c846d913c6673f8283db4c6a7825538](https://ropsten.etherscan.io/address/0xf74138625c846d913c6673f8283db4c6a7825538)
+* IZX Token: [0x24998829bb9ac179234b11e2a362cf3e60d810f7](https://ropsten.etherscan.io/token/0x24998829bb9ac179234b11e2a362cf3e60d810f7)
+* TokenDriver: [0x5c9a8cfc3cfc0a5ed10442217f95c28b039d0730](https://ropsten.etherscan.io/address/0x5c9a8cfc3cfc0a5ed10442217f95c28b039d0730)
 
 Example token and contracts:
 

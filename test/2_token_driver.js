@@ -3,6 +3,13 @@ var TokenSale = artifacts.require("TokenSale");
 var TokenDriver = artifacts.require("TokenDriver");
 var DriveToken = artifacts.require("DriveToken");
 
+function delay(t) {
+    return new Promise(function(resolve) {
+        setTimeout(resolve, t)
+    });
+}
+
+
 contract('TokenDriver', function(accounts) {
 
     it('should use IZX token, sold to users', function() {
@@ -179,4 +186,165 @@ contract('TokenDriver', function(accounts) {
 
 
     });
+
+
+    it("should not allow change without voting for new driver", function(done) {
+
+        var token, driver, new_driver;
+        IZXToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenDriver.deployed();
+        }).then(function(instance) {
+            driver = instance;
+            return TokenDriver.new(token.address, 5, 1000);
+        }).then(function(instance) {
+            new_driver = instance;
+            return driver.changeController(new_driver);
+        }).then( function(){
+            assert.fail("Exception expected");
+        }).catch(function(error) {
+            done();
+        });
+    });
+
+    it("should allow voting for new driver", function() {
+
+        var token, driver, new_driver, balance;
+        return IZXToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenDriver.deployed();
+        }).then(function(instance) {
+            driver = instance;
+            return TokenDriver.new(token.address, 5, 1000);
+        }).then(function(instance) {
+            new_driver = instance;
+            var now = Math.floor(Date.now() / 1000);
+            return driver.startVoting( new_driver.address, now + 6, {from: accounts[1], gas: 150000} );
+        }).then( function(result){
+
+            var log = result.logs[0];
+
+            assert.equal(log.event, 'VotingStarted');
+            assert.equal(log.args.candidate, new_driver.address);
+            assert.equal(log.args.token, token.address);
+            assert.isTrue(log.args.finishes_at > Math.floor(Date.now() / 1000));
+
+            return driver.candidate();
+        }).then(function(instance) {
+            assert.equal(instance, new_driver.address);
+            return token.balanceOf(accounts[1]);
+        }).then(function(result) {
+            balance =  result.toNumber();
+            return token.transfer(driver.address, web3.toWei(0.01), {from: accounts[1], gas: 150000});
+        }).then(function(result) {
+            return token.balanceOf(accounts[1]);
+        }).then(function(result) {
+            assert.equal(result.toNumber() + parseInt(web3.toWei(0.01)), balance);
+            return delay(8000);
+        }).then(function(result) {
+            return driver.finishVoting();
+        }).then(function(result) {
+            var log = result.logs[0];
+
+            assert.equal(log.event, 'VotingCompleted');
+            assert.equal(log.args.candidate, new_driver.address);
+            assert.equal(log.args.token, token.address);
+            assert.equal(log.args.candidate_wins, false);
+            assert.equal(log.args.voices_cons, web3.toWei(0.01));
+            assert.equal(log.args.voices_pro, web3.toWei(0.0));
+
+            return driver.candidate();
+        }).then(function(instance) {
+            assert.equal(instance, new_driver.address);
+            return driver.candidate_wins();
+        }).then(function(result) {
+            assert.equal(result, false);
+
+            return token.controller();
+        }).then(function(instance) {
+            assert.equal(instance, driver.address);
+            return driver.changeController(new_driver.address);
+        }).then(function(instance) {
+            fail("Exception expected");
+        }).catch(function(error) {
+            return driver.withdraw({from: accounts[1]});
+        }).then(function(result) {
+            return token.balanceOf(accounts[1]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), balance);
+        });
+    });
+
+    it("should switch controller to new driver after voting", function() {
+
+        var token, driver, new_driver, balance;
+        return IZXToken.deployed().then(function(instance) {
+            token = instance;
+            return TokenDriver.deployed();
+        }).then(function(instance) {
+            driver = instance;
+            return TokenDriver.new(token.address, 5, 1000);
+        }).then(function(instance) {
+            new_driver = instance;
+            var now = Math.floor(Date.now() / 1000);
+            return driver.startVoting( new_driver.address, now + 6, {from: accounts[1], gas: 150000} );
+        }).then( function(result){
+
+            var log = result.logs[0];
+
+            assert.equal(log.event, 'VotingStarted');
+            assert.equal(log.args.candidate, new_driver.address);
+            assert.equal(log.args.token, token.address);
+            assert.isTrue(log.args.finishes_at > Math.floor(Date.now() / 1000));
+
+            return driver.candidate();
+        }).then(function(instance) {
+            assert.equal(instance, new_driver.address);
+            return token.balanceOf(accounts[1]);
+        }).then(function(result) {
+            balance =  result.toNumber();
+            return token.transfer(new_driver.address, web3.toWei(0.01), {from: accounts[1], gas: 150000});
+        }).then(function(result) {
+            return token.balanceOf(accounts[1]);
+        }).then(function(result) {
+            assert.equal(result.toNumber() + parseInt(web3.toWei(0.01)), balance);
+            return delay(8000);
+        }).then(function(result) {
+            return driver.finishVoting();
+        }).then(function(result) {
+            var log = result.logs[0];
+
+            assert.equal(log.event, 'VotingCompleted');
+            assert.equal(log.args.candidate, new_driver.address);
+            assert.equal(log.args.token, token.address);
+            assert.equal(log.args.candidate_wins, true);
+            assert.equal(log.args.voices_pro, web3.toWei(0.01));
+            assert.equal(log.args.voices_cons, web3.toWei(0.0));
+
+            return driver.candidate();
+        }).then(function(instance) {
+            assert.equal(instance, new_driver.address);
+            return driver.candidate_wins();
+        }).then(function(result) {
+            assert.equal(result, true);
+            return driver.changeController(new_driver.address);
+        }).then(function(result) {
+
+            var log = result.logs[0];
+
+            assert.equal(log.event, 'NewTokenDriver');
+            assert.equal(log.args.token, token.address);
+            assert.equal(log.args.new_driver, new_driver.address);
+
+            return token.controller();
+        }).then(function(instance) {
+            assert.equal(instance, new_driver.address);
+            return new_driver.withdraw({from: accounts[1]});
+        }).then(function(result) {
+            return token.balanceOf(accounts[1]);
+        }).then(function(result) {
+            assert.equal(result.toNumber(), balance);
+        });
+    });
+
 });

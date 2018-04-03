@@ -35,6 +35,19 @@ contract TokenDriver is TokenController, ControlledByVote {
 
     using SafeMath for uint256;
 
+    /**
+    * @dev Throws if called by any account other than the token.
+    */
+    modifier onlyToken() {
+        require(msg.sender == address(token));
+        _;
+    }
+
+    modifier onlyTokenOrController() {
+        require(msg.sender == address(token) || msg.sender == address(ControlledToken(token).controller() ) );
+        _;
+    }
+
     function TokenDriver( ERC20 _token, uint _min_voting_duration, uint _max_voting_duration ) public
                 ControlledByVote(_token, _min_voting_duration, _max_voting_duration) {}
 
@@ -71,7 +84,7 @@ contract TokenDriver is TokenController, ControlledByVote {
     /// ----- METHODS IMPLEMENTATION FROM TokenController interface ----- ///
 
     /// @notice Called when `_owner` sends ether to the Token contract
-    function proxyPayment(address) payable public returns(bool){
+    function proxyPayment(address) payable public onlyToken returns(bool){
         return false;
     }
 
@@ -81,17 +94,22 @@ contract TokenDriver is TokenController, ControlledByVote {
     /// @param _to The destination of the transfer
     /// @param _amount The amount of the transfer
     /// @return False if the controller does not authorize the transfer
-    function onTransfer(address _from, address _to, uint _amount) public returns(bool){
-        if(_to==address(this)){
-            deposits[_from] = deposits[_from].add(_amount);
-            return true;
+    function onTransfer(address _from, address _to, uint _amount) public onlyToken returns(bool){
+
+        if(votingInProgress()){
+            if( _to==address(this) || _to==address(candidate) ){
+                TokenDriver(_to).register_deposit(_from, _amount);
+                return true;
+            }else{
+                return false;
+            }
         }else{
-            return !isContract(_to) || allowed_contracts[_to];
+           return !isContract(_to) || allowed_contracts[_to];
         }
     }
 
     /// @notice Notifies the controller about an approval allowing the
-    function onApprove(address, address _spender, uint) public returns(bool){
+    function onApprove(address, address _spender, uint) public onlyToken returns(bool){
         return !isContract(_spender) || allowed_contracts[_spender] || _spender==address(this);
     }
 
@@ -107,6 +125,9 @@ contract TokenDriver is TokenController, ControlledByVote {
         return size>0;
     }
 
+    function register_deposit(address _from, uint _amount) onlyTokenOrController public {
+        deposits[_from] = deposits[_from].add(_amount);
+    }
 
     function withdraw() public {
         uint amount = deposits[msg.sender];

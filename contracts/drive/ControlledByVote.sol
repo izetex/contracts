@@ -21,11 +21,8 @@ contract ControlledByVote {
 
     modifier onlyNoVoting() {
         if(address(candidate) != address(0)){
-
             require(now > finishes_at);
-            if(!voices_counted){
-                countVotes();
-            }
+            require(voices_counted);
             require(!candidate_wins);
         }
         _;
@@ -36,9 +33,7 @@ contract ControlledByVote {
         require(candidate == _vote_for);
 
         require(now > finishes_at);
-        if(!voices_counted){
-            countVotes();
-        }
+        require(voices_counted);
         require(candidate_wins);
 
         _;
@@ -52,11 +47,12 @@ contract ControlledByVote {
         require( _max_voting_duration > 0 );
         token = _token;
         min_voting_duration = _min_voting_duration;
+        max_voting_duration = _max_voting_duration;
     }
 
 
-    function newCandidate(ControlledByVote _candidate, uint _finishes_at) onlyNoVoting public {
-        require(address(candidate) != address(0));
+    function startVoting(ControlledByVote _candidate, uint _finishes_at) onlyNoVoting public {
+        require(address(_candidate) != address(0));
         require(_candidate.token() == token);
         require(_finishes_at >= now.add(min_voting_duration));
         require(_finishes_at <= now.add(max_voting_duration));
@@ -69,7 +65,11 @@ contract ControlledByVote {
     }
 
 
-    function countVotes() internal {
+    function finishVoting() public {
+
+        require(address(candidate) != address(0));
+        require(now > finishes_at);
+        require(!voices_counted);
 
         uint voices_cons    = token.balanceOf(this);
         uint voices_pro     = token.balanceOf(candidate);
@@ -78,6 +78,11 @@ contract ControlledByVote {
         voices_counted = true;
 
         VotingCompleted( candidate, token, candidate_wins, voices_pro, voices_cons);
+
+    }
+
+    function votingInProgress() public view returns(bool){
+        return candidate!=address(0) && (now <= finishes_at);
     }
 
 

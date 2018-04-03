@@ -12,7 +12,7 @@ module.exports = function(deployer, network, accounts) {
     }).then(function(instance) {
         token = instance;
 
-        return deployer.deploy(TokenDriver, token.address, 86400, 86400*10);
+        return deployer.deploy(TokenDriver, token.address, 4, 1000);
 
     }).then(function() {
         return TokenSale.deployed();

@@ -235,8 +235,8 @@ Sources are located in [DriveToken.sol](contracts/drive/DriveToken.sol).
 Example token and contracts:
 
 * DRIVE Token: [0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1](https://ropsten.etherscan.io/address/0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1)
-* Auction for DRIVE Token: [0x686d003bb33726bfb0f810a144f5dc9f7f132716](https://ropsten.etherscan.io/address/0x686d003bb33726bfb0f810a144f5dc9f7f132716)        
-* Campaign for DRIVE Token: [0xf860ec4072c079c59b21d625f5f76319bf896b96](https://ropsten.etherscan.io/address/0xf860ec4072c079c59b21d625f5f76319bf896b96)          
+* Auction for DRIVE Token: [0x3daf59a40c477c885ebc1c7127a897f482eff000](https://ropsten.etherscan.io/address/0x3daf59a40c477c885ebc1c7127a897f482eff000)        
+* Campaign for DRIVE Token: [0x4c9a5242d86c934ac4ea0f0296a0603d57b7b3a4](https://ropsten.etherscan.io/address/0x4c9a5242d86c934ac4ea0f0296a0603d57b7b3a4)          
    
 
 # Notes for Developers
@@ -389,8 +389,6 @@ solidity_flattener --allow-paths "$(pwd)/contracts" --output build/src/TokenSale
 
 solidity_flattener --solc-paths="zeppelin-solidity/=$(pwd)/node_modules/zeppelin-solidity/" --allow-paths "$(pwd)/contracts" --output build/src/DriveToken_flat.sol contracts/drive/DriveToken.sol
 solidity_flattener --solc-paths="zeppelin-solidity/=$(pwd)/node_modules/zeppelin-solidity/" --allow-paths "$(pwd)/contracts" --output build/src/TokenDriver_flat.sol contracts/drive/TokenDriver.sol
-solidity_flattener --solc-paths="zeppelin-solidity/=$(pwd)/node_modules/zeppelin-solidity/" --allow-paths "$(pwd)/contracts" --output build/src/Auction_flat.sol contracts/drive/Auction.sol
-solidity_flattener --solc-paths="zeppelin-solidity/=$(pwd)/node_modules/zeppelin-solidity/" --allow-paths "$(pwd)/contracts" --output build/src/Campaign_flat.sol contracts/drive/Campaign.sol
 
 
 ```

@@ -11,6 +11,8 @@ function deploy_contract(connection, contract, gas, gasprice, callback){
     var contract_class = connection.web3.eth.contract(contract.abi);
     contract_class.new(
         connection.config.token,
+        connection.config.min_voting_duration,
+        connection.config.max_voting_duration,
         {
             from: connection.address,
             data: contract.bytecode,

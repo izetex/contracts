@@ -66,7 +66,7 @@ contract Auction  {
 
     TokenDriver public  driver;
     ERC721      public  erc721token;
-    IZXToken    public  izx;
+    ERC20       public  izx;
     address     public  host;
     uint        public  host_share;
 
@@ -206,7 +206,7 @@ contract Campaign {
 
     TokenDriver public  driver;
     ERC721      public  erc721token;
-    IZXToken    public  izx;
+    ERC20       public  izx;
     address     public  host;
     uint        public  lifetime;
     uint        public  token_price;
@@ -331,6 +331,91 @@ contract Campaign {
 
 }
 
+contract ControlledByVote {
+
+    ERC20               public  token;
+    uint                public  min_voting_duration;
+    uint                public  max_voting_duration;
+
+    ControlledByVote    public  candidate;
+    uint                public  finishes_at;
+    bool                public  voices_counted;
+    bool                public  candidate_wins;
+
+    event VotingStarted( address indexed candidate, address indexed token, uint finishes_at);
+    event VotingCompleted( address indexed candidate, address indexed token, bool candidate_wins, uint voices_pro, uint voices_cons);
+
+    using SafeMath for uint256;
+
+    modifier onlyNoVoting() {
+        if(address(candidate) != address(0)){
+            require(now > finishes_at);
+            require(voices_counted);
+            require(!candidate_wins);
+        }
+        _;
+    }
+
+    modifier onlyVotedFor(ControlledByVote _vote_for) {
+        require(candidate != address(0));
+        require(candidate == _vote_for);
+
+        require(now > finishes_at);
+        require(voices_counted);
+        require(candidate_wins);
+
+        _;
+    }
+
+
+
+    function ControlledByVote( ERC20 _token, uint _min_voting_duration, uint _max_voting_duration ) public {
+        require( address(_token) != address(0));
+        require( _max_voting_duration >= _min_voting_duration);
+        require( _max_voting_duration > 0 );
+        token = _token;
+        min_voting_duration = _min_voting_duration;
+        max_voting_duration = _max_voting_duration;
+    }
+
+
+    function startVoting(ControlledByVote _candidate, uint _finishes_at) onlyNoVoting public {
+        require(address(_candidate) != address(0));
+        require(_candidate.token() == token);
+        require(_finishes_at >= now.add(min_voting_duration));
+        require(_finishes_at <= now.add(max_voting_duration));
+
+        candidate = _candidate;
+        finishes_at = _finishes_at;
+        voices_counted = false;
+
+        VotingStarted( candidate, token, finishes_at);
+    }
+
+
+    function finishVoting() public {
+
+        require(address(candidate) != address(0));
+        require(now > finishes_at);
+        require(!voices_counted);
+
+        uint voices_cons    = token.balanceOf(this);
+        uint voices_pro     = token.balanceOf(candidate);
+
+        candidate_wins = voices_pro > voices_cons;
+        voices_counted = true;
+
+        VotingCompleted( candidate, token, candidate_wins, voices_pro, voices_cons);
+
+    }
+
+    function votingInProgress() public view returns(bool){
+        return candidate!=address(0) && (now <= finishes_at);
+    }
+
+
+}
+
 contract ERC20 {
 
   function balanceOf(address who) constant public returns (uint);
@@ -369,19 +454,32 @@ contract TokenController {
         returns(bool);
 }
 
-contract TokenDriver is TokenController {
+contract TokenDriver is TokenController, ControlledByVote {
 
     event NewAuction( address indexed token, address indexed auction);
     event NewCampaign( address indexed token, address indexed campaign);
-
-    IZXToken public token;
+    event NewTokenDriver( address indexed token, address indexed new_driver);
 
     mapping(address => bool) public allowed_contracts;
+    mapping(address => uint) public deposits;
 
-    function TokenDriver( IZXToken _token ) public {
-        require( address(_token) != address(0));
-        token = _token;
+    using SafeMath for uint256;
+
+    /**
+    * @dev Throws if called by any account other than the token.
+    */
+    modifier onlyToken() {
+        require(msg.sender == address(token));
+        _;
     }
+
+    modifier onlyTokenOrController() {
+        require(msg.sender == address(token) || msg.sender == address(ControlledToken(token).controller() ) );
+        _;
+    }
+
+    function TokenDriver( ERC20 _token, uint _min_voting_duration, uint _max_voting_duration ) public
+                ControlledByVote(_token, _min_voting_duration, _max_voting_duration) {}
 
     /**
     * @dev creates a new auction contract for ERC721 token
@@ -416,21 +514,33 @@ contract TokenDriver is TokenController {
     /// ----- METHODS IMPLEMENTATION FROM TokenController interface ----- ///
 
     /// @notice Called when `_owner` sends ether to the Token contract
-    function proxyPayment(address) payable public returns(bool){
+    function proxyPayment(address) payable public onlyToken returns(bool){
         return false;
     }
 
     /// @notice Notifies the controller about a token transfer allowing the
     ///  controller to react if desired
+    /// @param _from The origin of the transfer
     /// @param _to The destination of the transfer
+    /// @param _amount The amount of the transfer
     /// @return False if the controller does not authorize the transfer
-    function onTransfer(address, address _to, uint) public returns(bool){
-        return !isContract(_to) || allowed_contracts[_to];
+    function onTransfer(address _from, address _to, uint _amount) public onlyToken returns(bool){
+
+        if(votingInProgress()){
+            if( _to==address(this) || _to==address(candidate) ){
+                TokenDriver(_to).register_deposit(_from, _amount);
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+           return !isContract(_to) || allowed_contracts[_to];
+        }
     }
 
     /// @notice Notifies the controller about an approval allowing the
-    function onApprove(address, address _spender, uint) public returns(bool){
-        return !isContract(_spender) || allowed_contracts[_spender];
+    function onApprove(address, address _spender, uint) public onlyToken returns(bool){
+        return !isContract(_spender) || allowed_contracts[_spender] || _spender==address(this);
     }
 
     /// @dev Internal function to determine if an address is a contract
@@ -445,6 +555,21 @@ contract TokenDriver is TokenController {
         return size>0;
     }
 
+    function register_deposit(address _from, uint _amount) onlyTokenOrController public {
+        deposits[_from] = deposits[_from].add(_amount);
+    }
+
+    function withdraw() public {
+        uint amount = deposits[msg.sender];
+        require(amount > 0);
+        deposits[msg.sender] = 0;
+        token.transfer(msg.sender, amount);
+    }
+
+    function changeController(ControlledByVote _newController) onlyVotedFor(_newController) public {
+        ControlledToken(token).changeController(_newController);
+        NewTokenDriver( token, address(_newController));
+    }
 }
 
 contract Controlled {
@@ -631,12 +756,6 @@ contract ControlledToken is ERC20, Controlled {
     mapping (address => uint256) balances;
     mapping (address => mapping (address => uint256)) allowed;
 
-
-}
-
-contract IZXToken is ControlledToken {
-
-   function IZXToken() ControlledToken( 1, 'IZX Token', 18, 'IZX' ) public {}
 
 }
 

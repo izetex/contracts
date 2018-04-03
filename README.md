@@ -6,7 +6,7 @@ The project contains:
 2) IZX Smart Contracts for Games
 3) Supporting scripts
 
-Current status as of 03/2018 is that the crowdsale smart contracts are successfully deployed and used in Ethereum 
+Current status as of 04/2018 is that the crowdsale smart contracts are successfully deployed and used in Ethereum 
 foundation network for IZX tokens initial crowdsale. 
 
 Smart contract for games integration is in test stage, deployed in Ropsten test Ethereum network, 
@@ -157,6 +157,12 @@ transfers and approvals:
 in TokenDriver as campaigns and auctions. This rule ensures that the token will not be accidentally sent to
 wrong smart contract. Also it ensures the protocol execution to be appied for all IZX token operations.
 
+
+TokenDriver can be changed by voting procedure, controlled by [ControlledByVote.sol](contracts/drive/ControlledByVote.sol)
+smart contract. Token holders can vote with their tokens to change the TokenDriver for IZX token.
+If the new TokenDriver wins in the amount of voted tokens, the changeController method is unlocked
+and can be used to change the controller.
+
 Sources are located in [TokenDriver.sol](contracts/drive/TokenDriver.sol).
 
 ### DriveToken smart contract
@@ -223,8 +229,8 @@ Sources are located in [DriveToken.sol](contracts/drive/DriveToken.sol).
 
 ### Ropsten Blockchain Network
 
-* IZX Token: [0x24998829bb9ac179234b11e2a362cf3e60d810f7](https://ropsten.etherscan.io/token/0x24998829bb9ac179234b11e2a362cf3e60d810f7)
-* TokenDriver: [0x5c9a8cfc3cfc0a5ed10442217f95c28b039d0730](https://ropsten.etherscan.io/address/0x5c9a8cfc3cfc0a5ed10442217f95c28b039d0730)
+* IZX Token: [0x9f498853826e45eacd6af36022b6eb586df6c5ac](https://ropsten.etherscan.io/token/0x9f498853826e45eacd6af36022b6eb586df6c5ac)
+* TokenDriver: [0x04968ad78196089d419559ccce39b7b9fe209399](https://ropsten.etherscan.io/address/0x04968ad78196089d419559ccce39b7b9fe209399)
 
 Example token and contracts:
 

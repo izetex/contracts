@@ -2,10 +2,10 @@ module.exports = {
     ropsten: {
         url: 'https://ropsten.infura.io/aaIrr36iBro3mIVCdWrg ',
         creator: '0xef34280050e8546d8e1d85ec75250149553fb396',
-        token: '0x24998829bb9ac179234b11e2a362cf3e60d810f7',
+        token: '0x9f498853826e45eacd6af36022b6eb586df6c5ac',
         game: '0xfb2fb88292b86f25ba70876a8392fa6fb64f45b7',
         drive_token: '0x72d5a21c0a51ecb35934f99b7c22c5faf99c74b1',
-        token_driver: '0x5c9a8cfc3cfc0a5ed10442217f95c28b039d0730',
+        token_driver: '0x04968ad78196089d419559ccce39b7b9fe209399',
         min_voting_duration: 3600,
         max_voting_duration: 8640000
     },

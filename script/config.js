@@ -21,6 +21,6 @@ module.exports = {
         creator: '0xb2556a76da6e5b99e82fc156f8faad2778225161',
         token: '0x2ad180cbaffbc97237f572148fc1b283b68d8861',
         vault: '0xf4702b0918A8a89dfC38459Ce42198834818F26B',
-        tokensale: '0x37e3efe76ee6cec50559bc07565eaf36ddc05467'
+        tokensale: '0xb2556a76da6e5b99e82fc156f8faad2778225161'
     }
 }

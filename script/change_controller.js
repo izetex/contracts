@@ -4,7 +4,7 @@ const token = require('./contracts/token');
 const tokensale = require('./contracts/tokensale');
 const owned = require('./contracts/owned');
 
-const environment = 'ropsten'; // ropsten/foundation, change to foundation to deploy to real
+const environment = 'foundation'; // ropsten/foundation, change to foundation to deploy to real
 var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment+' account:');
 var connection = new Connection(mnemonics, environment);
 

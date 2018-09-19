@@ -9,7 +9,7 @@ var connection = new Connection(mnemonics, environment);
 
 function deploy_contract(connection, tokensale, gasprice, callback){
 
-    var _startFundingTime = new Date('Jul 18 2018 00:00:00 GMT+0300 (MSK)').getTime()/1000; /* var of type uint256 here */ ;
+    var _startFundingTime = new Date('Jul 17 2018 21:00:00 GMT+0300 (MSK)').getTime()/1000; /* var of type uint256 here */ ;
     var _endFundingTime = new Date('Dec 31 2018 23:59:59 GMT+0300 (MSK)').getTime()/1000;/* var of type uint256 here */ ;
     var _tokenCap = '2500000000000000000000000000';/* var of type uint256 here */ ;
     var _vaultAddress = connection.config.vault;/* var of type address here */ ;

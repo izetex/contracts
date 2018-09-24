@@ -1,6 +1,6 @@
 const cli = require('readline-sync');
 const Connection = require('./eth_connection');
-const tokensale = require('./contracts/tokensale');
+const token_distribution = require('./contracts/token_distribution');
 const request = require('request');
 const fs = require('fs');
 
@@ -11,7 +11,7 @@ var filename = cli.question('Enter full path to CSV file:');
 var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment + ': ');
 var connection = new Connection(mnemonics, environment);
 
-var deployed_tokensale = connection.web3.eth.contract(tokensale.abi).at(connection.config.tokensale);
+var deployed_distr = connection.web3.eth.contract(token_distribution.abi).at(connection.config.token_distribution);
 
 var addresses = [];
 var amounts = [];
@@ -44,7 +44,7 @@ fs.readFile(filename, 'utf8',function(err,data){
         process.exit(1);
     }
 
-    deployed_tokensale.distributeTokens(addresses, amounts, {from: connection.address, 
+    deployed_distr.distributeTokens(addresses, amounts, {from: connection.address,
             gas: 40000*(addresses.length+1), gasPrice: connection.web3.toWei(gasprice, 'gwei')},
         function(error,result){
             console.log(error, result);

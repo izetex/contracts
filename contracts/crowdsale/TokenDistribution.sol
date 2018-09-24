@@ -8,7 +8,7 @@ contract TokenDistribution is Owned {
 
     ERC20 public tokenContract;
 
-    function TokenSale ( address _tokenAddress ) public {
+    function TokenDistribution ( address _tokenAddress ) public {
         tokenContract = ERC20(_tokenAddress); // The Deployed Token Contract
      }
 

@@ -7,7 +7,7 @@ const fs = require('fs');
 const environment = 'foundation'; // only at ropsten we generate tokens manually
 
 var mnemonics = cli.question('Enter your mnemonics or pkey for '+environment + ': ');
-var connection = new Connection(mnemonics, environment);
+var connection = new Connection(mnemonics, environment, true);
 
 var deployed_token = connection.web3.eth.contract(izx_token.abi).at(connection.config.token);
 

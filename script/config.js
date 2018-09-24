@@ -18,7 +18,7 @@ module.exports = {
     },
     foundation: {
         url: 'https://mainnet.infura.io/aaIrr36iBro3mIVCdWrg',
-        creator: '0xb2556a76da6e5b99e82fc156f8faad2778225161',
+        creator: '0xf8ee7f87db9b1603af462758e96f2225e449fc0b',
         token: '0x2ad180cbaffbc97237f572148fc1b283b68d8861',
         vault: '0xf4702b0918A8a89dfC38459Ce42198834818F26B',
         tokensale: '0xb2556a76da6e5b99e82fc156f8faad2778225161',

@@ -48,7 +48,7 @@ connection.web3.eth.getBalance(connection.address, function(error,result){
                 process.exit(1);
             }
             console.log('deploying now...');
-            deploy_contract(connection, tokensale, gasprice, function(deployed){
+            deploy_contract(connection, token_distribution, gasprice, function(deployed){
                 if(deployed) {
                     console.log('Contract transactionHash: ' + deployed.transactionHash);
                     connection.close();

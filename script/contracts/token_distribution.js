@@ -94,5 +94,5 @@ module.exports = {
             "type": "constructor"
         }
     ],
-    gas: 470000
+    gas: 870000
 };

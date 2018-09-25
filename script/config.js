@@ -23,6 +23,6 @@ module.exports = {
         vault: '0xf4702b0918A8a89dfC38459Ce42198834818F26B',
         tokensale: '0xb2556a76da6e5b99e82fc156f8faad2778225161',
         token_wallet: '0x497c64b3755260927b3f11ed0b9880f82375c927',
-        token_distribution: ''
+        token_distribution: '0x04d0811c922db2ce98ab7ac2599dac2d0353a394'
     }
 }

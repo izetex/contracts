@@ -9,14 +9,13 @@ var connection = new Connection(mnemonics, environment);
 
 function deploy_contract(connection, token_distribution, gasprice, callback){
 
-    var _tokenAddress = connection.config.token;/* var of type address here */ ;
-
     var thisContract = connection.web3.eth.contract(token_distribution.abi);
 
     console.log('Deploying contract with gas: '+token_distribution.gas);
 
     thisContract.new(
-        _tokenAddress,
+        connection.config.token,
+        connection.config.token_wallet,
         {
             from: connection.address,
             data: token_distribution.bytecode,
